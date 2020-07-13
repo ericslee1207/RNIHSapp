@@ -1,0 +1,58 @@
+[
+  {
+    "period": 1,
+    "subject": "Math",
+    "teacher": { "id": 0, "first_name": "Stephanie", "last_name": "Fair" },
+    "room": "M12",
+    "time": "8:00 AM",
+    "id": 0
+  },
+  {
+    "period": "*",
+    "subject": "Tutorial",
+    "teacher": { "id": 1, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "9:30 AM",
+    "id": 6
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "teacher": { "id": 2, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "9:50 AM",
+    "id": 4
+  },
+  {
+    "period": 2,
+    "subject": "English",
+    "teacher": { "id": 3, "first_name": "Natalie", "last_name": "Hanks" },
+    "room": "HM10",
+    "time": "10:00 AM",
+    "id": 1
+  },
+  {
+    "period": "*",
+    "subject": "Lunch",
+    "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "11:30 AM",
+    "id": 5
+  },
+  {
+    "period": 3,
+    "subject": "Science",
+    "teacher": { "id": 5, "first_name": "Joseph", "last_name": "Elmasri" },
+    "room": "S1",
+    "time": "12:10 PM",
+    "id": 2
+  },
+  {
+    "period": 4,
+    "subject": "History",
+    "teacher": { "id": 6, "first_name": "Cora", "last_name": "Peck" },
+    "room": "SS20",
+    "time": "1:40 PM",
+    "id": 3
+  }
+]
