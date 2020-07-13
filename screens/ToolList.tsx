@@ -13,6 +13,7 @@ import {
   Text,
   Icon,
 } from "native-base";
+import {TouchableOpacity} from 'react-native'
 
 export const ToolList = (props) => {
   const availableTools = props.tools.map((tool) => (
