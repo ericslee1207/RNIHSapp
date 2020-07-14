@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   Text,
@@ -27,33 +28,62 @@ export const Calendar1 = () => {
   const SetEvent = (props) => {
     const [isTimePickerVisible, setTimePicker] = useState(false)
     const [chosenTime, setTime]= useState('')
-    const [listofEvents, editList] = useState(new Array()); //initial value of useState would be what you get from another API/database
+    const [listofEvents, editList] = useState([]); //initial value of useState would be what you get from another API/database
     const [modalVisible, toggleModal] = useState(false);
     const [name, newName] = useState("");
     const [description, newDescription] = useState("");
     
     
-    
-    
     useEffect(()=>{
-      const loadAllEvents=async()=>{
-        try{
-          const jsonValue = await AsyncStorage.getItem(props.datePressed)
-          if (jsonValue!==null){
-            const allEvents=JSON.parse(jsonValue)
-            editList(allEvents)
-          }
-        }
-        catch(e){
-          console.log(e)
-        }
-      }
-      loadAllEvents();
+      saveData1()
     },[])
     
-    
-    
-    
+    const saveData = async () => {
+        const arrData = [{name: name, description: description, time: chosenTime}]; // [{ name, phone}] from the textInput
+      
+        const storedData = await AsyncStorage.getItem(props.datePressed);
+        console.log(storedData)
+      
+        let newData = [] as any;
+      
+        if (storedData === null) {
+          // save
+          await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
+        } else {
+          const storedDataParsed = JSON.parse(storedData);
+          newData = [...storedDataParsed, {name: name, description: description, time: chosenTime}];
+          await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+        }
+        newName("");
+        newDescription("");
+        setTime('')
+        toggleModal(false);
+        console.log(newData)
+        editList(newData);
+      };
+      const saveData1 = async () => {
+        const arrData = [{name: name, description: description, time: chosenTime}]; // [{ name, phone}] from the textInput
+      
+        const storedData = await AsyncStorage.getItem(props.datePressed);
+        console.log(storedData)
+      
+        let newData = [] as any;
+      
+        if (storedData === null) {
+          // save
+          await AsyncStorage.setItem(props.datePressed, JSON.stringify(arrData));
+        } else {
+          const storedDataParsed = JSON.parse(storedData);
+          newData = [...storedDataParsed];
+          await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+        }
+        newName("");
+        newDescription("");
+        setTime('')
+        toggleModal(false);
+        console.log(newData)
+        editList(newData);
+      };
     
     
     
@@ -79,49 +109,17 @@ export const Calendar1 = () => {
     
     
     
-    const storeEvent = async() =>{
-      try{
-        await AsyncStorage.setItem(props.datePressed, JSON.stringify(listofEvents));
-      }
-      catch(e){
-        console.log(e)
-      }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
     
     const submit = () => {
-      const newobjtobeappended={name: name, description: description, time: chosenTime}
-      editList([...listofEvents, newobjtobeappended]);
-      storeEvent();
-      newName("");
-      newDescription("");
-      setTime('')
-      toggleModal(false);
+      saveData();
     };
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    const my_events = listofEvents.map((event) => (
+
+    const my_events = listofEvents.map((event) => { if(event.name!=='' && event.description!=='' && event.time!==''){
+      return(
       <View key={event.name} style={{ paddingHorizontal: 10 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ fontWeight: "bold", fontSize: 20 }}>{event.name}</Text>
@@ -150,7 +148,12 @@ export const Calendar1 = () => {
         </Text>
         <View style={{height: 1, backgroundColor: 'darkgreen', width: '100%', marginVertical: 15}}/>
       </View>
-    ));
+      )
+    }
+    else{
+      console.log('nothing')
+    }      
+    });
     //AsyncStorage.setItem(props.datePressed, JSON.stringify(listofEvents))
     if (modalVisible === false) {
       return (
