@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Text,
@@ -8,190 +7,159 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import DateTimePicker from 'react-native-modal-datetime-picker'
-import { Card, Title, Paragraph, TextInput, Button } from "react-native-paper";
+import DateTimePicker from "react-native-modal-datetime-picker";
+import { Card, Title, Paragraph, TextInput, Button, FAB } from "react-native-paper";
 import { CalendarList, Agenda, Calendar } from "react-native-calendars";
 import IUSD_events from "../../IUSD_events.json";
 import moment from "moment";
 import { Madoka } from "react-native-textinput-effects";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from '@react-native-community/async-storage'
-
+import AsyncStorage from "@react-native-community/async-storage";
+import {Permissions, Notifications} from 'expo'
 
 export const Calendar1 = () => {
-
-
-
-
-  
-  const SetEvent = (props) => {
-    const [isTimePickerVisible, setTimePicker] = useState(false)
-    const [chosenTime, setTime]= useState('')
+  const SetEvent = (props: any) => {
+    const [isTimePickerVisible, setTimePicker] = useState(false);
+    const [chosenTime, setTime] = useState("");
     const [listofEvents, editList] = useState([]); //initial value of useState would be what you get from another API/database
     const [modalVisible, toggleModal] = useState(false);
     const [name, newName] = useState("");
     const [description, newDescription] = useState("");
-    
-    
-    useEffect(()=>{
-      saveData1()
-    },[])
-    
+
+    useEffect(() => {
+      updateInitialData();
+    }, []);
+
     const saveData = async () => {
-        const arrData = [{name: name, description: description, time: chosenTime}]; // [{ name, phone}] from the textInput
+      const storedData = await AsyncStorage.getItem(props.datePressed);
+
+      let newData = [] as any;
+
+      if (storedData === null) {
+        // save
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
+      } else {
+
+        const storedDataParsed = JSON.parse(storedData);
+        newData = [
+          ...storedDataParsed,
+          { name: name, description: description, time: chosenTime },
+        ].sort((a,b)=>b.time-a.time);
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+      }
+      newName("");
+      newDescription("");
+      setTime("");
+      toggleModal(false);
+      editList(newData);
+    };
+    const clearAsyncStorage = async() => {
+      AsyncStorage.clear();
+    }
+    const updateInitialData = async () => {
+      const storedData = await AsyncStorage.getItem(props.datePressed);
       
-        const storedData = await AsyncStorage.getItem(props.datePressed);
-        console.log(storedData)
-      
-        let newData = [] as any;
-      
-        if (storedData === null) {
-          // save
-          await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
-        } else {
-          const storedDataParsed = JSON.parse(storedData);
-          newData = [...storedDataParsed, {name: name, description: description, time: chosenTime}];
-          await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
-        }
-        newName("");
-        newDescription("");
-        setTime('')
-        toggleModal(false);
-        console.log(newData)
-        editList(newData);
-      };
-      const saveData1 = async () => {
-        const arrData = [{name: name, description: description, time: chosenTime}]; // [{ name, phone}] from the textInput
-      
-        const storedData = await AsyncStorage.getItem(props.datePressed);
-        console.log(storedData)
-      
-        let newData = [] as any;
-      
-        if (storedData === null) {
-          // save
-          await AsyncStorage.setItem(props.datePressed, JSON.stringify(arrData));
-        } else {
-          const storedDataParsed = JSON.parse(storedData);
-          newData = [...storedDataParsed];
-          await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
-        }
-        newName("");
-        newDescription("");
-        setTime('')
-        toggleModal(false);
-        console.log(newData)
-        editList(newData);
-      };
-    
-    
-    
-    
-    
-    
+      let newData = [] as any;
+
+      if (storedData === null) {
+        // save
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
+      } else {
+        const storedDataParsed = JSON.parse(storedData);
+        newData = [...storedDataParsed];
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+      }
+      editList(newData);
+    };
+
     const cancel = () => {
       newName("");
       newDescription("");
-      setTime('')
+      setTime("");
       toggleModal(false);
     };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    const deletenow = (id: string) => {
+      const onDelete = async () => {
+        const storedData = await AsyncStorage.getItem(props.datePressed);
+        let newData = [] as any;
+        if (storedData !== null) {
+          const storedDataParsed = JSON.parse(storedData);
+          newData = storedDataParsed.filter((data) => data.name != id);
+          try{
+            await AsyncStorage.removeItem(id)
+          }
+          catch(e){
+            console.log(e)
+          }
+          await AsyncStorage.setItem(
+            props.datePressed,
+            JSON.stringify(newData)
+          );
+        }
+        editList(newData);
+      };
+      onDelete();
+    };
+
     const submit = () => {
       saveData();
     };
-    
 
-    const my_events = listofEvents.map((event) => { if(event.name!=='' && event.description!=='' && event.time!==''){
-      return(
-      <View key={event.name} style={{ paddingHorizontal: 10 }}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 20 }}>{event.name}</Text>
-          
-          <Button
-            onPress={() =>
-              editList((list) =>
-                list.filter(
-                  (maybedeleteevent) => maybedeleteevent.name != event.name
-                )
-              ) 
-            }
-          >
-            Delete
-          </Button>
-        </View>
-        <Text style={{fontSize: 20, fontFamily: 'Trebuchet MS', alignSelf: 'flex-start'}}>{event.time}</Text>
-        <Text
-          style={{
-            color: "grey",
-            marginTop: 10,
-            fontSize: 15,
-          }}
-        >
-          {event.description}
-        </Text>
-        <View style={{height: 1, backgroundColor: 'darkgreen', width: '100%', marginVertical: 15}}/>
-      </View>
-      )
-    }
-    else{
-      console.log('nothing')
-    }      
+    const my_events = listofEvents.map((event) => {
+      if (event.name !== "" && event.description !== "" && event.time !== "") {
+        const eventname = event.name;
+        return (
+          <Card key={event.name} style={styles.descriptionCard}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                {event.name}
+              </Text>
+
+              <Button onPress={() => deletenow(eventname)}>Delete</Button>
+            </View>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Trebuchet MS",
+                alignSelf: "flex-start",
+              }}
+            >
+              {event.time}
+            </Text>
+            <Text
+              style={{
+                color: "grey",
+                marginTop: 10,
+                fontSize: 15,
+              }}
+            >
+              {event.description}
+            </Text>
+          </Card>
+        );
+      }
     });
     //AsyncStorage.setItem(props.datePressed, JSON.stringify(listofEvents))
     if (modalVisible === false) {
       return (
-        <Card style={styles.descriptionCard}>
+        <View>
+        <View style={styles.titleCard}>
           <Text style={styles.title}>{props.datePressed}</Text>
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "darkgreen",
-              width: "90%",
-              alignSelf: "center",
-              marginVertical: 15,
-            }}
-          />
-          {my_events}
-          <TouchableOpacity
-            style={styles.addEventButton1}
-            onPress={() => toggleModal(true)}
-          >
-            <Text style={{ fontSize: 15, color: "white" }}>Add Event</Text>
-          </TouchableOpacity>
-        </Card>
+          <FAB style={styles.addEventButton1} small icon="plus" onPress={()=>toggleModal(true)} />
+        </View>
+        {my_events}
+          
+        </View>
       );
     } else {
       return (
         <View>
-          <Card style={styles.descriptionCard}>
+          <Card style={styles.titleCard}>
             <Text style={styles.title}>{props.datePressed}</Text>
-            <View
-              style={{
-                height: 1,
-                backgroundColor: "darkgreen",
-                width: "90%",
-                alignSelf: "center",
-                marginVertical: 15,
-              }}
-            />
-            {my_events}
           </Card>
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
@@ -217,18 +185,39 @@ export const Calendar1 = () => {
                 value={description}
                 label="Description"
               />
-              <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, paddingRight: 25}}>
-                <Button onPress={()=>setTimePicker(true)} style={{marginBottom: 15, alignSelf: 'flex-start'}}>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: 15,
+                  paddingRight: 25,
+                }}
+              >
+                <Button
+                  onPress={() => setTimePicker(true)}
+                  style={{ marginBottom: 15, alignSelf: "flex-start" }}
+                >
                   Set Time
                 </Button>
-                <Text style={{fontSize: 25, fontFamily: 'Trebuchet MS', alignSelf: 'flex-start'}}>{chosenTime}</Text>
-              </View>       
+                <Text
+                  style={{
+                    fontSize: 25,
+                    fontFamily: "Trebuchet MS",
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  {chosenTime}
+                </Text>
+              </View>
               <DateTimePicker
                 isVisible={isTimePickerVisible}
-                onConfirm={(datetime)=>[setTimePicker(false), setTime(moment(datetime).format('LT'))]}
-                onCancel={()=>setTimePicker(false)}
-                mode={'time'}
-                
+                onConfirm={(datetime) => [
+                  setTimePicker(false),
+                  setTime(moment(datetime).format("LT")),
+                ]}
+                onCancel={() => setTimePicker(false)}
+                mode={"time"}
                 is24Hour={false}
               />
               <View
@@ -255,38 +244,18 @@ export const Calendar1 = () => {
               </View>
             </View>
           </TouchableWithoutFeedback>
+          {my_events}
         </View>
       );
     }
   };
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   const getCurrentDate = () => {
     const formatted = moment(new Date()).format("L").split("/");
 
     return formatted[2] + "-" + formatted[1] + "-" + formatted[0];
   };
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   const ondatePress = (day) => {
     changeDate(day.dateString);
     const newMarkedObject = {
@@ -296,28 +265,12 @@ export const Calendar1 = () => {
   };
   const [datePressed, changeDate] = useState(getCurrentDate());
   const [markedDate, setMarkDate] = useState({});
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   return (
     <KeyboardAwareScrollView style={{ flex: 1 }}>
       <View style={{ justifyContent: "center", padding: 10 }}>
         <Calendar
-          style={{ borderRadius: 10}}
+          style={{ borderRadius: 10 }}
           onDayPress={(day) => {
             ondatePress(day);
           }}
@@ -329,59 +282,39 @@ export const Calendar1 = () => {
   );
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const styles = StyleSheet.create({
   title: {
-    fontSize: 22,
-    alignSelf: "center",
+    fontSize: 27,
+    marginVertical: "5%",
     marginHorizontal: 15,
   },
   descriptionCard: {
-    marginVertical: "5%",
+    marginVertical: "1.5%",
     padding: 20,
     borderRadius: 10,
+    borderLeftWidth: 7,
+    borderColor: 'darkturquoise',
+    shadowRadius: 5,
+    shadowColor: 'mediumturquoise'
+  },
+  titleCard: {
+    marginVertical: "5%",
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    shadowOffset: {
+      width: 4,
+      height: 4
+    },
+    shadowOpacity: 0.3,
+    justifyContent: 'space-between'
   },
   addEventButton1: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "lightblue",
-    height: 35,
-    width: "60%",
-    alignSelf: "center",
-    borderRadius: 10,
-    marginTop: '4%'
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
   addEventButton: {
     justifyContent: "center",
@@ -405,9 +338,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "white",
     width: "100%",
-    height: Dimensions.get("window").height * 0.43,
+    height: Dimensions.get("window").height * 0.41,
     borderRadius: 20,
     alignItems: "center",
-    marginBottom: 15
+    marginBottom: '4%',
+    shadowOffset: {
+      width: 4,
+      height: 4
+    },
+    shadowOpacity: 0.3,
   },
 });

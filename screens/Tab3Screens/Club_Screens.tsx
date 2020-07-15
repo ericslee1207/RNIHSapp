@@ -90,7 +90,8 @@ const styles=StyleSheet.create({
         shadowRadius: 3, 
         shadowOpacity: 0.4, 
         shadowOffset: {width: 2, height: 2}, 
-        marginTop: 10
+        marginTop: 10,
+
     },
     clubTitle: {
         backgroundColor: 'transparent', 

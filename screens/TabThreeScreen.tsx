@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     shadowColor: "lightblue",
     shadowOpacity: 1,
     padding: 8,
+    borderLeftWidth: 7,
   },
   iconStyle: {
     height: 20,
