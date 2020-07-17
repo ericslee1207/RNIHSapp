@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginVertical: 8,
-    borderColor: "lightblue",
+    borderColor: "lightpink",
     shadowRadius: 9,
     shadowColor: "lightblue",
     shadowOpacity: 1,

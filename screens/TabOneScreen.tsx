@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  ShadowPropTypesIOS,
 } from "react-native";
 import { Provider as PaperProvider, Title } from "react-native-paper";
 
@@ -335,10 +336,16 @@ export default function TabOneScreen() {
               height: "100%",
               flexDirection: "row",
               justifyContent: "flex-end",
-              borderColor: "black",
+              borderColor: "skyblue",
               borderWidth: 0.2,
+              // shadowOffset: {
+              //   height: -10
+              // },
+              shadowColor: 'skyblue',
+              shadowOpacity: 1,
+              backgroundColor: 'lightblue'
             }}
-            imageStyle={{ opacity: 0.4 }}
+            imageStyle={{ opacity: 0.4, borderRadius: 10 }}
             source={require("../assets/images/IHSfront.jpg")}
           >
             <TouchableOpacity

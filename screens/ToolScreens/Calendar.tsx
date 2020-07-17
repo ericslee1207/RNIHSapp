@@ -6,9 +6,17 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
-import { Card, Title, Paragraph, TextInput, Button, FAB } from "react-native-paper";
+import {
+  Card,
+  Title,
+  Paragraph,
+  TextInput,
+  Button,
+  FAB,
+} from "react-native-paper";
 import { CalendarList, Agenda, Calendar } from "react-native-calendars";
 import IUSD_events from "../../IUSD_events.json";
 import moment from "moment";
@@ -16,9 +24,27 @@ import { Madoka } from "react-native-textinput-effects";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-community/async-storage";
-import {Permissions, Notifications} from 'expo'
 
 export const Calendar1 = () => {
+  const [markedDates, newmarkedDate] = useState({});
+  const startup = async () => {
+    let newData = {} as any;
+    const storedIndicators = await AsyncStorage.getItem("indicator");
+    if (storedIndicators === null) {
+      await AsyncStorage.setItem("indicator", JSON.stringify({}));
+    } else {
+      const parsedStoredIndicator = JSON.parse(storedIndicators);
+      newData = parsedStoredIndicator;
+      await AsyncStorage.setItem(
+        "indicator",
+        JSON.stringify(parsedStoredIndicator)
+      );
+    }
+    newmarkedDate(newData);
+  };
+  useEffect(() => {
+    startup();
+  }, []);
   const SetEvent = (props: any) => {
     const [isTimePickerVisible, setTimePicker] = useState(false);
     const [chosenTime, setTime] = useState("");
@@ -40,13 +66,19 @@ export const Calendar1 = () => {
         // save
         await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
       } else {
-
         const storedDataParsed = JSON.parse(storedData);
         newData = [
           ...storedDataParsed,
           { name: name, description: description, time: chosenTime },
-        ].sort((a,b)=>b.time-a.time);
+        ].sort((a, b) => b.time - a.time);
         await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+      }
+      if (newData !== []) {
+        const newpair = {
+          [props.datePressed]: { marked: true, dotColor: "darkturquoise" },
+        };
+        newmarkedDate((object) => Object.assign(object, newpair));
+        await AsyncStorage.setItem("indicator", JSON.stringify(markedDates));
       }
       newName("");
       newDescription("");
@@ -54,23 +86,14 @@ export const Calendar1 = () => {
       toggleModal(false);
       editList(newData);
     };
-    const clearAsyncStorage = async() => {
+    const clearAsyncStorage = async () => {
       AsyncStorage.clear();
-    }
+    };
     const updateInitialData = async () => {
       const storedData = await AsyncStorage.getItem(props.datePressed);
-      
-      let newData = [] as any;
-
-      if (storedData === null) {
-        // save
-        await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
-      } else {
-        const storedDataParsed = JSON.parse(storedData);
-        newData = [...storedDataParsed];
-        await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
+      if (storedData!==null){
+        editList(JSON.parse(storedData))
       }
-      editList(newData);
     };
 
     const cancel = () => {
@@ -83,20 +106,30 @@ export const Calendar1 = () => {
     const deletenow = (id: string) => {
       const onDelete = async () => {
         const storedData = await AsyncStorage.getItem(props.datePressed);
+        let stringifieddata = [] as any;
         let newData = [] as any;
         if (storedData !== null) {
           const storedDataParsed = JSON.parse(storedData);
           newData = storedDataParsed.filter((data) => data.name != id);
-          try{
-            await AsyncStorage.removeItem(id)
+          try {
+            await AsyncStorage.removeItem(id);
+          } catch (e) {
+            console.log(e);
           }
-          catch(e){
-            console.log(e)
-          }
+          stringifieddata = JSON.stringify(newData);
+          await AsyncStorage.setItem(props.datePressed, stringifieddata);
+        }
+        if (stringifieddata===JSON.stringify([])){
+          const newArr = Object.keys(markedDates).reduce((object, key) => {
+            if (key !== props.datePressed) {
+              object[key]=markedDates[key]
+            }
+            return object
+          }, {})
           await AsyncStorage.setItem(
-            props.datePressed,
-            JSON.stringify(newData)
-          );
+            'indicator',
+            JSON.stringify(newArr)
+          )
         }
         editList(newData);
       };
@@ -147,12 +180,16 @@ export const Calendar1 = () => {
     if (modalVisible === false) {
       return (
         <View>
-        <View style={styles.titleCard}>
-          <Text style={styles.title}>{props.datePressed}</Text>
-          <FAB style={styles.addEventButton1} small icon="plus" onPress={()=>toggleModal(true)} />
-        </View>
-        {my_events}
-          
+          <View style={styles.titleCard}>
+            <Text style={styles.title}>{props.datePressed}</Text>
+            <FAB
+              style={styles.addEventButton1}
+              small
+              icon="plus"
+              onPress={() => toggleModal(true)}
+            />
+          </View>
+          {my_events}
         </View>
       );
     } else {
@@ -253,7 +290,7 @@ export const Calendar1 = () => {
   const getCurrentDate = () => {
     const formatted = moment(new Date()).format("L").split("/");
 
-    return formatted[2] + "-" + formatted[1] + "-" + formatted[0];
+    return formatted[2] + "-" + formatted[0] + "-" + formatted[1];
   };
 
   const ondatePress = (day) => {
@@ -274,7 +311,7 @@ export const Calendar1 = () => {
           onDayPress={(day) => {
             ondatePress(day);
           }}
-          markedDates={markedDate}
+          markedDates={markedDates}
         />
         <SetEvent datePressed={datePressed} />
       </View>
@@ -293,23 +330,23 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     borderLeftWidth: 7,
-    borderColor: 'darkturquoise',
+    borderColor: "darkturquoise",
     shadowRadius: 5,
-    shadowColor: 'mediumturquoise'
+    shadowColor: "mediumturquoise",
   },
   titleCard: {
     marginVertical: "5%",
-    width: '100%',
-    backgroundColor: 'white',
+    width: "100%",
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
-    flexDirection: 'row',
+    flexDirection: "row",
     shadowOffset: {
       width: 4,
-      height: 4
+      height: 4,
     },
     shadowOpacity: 0.3,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   addEventButton1: {
     margin: 16,
@@ -341,10 +378,10 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height * 0.41,
     borderRadius: 20,
     alignItems: "center",
-    marginBottom: '4%',
+    marginBottom: "4%",
     shadowOffset: {
       width: 4,
-      height: 4
+      height: 4,
     },
     shadowOpacity: 0.3,
   },

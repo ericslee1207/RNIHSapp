@@ -51,7 +51,8 @@
     "react-native-textinput-effects": "^0.6.1",
     "react-native-web": "~0.11.7",
     "@react-native-community/async-storage": "~1.11.0",
-    "expo-blur": "~8.1.2"
+    "expo-blur": "~8.1.2",
+    "expo-notifications": "~0.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
