@@ -8,7 +8,6 @@ import {
   Linking,
   ShadowPropTypesIOS,
 } from "react-native";
-import { Provider as PaperProvider, Title } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
 
@@ -149,10 +148,6 @@ const ScheduleItem = (props: any) => {
     currentPeriod = nextPeriod;
     randomPeriod = props.data;
     return (
-      // <Card style={{
-      //   borderRadius: 10,shadowRadius: 6, shadowOpacity: 0.6, shadowColor: 'green',
-      //    shadowOffset:{width: 0.4, height: 0.4}, backgroundColor: 'lightgreen', opacity: 0.6
-      // }}>
       <ImageBackground
         source={require("../assets/images/lightGreenbanner1.jpg")}
         style={{
@@ -256,7 +251,7 @@ export default function TabOneScreen() {
     }, secondsLeft);
   }, []);
   useEffect(() => {
-    updateDate((date) => moment(new Date()));
+    updateDate(moment(new Date()));
   }, [index]);
 
   const classes = periods.map((period) => (
@@ -281,18 +276,18 @@ export default function TabOneScreen() {
           source={require("../assets/images/lightbluegradient.png")}
           style={{ width: "100%" }}
         >
-          <Title
+          <Text
             style={{
               fontFamily: "Trebuchet MS",
-              fontSize: 29,
-              fontWeight: "bold",
+              fontSize: 30,
+              // fontWeight: "bold",
               marginTop: 25,
               alignSelf: "flex-start",
               marginLeft: "5%",
             }}
           >
             For today...
-          </Title>
+          </Text>
           <View
             style={styles.separator}
             lightColor="#006400"
@@ -309,7 +304,7 @@ export default function TabOneScreen() {
               backgroundColor: "rgba(0,0,0,0)",
               width: "90%",
               alignSelf: "center",
-              paddingVertical: 30,
+              paddingBottom: 30,
             }}
           >
             <Text
@@ -317,7 +312,7 @@ export default function TabOneScreen() {
                 alignSelf: "flex-start",
                 fontSize: 27,
                 fontFamily: "Trebuchet MS",
-                fontWeight: "bold",
+                // fontWeight: "bold",
                 marginBottom: 15,
               }}
             >
@@ -437,7 +432,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 15,
-    height: 2,
+    height: 1,
     alignSelf: "center",
     width: "90%",
   },

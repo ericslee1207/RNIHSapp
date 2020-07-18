@@ -91,9 +91,19 @@ export const Calendar1 = () => {
     };
     const updateInitialData = async () => {
       const storedData = await AsyncStorage.getItem(props.datePressed);
-      if (storedData!==null){
-        editList(JSON.parse(storedData))
+
+      let newData = [] as any;
+
+      if (storedData === null) {
+        // save
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify([]));
+      } else {
+        const storedDataParsed = JSON.parse(storedData);
+        newData = [
+          ...storedDataParsed]
+        await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
       }
+      editList(newData)
     };
 
     const cancel = () => {

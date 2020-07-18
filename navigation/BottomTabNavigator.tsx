@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { Image, Dimensions, StyleSheet } from "react-native";
-import club_data from '../clubs_2019-2020.json'
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
@@ -20,7 +19,6 @@ import {
   TabThreeParamList,
 } from "../types";
 import { Club_Page } from "../screens/Tab3Screens/Club_Screens";
-import { AddEvent } from "../screens/ToolScreens/AddEvent";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -32,11 +30,10 @@ export default function BottomTabNavigator() {
       initialRouteName="Profile"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tint,
-        tabStyle: {},
       }}
     >
       <BottomTab.Screen
-        name="Assistance"
+        name="Involvements"
         component={TabThreeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -96,7 +93,7 @@ function TabOneNavigator() {
             height: 170,
             shadowColor: "grey",
             shadowOffset: {
-              height: 3,
+              height: 1,
             },
             shadowOpacity: 0.8,
           },

@@ -1,12 +1,14 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
+  Introduction: undefined;
+  Login: undefined;
 };
 
 export type BottomTabParamList = {
   Profile: undefined;
   Tools: undefined;
-  Assistance: undefined;
+  Involvements: undefined;
 };
 
 export type TabOneParamList = {

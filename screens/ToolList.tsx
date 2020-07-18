@@ -1,8 +1,7 @@
 import * as React from "react";
-import { StyleSheet, Image, Alert } from "react-native";
+import {Image} from "react-native";
 import {
   Container,
-  Header,
   Content,
   List,
   ListItem,
@@ -11,9 +10,7 @@ import {
   Right,
   Thumbnail,
   Text,
-  Icon,
 } from "native-base";
-import {TouchableOpacity} from 'react-native'
 
 export const ToolList = (props) => {
   const availableTools = props.tools.map((tool) => (

@@ -51,13 +51,13 @@ const firstRoute= (navigation) => {
 
 const secondRoute = () => {
   return(
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-
+    <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+      <Text>To Be Determined</Text>
     </View>
   )
 }
 
-const renderTabBar= (props) => {
+const renderTabBar= (props: any) => {
   return(
     <TabBar
       {...props}

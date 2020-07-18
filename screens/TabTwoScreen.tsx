@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Button } from "react-native";
 import {
   Container,
   Header,
@@ -20,6 +20,7 @@ import { ToolList } from "./ToolList";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "../navigation";
+import { AuthContext } from "../components/AuthContext";
 
 const tools = [
   {
@@ -51,9 +52,11 @@ const tools = [
 ];
 
 function MainScreen(props) {
+  const {SignOut} = React.useContext(AuthContext)
   return (
     <View style={styles.container}>
       <ToolList tools={tools} navigation={props.navigation} />
+      <Button title='Sign out' onPress={()=>SignOut()}/>
     </View>
   );
 }
@@ -66,6 +69,7 @@ export default function TabTwoScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 30
   },
   title: {
     fontSize: 20,

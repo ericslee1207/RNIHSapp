@@ -12,11 +12,11 @@ export const IdCard = () => {
     return(
     <View style={styles.container}>
         <Card style={styles.card}>
-            <Card.Title title='Lee, Eric' style={styles.cardTitle} titleStyle={{fontSize: 25}}/>
+            <Card.Title title='Lee, Eric' style={styles.cardTitle} titleStyle={{fontSize: Dimensions.get('window').height/32}}/>
             <View style={{paddingHorizontal: 23, marginBottom: 5,justifyContent: 'space-between', width: '100%', flexDirection: 'row'}}>
-                <Text style={{fontSize: 20}}>11</Text>
-                <Text style={{fontSize: 20}}>19639</Text>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Lunch</Text>
+                <Text style={{fontSize: Dimensions.get('window').height/35}}>11</Text>
+                <Text style={{fontSize: Dimensions.get('window').height/35}}>19639</Text>
+                <Text style={{fontSize: Dimensions.get('window').height/35, fontWeight: 'bold'}}>Lunch</Text>
             </View>
             <View style={{width: '100%', height: 5, backgroundColor: "#006400"}}/>
             <View style={{flexDirection: 'row', height: '75%', padding: 30}}>
@@ -25,9 +25,9 @@ export const IdCard = () => {
             {/* <ImageBackground source={require('../../assets/images/silverBackground.png')} style={{width: '80%', height: '65%'}}>
             </ImageBackground> */}
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: -10}}>
-                <Text style={{fontSize: 33, fontWeight: 'bold'}}>{year[0].start}</Text>
+                <Text style={{fontSize: Dimensions.get('window').height/25, fontWeight: 'bold'}}>{year[0].start}</Text>
                 <Ihsimage/>
-                <Text style={{fontSize: 33, fontWeight: 'bold'}}>{year[0].end}</Text>
+                <Text style={{fontSize: Dimensions.get('window').height/25, fontWeight: 'bold'}}>{year[0].end}</Text>
             </View>
             <Image source={require('../../assets/images/barcode.jpg')} style={{width: '90%', height: '30%'}}/>
             </View>

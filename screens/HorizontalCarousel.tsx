@@ -4,9 +4,9 @@ import { Provider as PaperProvider, Card } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
 
-import Carousel from "react-native-snap-carousel";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 import { MontoFri } from "./TabOneScreen";
-export const HorizontalCarousel = (props) => {
+export const HorizontalCarousel = (props: any) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const datenow = props.date;
@@ -14,8 +14,9 @@ export const HorizontalCarousel = (props) => {
     return (
       <Card
         style={{
-          borderRadius: 10,
-          height: Dimensions.get("window").height * 0.217,
+          borderRadius: 7,
+          height: Dimensions.get("window").height * 0.23,
+          marginBottom: 10,
           width: "90%",
           shadowColor: "grey",
           shadowOffset: { width: 3, height: 3 },
@@ -39,7 +40,7 @@ export const HorizontalCarousel = (props) => {
           </View>
           <View
             style={styles.verticalSeparator}
-            lightColor="#006400"
+            lightColor="darkgreen"
             darkColor="rgba(255,255,255,0.1)"
           />
           <View
@@ -107,8 +108,9 @@ export const HorizontalCarousel = (props) => {
     return (
       <Card
         style={{
-          borderRadius: 10,
-          height: Dimensions.get("window").height * 0.22,
+          borderRadius: 7,
+          height: Dimensions.get("window").height * 0.23,
+          marginBottom: 10,
           width: "90%",
           shadowColor: "grey",
           shadowOffset: { width: 3, height: 3 },
@@ -157,24 +159,41 @@ export const HorizontalCarousel = (props) => {
   const _renderItem = ({ item }) => {
     return <item.body />;
   };
+  const Pagination1 = () => {
+    return (
+      <Pagination
+        dotsLength={2}
+        activeDotIndex={activeIndex}
+        dotStyle={{
+          width: 10,
+          height: 10,
+          borderRadius: 5,
+          marginHorizontal: 8,
+        }}
+        inactiveDotOpacity={0.4}
+        inactiveDotScale={0.6}
+        containerStyle = {{height: 50, paddingTop: 10}}
+      />
+    );
+  };
   return (
     <View
       style={{
         flex: 1,
-        flexDirection: "row",
         justifyContent: "center",
         backgroundColor: "transparent",
       }}
     >
       <Carousel
         layout={"stack"}
-        itemHeight={Dimensions.get('window').height*0.8}
+        itemHeight={Dimensions.get("window").height * 0.8}
         data={carouselItems}
-        sliderWidth={300}
+        sliderWidth={Dimensions.get("window").width}
         itemWidth={Dimensions.get("window").width}
         renderItem={_renderItem}
         onSnapToItem={(index) => setActiveIndex(index)}
       />
+      <Pagination1 />
     </View>
   );
 };
@@ -197,9 +216,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   dateFormat: {
-    marginVertical: 15,
+    marginVertical: 22,
 
-    fontSize: 25,
+    fontSize: 28,
   },
   smallImage: {
     height: 20,
