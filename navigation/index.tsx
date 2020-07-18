@@ -32,7 +32,7 @@ function RootNavigator() {
   const [userToken, setUserToken] = React.useState(null as any)
 
   // React.useEffect(() => {
-  //   setTimeout(()=>{setIsLoading(false)}, 3000)
+  //   setTimeout(()=>{setIsLoading(false)}, 2000)
   // }, []);
 
   const verifyUser = React.useMemo(() => ({

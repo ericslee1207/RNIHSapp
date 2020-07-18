@@ -14,7 +14,7 @@ export const HorizontalCarousel = (props: any) => {
     return (
       <Card
         style={{
-          borderRadius: 7,
+          borderRadius: 10,
           height: Dimensions.get("window").height * 0.23,
           marginBottom: 10,
           width: "90%",
@@ -108,7 +108,7 @@ export const HorizontalCarousel = (props: any) => {
     return (
       <Card
         style={{
-          borderRadius: 7,
+          borderRadius: 10,
           height: Dimensions.get("window").height * 0.23,
           marginBottom: 10,
           width: "90%",
