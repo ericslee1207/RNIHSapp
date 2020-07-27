@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { Image, Dimensions, StyleSheet } from "react-native";
+import { Image, Dimensions, StyleSheet, View } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
@@ -19,17 +19,20 @@ import {
   TabThreeParamList,
 } from "../types";
 import { Club_Page } from "../screens/Tab3Screens/Club_Screens";
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Profile"
-      tabBarOptions={{
-        activeTintColor: Colors[colorScheme].tint,
+      activeColor='#009387'
+      inactiveColor='grey'
+      shifting={true}
+      barStyle={{
+
       }}
     >
       <BottomTab.Screen
@@ -39,6 +42,8 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-bookmark" color={color} />
           ),
+          tabBarColor: 'lightblue',
+          tabBarLabel: ''
         }}
       />
       <BottomTab.Screen
@@ -48,6 +53,8 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-contact" color={color} />
           ),
+          tabBarColor: 'white',
+          tabBarLabel: ''
         }}
       />
       <BottomTab.Screen
@@ -57,6 +64,8 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-search" color={color} />
           ),
+          tabBarColor: 'lightblue',
+          tabBarLabel: ''
         }}
       />
     </BottomTab.Navigator>
@@ -67,7 +76,9 @@ export default function BottomTabNavigator() {
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
   return (
-    <Ionicons size={30} style={{ marginBottom: -3, marginTop: 5 }} {...props} />
+    
+    <Ionicons size={30} style={{ marginBottom: -3, marginTop:0 }} {...props} />
+
   );
 }
 
@@ -84,13 +95,13 @@ function TabOneNavigator() {
         options={{
           headerTitle: (props) => (
             <Image
-              style={{ width: 320, height: 78, alignSelf: "center" }}
+              style={{ width: 300, height: 70, alignSelf: "center" }}
               source={require("../assets/images/IHSheader.png")}
             />
           ),
           headerStyle: {
             backgroundColor: "lightblue",
-            height: 170,
+            height: 145,
             shadowColor: "grey",
             shadowOffset: {
               height: 1,

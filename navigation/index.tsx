@@ -9,7 +9,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import {Login} from '../screens/LoginScreen';
 import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
-import {AuthContext} from '../components/AuthContext'
+import {AuthContext} from '../components/AuthContext';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started

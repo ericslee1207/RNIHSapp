@@ -275,6 +275,7 @@ export default function TabOneScreen() {
         <ImageBackground
           source={require("../assets/images/lightbluegradient.png")}
           style={{ width: "100%" }}
+          imageStyle={{opacity: 0.9}}
         >
           <Text
             style={{
