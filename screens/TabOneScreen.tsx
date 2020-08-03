@@ -67,8 +67,7 @@ function inbetween(first: string, second: string, now: string) {
 }
 
 const ScheduleItem = (props: any) => {
-  // const datenow = moment().format('LT');
-  const datenow='2:00 AM'
+  const datenow = moment().format('LT');
   const datenow_split = datenow
     .split(" ")
     .join(",")
