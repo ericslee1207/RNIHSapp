@@ -267,8 +267,8 @@ export default function TabOneScreen() {
           </Text>
           <View
             style={styles.separator}
-            lightColor="#006400"
-            darkColor="#006400"
+            lightColor="#009387"
+            darkColor="#009387"
           />
           <AdayorBday day="A"/>
           <HorizontalCarousel
