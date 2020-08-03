@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import { Provider as PaperProvider, Card } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
-
+import {CountdownCircleTimer} from 'react-native-countdown-circle-timer'
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { MontoFri } from "./TabOneScreen";
 export const HorizontalCarousel = (props: any) => {
@@ -17,49 +17,20 @@ export const HorizontalCarousel = (props: any) => {
           borderRadius: 10,
           height: Dimensions.get("window").height * 0.23,
           marginBottom: 10,
-          width: "90%",
-          shadowColor: "grey",
-          shadowOffset: { width: 3, height: 3 },
-          shadowOpacity: 0.5,
-          alignSelf: "center",
-          justifyContent: "center",
+          backgroundColor: 'transparent'
         }}
       >
-        <View style={styles.header}>
-          <View
-            style={{
-              flexDirection: "column",
-              width: "40%",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "transparent",
-            }}
-          >
-            <Text style={styles.title}>A</Text>
-            <Text style={styles.subheader}>Day</Text>
-          </View>
-          <View
-            style={styles.verticalSeparator}
-            lightColor="darkgreen"
-            darkColor="rgba(255,255,255,0.1)"
-          />
-          <View
-            style={{
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
-              backgroundColor: "rgba(0,0,0,0)",
-            }}
-          >
-            <Text style={styles.dateFormat}>{datenow.format("LL")}</Text>
-            <MontoFri date={datenow} />
-          </View>
-        </View>
+        
       </Card>
     );
   };
   const arr = props.comingPeriod.time
+    .split(" ")
+    .join(",")
+    .split(":")
+    .join(",")
+    .split(",");
+  const bef = props.currentPeriod.time
     .split(" ")
     .join(",")
     .split(":")
@@ -75,6 +46,11 @@ export const HorizontalCarousel = (props: any) => {
   let nowhour = parseInt(dateLT[0]);
   let nowminute = parseInt(dateLT[1]);
   let nowampm = dateLT[2];
+
+  let befhour = parseInt(bef[0]);
+  let befminute = parseInt(bef[1]);
+  let befampm = bef[2];
+
   let nexthour = parseInt(arr[0]);
   const nextminute = parseInt(arr[1]);
   const nextampm = arr[2];
@@ -89,9 +65,16 @@ export const HorizontalCarousel = (props: any) => {
   let hourdiff = nexthour - nowhour;
   let minutediff = nextminute - nowminute;
   let timeLeft = hourdiff * 60 + minutediff;
+  
+  if (befhour != 12 && befampm === "PM") {
+    befhour += 12;
+  }
 
-  console.log(nowhour)
+  let hourdiff1 = nexthour - befhour;
+  let minutediff1 = nextminute - befminute;
+  let timeLeft1 = hourdiff1 * 60 + minutediff1;
 
+  const leftPercentage=(1-(timeLeft/timeLeft1))*100;
   if (
     (nowampm === "PM" && nowhour > 15) ||
     (nowampm === "AM" && nowhour === 12)
@@ -108,19 +91,30 @@ export const HorizontalCarousel = (props: any) => {
     subject = "School";
   }
   const timeTracker = () => {
+    
+    const HorizontalTimer = () => {
+      return(
+        <View style={{backgroundColor: 'lightgrey', width: '94%', height: 15, marginLeft: '3%', borderRadius: 15, marginTop: '5%', borderColor: 'white', borderWidth: 1, justifyContent: 'center'}}>
+          <View style={{backgroundColor: 'lightblue', height: 15, marginLeft: `${leftPercentage}%`, borderRadius: 15, borderColor: 'white', borderWidth: 1}}/>
+        </View>
+      )
+      
+    }
+
+
     return (
       <Card
         style={{
           borderRadius: 10,
-          height: Dimensions.get("window").height * 0.23,
+          height: Dimensions.get("window").height * 0.24,
           marginBottom: 10,
-          width: "90%",
-          shadowColor: "grey",
-          shadowOffset: { width: 3, height: 3 },
-          shadowOpacity: 0.5,
-          alignSelf: "center",
-          justifyContent: "center",
-          padding: 20,
+          backgroundColor: 'white',
+          borderWidth: 1, borderColor: 'white',
+          padding: 25,
+          paddingBottom: 40,
+          width: '90%',
+          marginLeft: '5%',
+          marginTop: '5%'
         }}
       >
         <View style={styles.header}>
@@ -129,6 +123,7 @@ export const HorizontalCarousel = (props: any) => {
               flexDirection: "column",
               width: "40%",
               justifyContent: "flex-start",
+              backgroundColor: 'transparent'
             }}
           >
             <Text style={{ fontSize: 30 }}>{subject}</Text>
@@ -145,18 +140,20 @@ export const HorizontalCarousel = (props: any) => {
           >
             <Text style={{ fontSize: 85, color: "lightblue" }}>{timeLeft}</Text>
             <Text style={{ alignSelf: "center" }}>minutes</Text>
+            
           </View>
         </View>
+        <HorizontalTimer/>
       </Card>
     );
   };
   const carouselItems = [
     {
-      title: "Today",
-      body: today,
+      body: timeTracker,
     },
     {
-      body: timeTracker,
+      title: "Today",
+      body: today,
     },
   ];
   const _renderItem = ({ item }) => {
@@ -212,7 +209,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: "row",
     backgroundColor: "transparent",
-    marginRight: "8.8%",
+    marginRight: 0,
   },
   subheader: {
     fontWeight: "bold",

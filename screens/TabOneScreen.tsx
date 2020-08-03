@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { Text, View } from "../components/Themed";
-
+import {AdayorBday} from "./AdayorBday"
 import { CurrentDate } from "./curDate";
 import moment from "moment";
 import { classDetail } from "./classDetails";
@@ -270,6 +270,7 @@ export default function TabOneScreen() {
             lightColor="#006400"
             darkColor="#006400"
           />
+          <AdayorBday day="B"/>
           <HorizontalCarousel
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
