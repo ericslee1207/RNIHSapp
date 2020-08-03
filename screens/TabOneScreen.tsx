@@ -265,11 +265,11 @@ export default function TabOneScreen() {
           >
             For today...
           </Text>
-          {/* <View
+          <View
             style={styles.separator}
             lightColor="#006400"
             darkColor="#006400"
-          /> */}
+          />
           <AdayorBday day="A"/>
           <HorizontalCarousel
             currentPeriod={currentPeriod}

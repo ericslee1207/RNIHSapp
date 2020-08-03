@@ -223,6 +223,7 @@ export const Calendar1 = () => {
                 onChangeText={(text) => newName(text)}
                 value={name}
                 label="Name"
+                maxLength={22}
               />
               <Madoka
                 style={{ width: "90%", height: 30 }}
