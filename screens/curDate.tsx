@@ -172,19 +172,18 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     smallImage: {
-      height: 26,
-      width: 26,
-      marginHorizontal: 3,
+      height: 36,
+      width: 36,
+      marginHorizontal: 6,
       marginBottom: 5,
-      borderRadius: 13,
+      borderRadius: 18,
       borderWidth: 0.2,
       borderColor: 'lightblue',
       shadowOffset: {width: 2, height: 2}
     },
     imagesubtitle: {
       alignSelf: 'center',
-      fontSize: 14
-      
+      fontSize: 14,      
     },
     calendarButtonStyle: {
       height: 30,

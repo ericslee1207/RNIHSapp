@@ -15,12 +15,32 @@ export const HorizontalCarousel = (props: any) => {
       <Card
         style={{
           borderRadius: 10,
-          height: Dimensions.get("window").height * 0.23,
+          height: Dimensions.get("window").height * 0.24,
           marginBottom: 10,
-          backgroundColor: 'transparent'
+          backgroundColor: 'white',
+          borderWidth: 1, borderColor: 'white',
+          padding: 25,
+          paddingBottom: 40,
+          width: '90%',
+          marginLeft: '5%',
+          marginTop: '5%'
         }}
       >
-        
+        <View style={styles.header}>
+          
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 20,
+              backgroundColor: "rgba(0,0,0,0)",
+            }}
+          >
+            <Text style={styles.dateFormat}>{datenow.format("LL")}</Text>
+            <MontoFri date={datenow} />
+          </View>
+        </View>
       </Card>
     );
   };
@@ -204,12 +224,10 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    height: "93%",
     justifyContent: "center",
     marginHorizontal: 5,
     flexDirection: "row",
     backgroundColor: "transparent",
-    marginRight: 0,
   },
   subheader: {
     fontWeight: "bold",
@@ -217,8 +235,7 @@ const styles = StyleSheet.create({
   },
   dateFormat: {
     marginVertical: 22,
-
-    fontSize: 28,
+    fontSize: 35, color: 'lightblue'
   },
   smallImage: {
     height: 20,
