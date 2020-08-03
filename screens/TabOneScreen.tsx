@@ -253,7 +253,7 @@ export default function TabOneScreen() {
           style={{ width: "100%" }}
           imageStyle={{opacity: 0.5}}
         >
-          <Text
+          {/* <Text
             style={{
               fontFamily: "Trebuchet MS",
               fontSize: 30,
@@ -269,7 +269,7 @@ export default function TabOneScreen() {
             style={styles.separator}
             lightColor="#006400"
             darkColor="#006400"
-          />
+          /> */}
           <AdayorBday day="B"/>
           <HorizontalCarousel
             currentPeriod={currentPeriod}

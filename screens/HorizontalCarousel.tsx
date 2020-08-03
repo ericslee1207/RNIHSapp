@@ -6,6 +6,7 @@ import { Text, View } from "../components/Themed";
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer'
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { MontoFri } from "./TabOneScreen";
+import { lightBlue100 } from "react-native-paper/lib/typescript/src/styles/colors";
 export const HorizontalCarousel = (props: any) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -114,8 +115,8 @@ export const HorizontalCarousel = (props: any) => {
     
     const HorizontalTimer = () => {
       return(
-        <View style={{backgroundColor: 'lightgrey', width: '94%', height: 15, marginLeft: '3%', borderRadius: 15, marginTop: '5%', borderColor: 'white', borderWidth: 1, justifyContent: 'center'}}>
-          <View style={{backgroundColor: 'lightblue', height: 15, marginLeft: `${leftPercentage}%`, borderRadius: 15, borderColor: 'white', borderWidth: 1}}/>
+        <View style={{backgroundColor: 'lightgrey', width: '94%', height: 16, marginLeft: '3%', borderRadius: 15, marginTop: '5%', borderColor: 'white', borderWidth: 1, justifyContent: 'center'}}>
+          <View style={{backgroundColor: 'lightblue', height: 16, marginLeft: `${leftPercentage}%`, borderRadius: 15, borderColor: 'white', borderWidth: 1}}/>
         </View>
       )
       
@@ -130,8 +131,8 @@ export const HorizontalCarousel = (props: any) => {
           marginBottom: 10,
           backgroundColor: 'white',
           borderWidth: 1, borderColor: 'white',
-          padding: 25,
-          paddingBottom: 40,
+          padding: 20,
+          paddingBottom: 30,
           width: '90%',
           marginLeft: '5%',
           marginTop: '5%'
@@ -146,7 +147,7 @@ export const HorizontalCarousel = (props: any) => {
               backgroundColor: 'transparent'
             }}
           >
-            <Text style={{ fontSize: 30 }}>{subject}</Text>
+            <Text style={{ fontSize: 35 }}>{subject}</Text>
             <Text style={styles.subheader}>{subtitle}</Text>
           </View>
           <View
@@ -159,11 +160,12 @@ export const HorizontalCarousel = (props: any) => {
             }}
           >
             <Text style={{ fontSize: 85, color: "lightblue" }}>{timeLeft}</Text>
-            <Text style={{ alignSelf: "center" }}>minutes</Text>
+            <Text style={{ alignSelf: "center", color: 'grey' }}>minutes</Text>
             
           </View>
         </View>
         <HorizontalTimer/>
+        
       </Card>
     );
   };
