@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
-  ShadowPropTypesIOS,
 } from "react-native";
 
 import { Text, View } from "../components/Themed";
@@ -18,22 +17,8 @@ import { classDetail } from "./classDetails";
 import { HorizontalCarousel } from "./HorizontalCarousel";
 import periods from "../Teacher_Data.json";
 
-let randomPeriod = periods[0];
-let currentPeriod = periods[1];
-
-// for (let i = 0; i < periods.length; i++) {
-//   const arr=periods[i].time.split(' ').join(',').split(':').join(',').split(',');
-//   let nowhour=parseInt(arr[0]);
-//   const nowminute=parseInt(arr[1]);
-//   const nowampm=arr[2];
-//   if (nowhour===12 || nowhour<4){
-//     Object.assign(periods[i].time,{ampm: 'PM'})
-//   }
-//   else{
-//     Object.assign(periods[i].time, {ampm: 'AM'})
-//   }
-
-// }
+let currentPeriod = periods[0];
+let comingPeriod = periods[1];
 
 function inbetween(first: string, second: string, now: string) {
   const arr = now.split(" ").join(",").split(":").join(",").split(",");
@@ -49,6 +34,9 @@ function inbetween(first: string, second: string, now: string) {
   const secondminute = parseInt(arr2[1]);
   const secondampm = arr2[2];
 
+  if (nowhour===12 && nowampm==="AM"){
+    return false;
+  }
   if (secondampm === "PM" && secondhour < 12) {
     secondhour += 12;
   }
@@ -79,7 +67,8 @@ function inbetween(first: string, second: string, now: string) {
 }
 
 const ScheduleItem = (props: any) => {
-  const datenow = props.date.format("LT");
+  // const datenow = moment().format('LT');
+  const datenow='2:00 AM'
   const datenow_split = datenow
     .split(" ")
     .join(",")
@@ -145,21 +134,10 @@ const ScheduleItem = (props: any) => {
     nextPeriod = periods[0];
   }
   if (curPeriod === props.data) {
-    currentPeriod = nextPeriod;
-    randomPeriod = props.data;
+    comingPeriod = nextPeriod;
+    currentPeriod = props.data;
     return (
-      <ImageBackground
-        source={require("../assets/images/lightGreenbanner1.jpg")}
-        style={{
-          width: "100%",
-          shadowRadius: 6,
-          shadowOpacity: 0.4,
-          shadowColor: "green",
-          shadowOffset: { width: 2, height: 2 },
-        }}
-        imageStyle={{ opacity: 0.5, borderRadius: 15 }}
-      >
-        <View style={styles.scheduleFormat}>
+        <View style={styles.scheduleFormat1}>
           <Text
             style={{
               fontFamily: "Trebuchet MS",
@@ -188,7 +166,6 @@ const ScheduleItem = (props: any) => {
             <Detailbutton />
           </View>
         </View>
-      </ImageBackground>
       //</Card>
     );
   } else {
@@ -270,12 +247,12 @@ export default function TabOneScreen() {
   ));
   return (
     //need to render this constantly without refreshing the entire file
-    <ScrollView style={{ backgroundColor: "lightblue" }}>
+    <ScrollView style={{ backgroundColor: "#E9FBFB" }}>
       <View style={styles.container}>
         <ImageBackground
           source={require("../assets/images/lightbluegradient.png")}
           style={{ width: "100%" }}
-          imageStyle={{opacity: 0.9}}
+          imageStyle={{opacity: 0.5}}
         >
           <Text
             style={{
@@ -295,8 +272,8 @@ export default function TabOneScreen() {
             darkColor="#006400"
           />
           <HorizontalCarousel
-            randomPeriod={randomPeriod}
-            curPeriod={currentPeriod}
+            currentPeriod={currentPeriod}
+            comingPeriod={comingPeriod}
             date={datenow}
           />
 
@@ -419,13 +396,34 @@ const styles = StyleSheet.create({
     width: 50,
   },
   scheduleFormat: {
-    width: "90%",
+    height: 75,
+    width: "95%",
     justifyContent: "space-between",
     marginHorizontal: 15,
-    marginVertical: 10,
-    marginLeft: "5%",
+    marginVertical: 8,
+    marginLeft: "2.5%",
     flexDirection: "row",
-    backgroundColor: "rgba(0,0,0,0)",
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    shadowOffset: {height: 1, width: 1},
+    shadowOpacity: 0.1,
+  },
+  scheduleFormat1: {
+    height: 80,
+    width: "95%",
+    justifyContent: "space-between",
+    marginHorizontal: 15,
+    backgroundColor: 'hsl(165, 100%, 80%)',
+    marginVertical: 0,
+    marginLeft: "2.5%",
+    flexDirection: "row",
+    padding: 15,
+    borderRadius: 20,
+    alignItems: 'center',
+    shadowOffset: {height: 1, width: 1},
+    shadowOpacity: 0.1,
   },
   title: {
     fontSize: 90,

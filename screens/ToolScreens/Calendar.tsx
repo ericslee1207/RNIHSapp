@@ -103,6 +103,7 @@ export const Calendar1 = () => {
           ...storedDataParsed]
         await AsyncStorage.setItem(props.datePressed, JSON.stringify(newData));
       }
+
       editList(newData)
     };
 

@@ -108,7 +108,7 @@ const styles=StyleSheet.create({
     applyButton: {
         width: Dimensions.get('window').width*0.92, 
         height: 60, 
-        backgroundColor: '#009387', 
+        backgroundColor: 'rgba(0, 147, 135, 0.6)', 
         marginVertical: 20, 
         borderRadius: 10, 
         alignSelf: 'center', 

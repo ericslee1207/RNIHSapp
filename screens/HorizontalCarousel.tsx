@@ -59,7 +59,7 @@ export const HorizontalCarousel = (props: any) => {
       </Card>
     );
   };
-  const arr = props.curPeriod.time
+  const arr = props.comingPeriod.time
     .split(" ")
     .join(",")
     .split(":")
@@ -79,7 +79,7 @@ export const HorizontalCarousel = (props: any) => {
   const nextminute = parseInt(arr[1]);
   const nextampm = arr[2];
   let subtitle = "ends in";
-  let subject = props.randomPeriod.subject;
+  let subject = props.currentPeriod.subject;
   if (nowhour != 12 && nowampm === "PM") {
     nowhour += 12;
   }
@@ -89,9 +89,12 @@ export const HorizontalCarousel = (props: any) => {
   let hourdiff = nexthour - nowhour;
   let minutediff = nextminute - nowminute;
   let timeLeft = hourdiff * 60 + minutediff;
+
+  console.log(nowhour)
+
   if (
     (nowampm === "PM" && nowhour > 15) ||
-    (nowampm === "AM" && nowhour == 12)
+    (nowampm === "AM" && nowhour === 12)
   ) {
     timeLeft = 0;
     subtitle = "ended";

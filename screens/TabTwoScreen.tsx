@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Image, Button } from "react-native";
+import { StyleSheet, Image, Button, Alert } from "react-native";
 import {
   Container,
   Header,
@@ -56,7 +56,21 @@ function MainScreen(props) {
   return (
     <View style={styles.container}>
       <ToolList tools={tools} navigation={props.navigation} />
-      <Button title='Sign out' onPress={()=>SignOut()}/>
+      <Button title='Sign out' onPress={()=>Alert.alert(
+        "Sign Out",
+        "",
+        [
+        {
+          text: 'Yes',
+          onPress: () => SignOut()
+        },
+        {
+          text: 'No',
+          onPress: () => console.log('canceled')
+        }
+      ],
+      {cancelable: false}
+      )}/>
     </View>
   );
 }

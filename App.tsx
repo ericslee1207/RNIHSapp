@@ -7,6 +7,13 @@ import { DefaultTheme, DarkTheme, Provider as PaperProvider } from 'react-native
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+
+import {firebaseConfig} from './config'
+
+// import * as firebase from 'firebase'
+// firebase.initializeApp(firebaseConfig)
+
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

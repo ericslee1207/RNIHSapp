@@ -46,6 +46,16 @@ function RootNavigator() {
     }
   }), [])
 
+
+
+  // const [isTimePickerVisible, setTimePicker] = React.useState(false);
+  // const [chosenTime, setTime] = React.useState("");
+  // const [listofEvents, editList] = React.useState([]); //initial value of useState would be what you get from another API/database
+  // const [modalVisible, toggleModal] = React.useState(false);
+  // const [name, newName] = React.useState("");
+  // const [description, newDescription] = React.useState("");
+
+
   if (isLoading){
     return(
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
@@ -54,7 +64,12 @@ function RootNavigator() {
     )
   }
   return (
-    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut}}>
+    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut,
+      // isTimePickerVisible: isTimePickerVisible, setTimePicker: setTimePicker, 
+      // chosenTime: chosenTime, setTime: setTime, listofEvents: listofEvents, editList: editList, modalVisible: modalVisible, 
+      // toggleModal: toggleModal, name: name, newName: newName, description: description, newDescription: newDescription
+    
+    }}>
       {userToken===null?(
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name="Introduction" component={Intro}/>

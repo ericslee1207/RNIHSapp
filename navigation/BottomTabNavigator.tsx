@@ -53,8 +53,9 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-contact" color={color} />
           ),
-          tabBarColor: 'white',
-          tabBarLabel: ''
+          tabBarColor: 'rgba(233, 251, 251, 0.96)',
+          tabBarLabel: '',
+          
         }}
       />
       <BottomTab.Screen
@@ -96,15 +97,15 @@ function TabOneNavigator() {
           headerTitle: (props) => (
             <Image
               style={{ width: 300, height: 70, alignSelf: "center" }}
-              source={require("../assets/images/IHSheader.png")}
+              source={require("../assets/images/lightgreenIHSheader.png")}
             />
           ),
           headerStyle: {
-            backgroundColor: "lightblue",
+            backgroundColor: 'rgba(233, 251, 251, 0.96)',
             height: 145,
             shadowColor: "grey",
             shadowOffset: {
-              height: 1,
+              height: 0.2,
             },
             shadowOpacity: 0.8,
           },
@@ -201,7 +202,7 @@ function TabThreeNavigator() {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "lightblue",
-    height: Dimensions.get('window').height*0.13,
+    height: Dimensions.get('window').height*0.125,
   },
   headerTitle: {
     color: "white",
