@@ -24,7 +24,9 @@ export const HorizontalCarousel = (props: any) => {
           paddingBottom: 40,
           width: '90%',
           marginLeft: '5%',
-          marginTop: '5%'
+          marginTop: '5%',
+          shadowOffset:{height: 2, width: 2},
+          shadowOpacity: 0.1
         }}
       >
         <View style={styles.header}>
@@ -135,7 +137,9 @@ export const HorizontalCarousel = (props: any) => {
           paddingBottom: 30,
           width: '90%',
           marginLeft: '5%',
-          marginTop: '5%'
+          marginTop: '5%',
+          shadowOffset:{height: 2, width: 2},
+          shadowOpacity: 0.1
         }}
       >
         <View style={styles.header}>
