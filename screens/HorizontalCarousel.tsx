@@ -97,7 +97,7 @@ export const HorizontalCarousel = (props: any) => {
   let minutediff1 = nextminute - befminute;
   let timeLeft1 = hourdiff1 * 60 + minutediff1;
 
-  const leftPercentage=(1-(timeLeft/timeLeft1))*100;
+  let leftPercentage=(1-(timeLeft/timeLeft1))*100;
   if (
     (nowampm === "PM" && nowhour > 15) ||
     (nowampm === "AM" && nowhour === 12)
@@ -108,6 +108,7 @@ export const HorizontalCarousel = (props: any) => {
   } else if (nowhour <= 8 && nowampm === "AM") {
     subtitle = "starts in";
     subject = "School";
+    leftPercentage=100
   } else if (nowampm === "PM" && nowhour === 15 && nowminute >= 25) {
     timeLeft = 0;
     subtitle = "ended";

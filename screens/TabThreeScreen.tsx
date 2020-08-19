@@ -69,7 +69,7 @@ const renderTabBar= (props: any) => {
 
 export default function TabTwoScreen({navigation}) {
   const [index, setIndex]= useState(0);
-  const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'Second'}]
+  const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'My clubs'}]
 
   const renderScene=SceneMap({
     first: ()=>firstRoute(navigation),

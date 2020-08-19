@@ -253,24 +253,29 @@ export default function TabOneScreen() {
           style={{ width: "100%" }}
           imageStyle={{opacity: 0.5}}
         >
-          <Text
-            style={{
-              fontFamily: "Trebuchet MS",
-              fontSize: 30,
-              // fontWeight: "bold",
-              marginTop: 25,
-              alignSelf: "flex-start",
-              marginLeft: "5%",
-            }}
-          >
-            For today...
-          </Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'transparent', paddingHorizontal: 10, paddingRight: 20}}>
+
+            <Text
+              style={{
+                fontFamily: "Trebuchet MS",
+                fontSize: 30,
+                // fontWeight: "bold",
+                marginTop: 25,
+                alignSelf: "flex-start",
+                marginLeft: "5%",
+              }}
+            >
+              For today...
+            </Text>
+            <AdayorBday day="A"/>
+
+          </View>
           <View
             style={styles.separator}
             lightColor="#009387"
             darkColor="#009387"
           />
-          <AdayorBday day="A"/>
+
           <HorizontalCarousel
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
