@@ -10,6 +10,7 @@ import {Login} from '../screens/LoginScreen';
 import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
 import {AuthContext} from '../components/AuthContext';
+import {TabOneNavigator} from './BottomTabNavigator'
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -78,6 +79,7 @@ function RootNavigator() {
       ):
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name="Root" component={BottomTabNavigator} />
+          <RootStack.Screen name="Home" component={TabOneNavigator} />
         </RootStack.Navigator>}
       
     </AuthContext.Provider>

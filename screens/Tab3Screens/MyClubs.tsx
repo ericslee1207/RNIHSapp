@@ -6,10 +6,9 @@ import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-g
 import {Subtitle} from 'native-base'
 import {ClubContext} from './ClubContext'
 
-export const Club_Page= ({navigation, route})=>{
+export const MyClubs= ({navigation, route})=>{
     let {clubname, clubadvisor, clubroom, clubmeeting, clubleader, clubinfo} = route.params
     let font_size=50
-    const {saved_clubs, save_club} = React.useContext(ClubContext)
     if (clubinfo===undefined){
         clubinfo='NA'
     }
@@ -18,11 +17,6 @@ export const Club_Page= ({navigation, route})=>{
         font_size=40
     }
 
-    // const AddToSavedClubs = () =>{
-        
-    //     save_club((my_clubs) => my_clubs.concat(route.params))
-    //     console.log(saved_clubs)
-    // }
 
     return(
         <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
@@ -57,9 +51,7 @@ export const Club_Page= ({navigation, route})=>{
                     </View>
                     {/* <Text style={{fontSize: 17, color: 'grey', fontStyle: 'italic', marginVertical: 6}}>{clubinfo}</Text> */}
                 </Card>
-                <TouchableOpacity style={styles.applyButton} onPress={()=>{}}>
-                    <Text style={styles.infoHeader}>Apply</Text>
-                </TouchableOpacity>
+
             </View>
             
         </ScrollView>

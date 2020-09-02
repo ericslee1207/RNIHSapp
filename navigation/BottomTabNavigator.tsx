@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { Image, Dimensions, StyleSheet, View } from "react-native";
+import { Image, Dimensions, StyleSheet, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
@@ -19,13 +19,21 @@ import {
   TabThreeParamList,
 } from "../types";
 import { Club_Page } from "../screens/Tab3Screens/Club_Screens";
+import { MyClubs } from "../screens/Tab3Screens/MyClubs"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({navigation}) {
 
   return (
+    <>
+    <View style={styles.homebuttonbackground}>
+      <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={{backgroundColor: 'transparent'}}>
+        <Image style={styles.homeButton} source={require('../assets/images/diffhome.png')}/>
+      </TouchableOpacity>
+    </View>
+    
     <BottomTab.Navigator
       initialRouteName="Profile"
       activeColor='#009387'
@@ -70,6 +78,7 @@ export default function BottomTabNavigator() {
         }}
       />
     </BottomTab.Navigator>
+    </>
   );
 }
 
@@ -87,7 +96,7 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+export function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
@@ -195,9 +204,20 @@ function TabThreeNavigator() {
         }}
         
         />
+        <TabThreeStack.Screen
+        name="MyClubs"
+        component={MyClubs}
+        options={{
+          headerTitle: 'My Clubs',
+          headerStyle: styles.header,
+          headerTitleStyle: styles.headerTitle
+        }}
+        
+        />
     </TabThreeStack.Navigator>
   );
 }
+
 
 const styles = StyleSheet.create({
   header: {
@@ -207,4 +227,22 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: "white",
   },
+  homeButton: {
+    width: 45, 
+    height: 45,
+    alignSelf: 'center',
+  },
+  homebuttonbackground: {
+    zIndex: 100,
+    position: 'absolute',
+    borderRadius: 73/2,
+    width: 73, 
+    height: 73,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    bottom: '4%',
+    borderWidth: 5,
+    borderColor: '#009387',
+    justifyContent: 'center'
+  }
 });

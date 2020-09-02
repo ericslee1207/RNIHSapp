@@ -1,5 +1,6 @@
 export type RootStackParamList = {
   Root: undefined;
+  Home: undefined;
   NotFound: undefined;
   Introduction: undefined;
   Login: undefined;
@@ -26,4 +27,5 @@ export type TabTwoParamList = {
 export type TabThreeParamList = {
   TabThreeScreen: undefined;
   ClubScreen: undefined;
+  MyClubs: undefined;
 }

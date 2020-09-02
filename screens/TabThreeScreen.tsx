@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Image, Dimensions, Alert } from "react-native";
 import { My_SearchBar } from "../screens/Tab3Screens/SearchBar";
 import { Text, View } from "../components/Themed";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import club_data from "../clubs_2019-2020.json";
 import { Card, Avatar, IconButton, Title } from "react-native-paper";
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view'
+import {ClubContext} from './Tab3Screens/ClubContext'
 
 const firstRoute= (navigation) => {
   const [clubs, setClubs] = useState(club_data);
+  
+
   const onChange = (query: string) => {
     const queries = club_data.filter((club) => {
       const clubdata = club.clubname.toLowerCase();
@@ -49,11 +53,51 @@ const firstRoute= (navigation) => {
   );
 }
 
-const secondRoute = () => {
+const secondRoute = (navigation) => {
+  // const {saved_clubs} = React.useContext(ClubContext)
+  // const [clubs, setClubs] = useState(club_data);
+  
+
+  // const onChange = (query: string) => {
+  //   const queries = club_data.filter((club) => {
+  //     const clubdata = club.clubname.toLowerCase();
+  //     const query_data = query.toLowerCase();
+  //     return clubdata.indexOf(query_data) > -1;
+  //   });
+  //   setClubs(queries);
+  // };
+
+  // const renderListItem = ({ item }) => {
+  //   let clubinfo = item.clubinfo;
+  //   if (item.clubinfo === undefined) {
+  //     clubinfo = "...";
+  //   }
+  //   //cant have direct actions for onPress. Need to put it into a const that holds the function first
+  //   return (
+  //     <Card style={styles.card} onPress={()=>navigation.navigate('MyClubs', item)}> 
+  //       <Card.Title
+  //         title={item.clubname}
+  //         subtitle={clubinfo}
+  //         right={() => (
+  //           <IconButton style={styles.iconStyle} icon="chevron-right" />
+  //         )}
+  //       />
+  //     </Card>
+  //   );
+  // };
+  // return (
+  //   <View style={styles.container}>
+  //     <My_SearchBar change_function={onChange} />
+  //     <FlatList
+  //       style={styles.scrollview}
+  //       data={saved_clubs}
+  //       renderItem={renderListItem}
+  //       keyExtractor={(item) => item.clubname}
+  //     />
+  //   </View>
+  // );
   return(
-    <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-      <Text>To Be Determined</Text>
-    </View>
+    <View></View>
   )
 }
 
@@ -68,22 +112,49 @@ const renderTabBar= (props: any) => {
 }
 
 export default function TabTwoScreen({navigation}) {
+
   const [index, setIndex]= useState(0);
   const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'My clubs'}]
 
   const renderScene=SceneMap({
     first: ()=>firstRoute(navigation),
-    second: secondRoute
+    second: () => secondRoute(navigation)
   })
 
+
+  const [saved_clubs, save_club] = useState([])
+
+  // const startup = async () => {
+  //   const storedData = await AsyncStorage.getItem("saved_clubs");
+
+  //   let newData = [] as any;
+
+  //   if (storedData === null) {
+  //     // save
+  //     await AsyncStorage.setItem("saved_clubs", JSON.stringify([]));
+  //   } else {
+  //     const storedDataParsed = JSON.parse(storedData);
+  //     newData = [
+  //       ...storedDataParsed]
+  //     await AsyncStorage.setItem("saved_clubs", JSON.stringify(newData));
+  //   }
+
+  //   save_club(newData)
+  // };
+  // useEffect(() => {
+  //   startup();
+  // }, []);
+
   return(
-    <TabView
-      renderTabBar={renderTabBar}
-      navigationState={{index, routes}}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{width: Dimensions.get('window').width}}
-    />
+    <ClubContext.Provider value={{saved_clubs: saved_clubs, save_club: save_club}}>
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{index, routes}}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{width: Dimensions.get('window').width}}
+      />
+    </ClubContext.Provider>
   )  
 }
 

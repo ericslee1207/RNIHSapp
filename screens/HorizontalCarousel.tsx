@@ -118,8 +118,8 @@ export const HorizontalCarousel = (props: any) => {
     
     const HorizontalTimer = () => {
       return(
-        <View style={{backgroundColor: 'lightgrey', width: '94%', height: 16, marginLeft: '3%', borderRadius: 15, marginTop: '5%', borderColor: 'white', borderWidth: 1, justifyContent: 'center'}}>
-          <View style={{backgroundColor: 'lightblue', height: 16, marginLeft: `${leftPercentage}%`, borderRadius: 15, borderColor: 'white', borderWidth: 1}}/>
+        <View style={{backgroundColor: 'lightgrey', width: '94%', height: 14, marginLeft: '3%', borderRadius: 15, marginTop: '5%', borderColor: 'white', borderWidth: 1, justifyContent: 'center'}}>
+          <View style={{backgroundColor: 'lightblue', height: 14, marginLeft: `${leftPercentage}%`, borderRadius: 15, borderColor: 'white', borderWidth: 1}}/>
         </View>
       )
       
@@ -144,7 +144,7 @@ export const HorizontalCarousel = (props: any) => {
         }}
       >
         <View style={styles.header}>
-          <View
+          <View 
             style={{
               flexDirection: "column",
               width: "40%",
@@ -152,7 +152,7 @@ export const HorizontalCarousel = (props: any) => {
               backgroundColor: 'transparent'
             }}
           >
-            <Text style={{ fontSize: 35 }}>{subject}</Text>
+            <Text style={{fontSize: 30}} allowFontScaling={true}>{subject}</Text>
             <Text style={styles.subheader}>{subtitle}</Text>
           </View>
           <View
