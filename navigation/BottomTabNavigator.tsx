@@ -189,7 +189,8 @@ function TabThreeNavigator() {
         component={TabThreeScreen}
         options={{
           headerTitle: "Courses and Clubs",
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {height: Dimensions.get('window').height*0.11,
+        }],
           headerTitleStyle: styles.headerTitle,
         }}
       />

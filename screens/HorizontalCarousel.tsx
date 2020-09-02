@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   dateFormat: {
     marginVertical: 22,
-    fontSize: 35, color: 'lightblue'
+    fontSize: 30, color: 'lightblue'
   },
   smallImage: {
     height: 20,

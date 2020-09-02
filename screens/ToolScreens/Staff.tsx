@@ -14,7 +14,6 @@ import {
 } from "native-base";
 import { View, SectionList, StyleSheet, Alert } from "react-native";
 import DATA from "../../exStaff.json";
-import Teacher_Data from "../../Teacher_Data.json";
 import { Staff_List } from "./staff_list";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
@@ -56,12 +55,12 @@ const DropDownMenu = (props) => {
   );
 };
 let my_teachers = [];
-for (let i = 0; i < Teacher_Data.length; i++) {
-  const period = Teacher_Data[i].period;
-  if (period != "*") {
-    my_teachers.push(Teacher_Data[i].teacher);
-  }
-}
+// for (let i = 0; i < Teacher_Data.length; i++) {
+//   const period = Teacher_Data[i].period;
+//   if (period != "*") {
+//     my_teachers.push(Teacher_Data[i].teacher);
+//   }
+// }
 export const Staff = () => {
   const [staffdata, setStaffData] = useState(DATA);
   const render_Item = (titles) => {

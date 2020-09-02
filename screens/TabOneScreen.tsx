@@ -15,7 +15,27 @@ import moment from "moment";
 import { classDetail } from "./classDetails";
 
 import { HorizontalCarousel } from "./HorizontalCarousel";
-import periods from "../Teacher_Data.json";
+
+import oddPeriods from "../OddPeriods.json";
+import evenPeriods from "../EvenPeriods.json";
+
+const currentDate = new Date();
+const day = moment(currentDate).format('dddd');
+let periods: any;
+let evenOrOdd: any;
+if (day==="Tuesday" || day==="Wednesday"){
+  periods=oddPeriods;
+  evenOrOdd="odd"
+}
+else if(day==="Thursday" || day === "Friday"){
+  periods=evenPeriods;
+  evenOrOdd="even"
+}
+else{
+  periods=oddPeriods;
+}
+
+
 
 let currentPeriod = periods[0];
 let comingPeriod = periods[1];
@@ -267,7 +287,7 @@ export default function TabOneScreen() {
             >
               For today...
             </Text>
-            <AdayorBday day="A"/>
+            <AdayorBday day={evenOrOdd}/>
 
           </View>
           <View

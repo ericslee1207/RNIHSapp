@@ -1,0 +1,67 @@
+[
+  {
+    "period": 0,
+    "subject": "Period 0",
+    "teacher": { "id": 0, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "7:00 AM",
+    "id": 0
+  },
+  {
+    "period": "*",
+    "subject": "Office Hours",
+    "teacher": { "id": 1, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "7:55 AM",
+    "id":1
+  },
+  {
+    "period": 1,
+    "subject": "Period 1",
+    "teacher": { "id": 2, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "8:30 AM",
+    "id": 2
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "teacher": { "id": 3, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "9:55 AM",
+    "id": 3
+  },
+  {
+    "period": 3,
+    "subject": "Period 3",
+    "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "10:15 AM",
+    "id": 4
+  },
+  {
+    "period": 5,
+    "subject": "Period 5",
+    "teacher": { "id": 5, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "11:45 AM",
+    "id": 5
+  },
+  {
+    "period": "*",
+    "subject": "Lunch",
+    "teacher": { "id": 6, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "1:10 PM",
+    "id": 6
+  },
+  
+  {
+    "period": 7,
+    "subject": "Period 7",
+    "teacher": { "id": 7, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "1:45 PM",
+    "id": 7
+  }
+]
