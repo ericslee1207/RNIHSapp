@@ -121,6 +121,7 @@ export function TabOneNavigator() {
           headerTitleStyle: {
             color: "white",
           },
+          headerLeft: null
         }}
       />
     </TabOneStack.Navigator>
@@ -139,6 +140,8 @@ function TabTwoNavigator() {
           headerTitle: "Tools",
           headerStyle: styles.header,
           headerTitleStyle: styles.headerTitle,
+          headerLeft: null
+
         }}
       />
       <TabTwoStack.Screen
@@ -192,6 +195,8 @@ function TabThreeNavigator() {
           headerStyle: [styles.header, {height: Dimensions.get('window').height*0.11,
         }],
           headerTitleStyle: styles.headerTitle,
+          headerLeft: null
+
         }}
       />
 

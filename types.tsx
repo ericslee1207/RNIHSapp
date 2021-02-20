@@ -4,6 +4,8 @@ export type RootStackParamList = {
   NotFound: undefined;
   Introduction: undefined;
   Login: undefined;
+  OnboardingOne: undefined;
+  OnboardingTwo: undefined;
 };
 
 export type BottomTabParamList = {

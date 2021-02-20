@@ -10,12 +10,11 @@ import {
 
 import { Text, View } from "../components/Themed";
 import {AdayorBday} from "./AdayorBday"
-import { CurrentDate } from "./curDate";
 import moment from "moment";
 import { classDetail } from "./classDetails";
 
 import { HorizontalCarousel } from "./HorizontalCarousel";
-
+import {MontoFri} from "./MontoFri"
 import oddPeriods from "../OddPeriods.json";
 import evenPeriods from "../EvenPeriods.json";
 
@@ -123,20 +122,20 @@ const ScheduleItem = (props: any) => {
       id: 4,
     };
   }
-  const Detailbutton = () => {
-    if (trueperiod) {
-      return (
-        <TouchableOpacity
-          style={{ width: 50, height: 20, backgroundColor: "rgba(0,0,0,0)" }}
-          onPress={() => classDetail(props.data)}
-        >
-          <Text style={{ color: "#1e90ff" }}>Details</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return null;
-    }
-  };
+  // const Detailbutton = () => {
+  //   if (trueperiod) {
+  //     return (
+  //       <TouchableOpacity
+  //         style={{ width: 50, height: 20, backgroundColor: "rgba(0,0,0,0)" }}
+  //         onPress={() => classDetail(props.data)}
+  //       >
+  //         <Text style={{ color: "#1e90ff" }}>Details</Text>
+  //       </TouchableOpacity>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // };
   const arr = props.data.time
     .split(" ")
     .join(",")
@@ -182,7 +181,7 @@ const ScheduleItem = (props: any) => {
             >
               {nowhour}:{nowminute} {nowampm}
             </Text>
-            <Detailbutton />
+            {/* <Detailbutton /> */}
           </View>
         </View>
       //</Card>
@@ -215,16 +214,14 @@ const ScheduleItem = (props: any) => {
           >
             {nowhour}:{nowminute} {nowampm}
           </Text>
-          <Detailbutton />
+          {/* <Detailbutton /> */}
         </View>
       </View>
     );
   }
 };
 
-export const MontoFri = (props: any) => {
-  return <CurrentDate date={props.date.format("dddd")} />;
-};
+
 
 export default function TabOneScreen() {
   const currentDate = new Date();

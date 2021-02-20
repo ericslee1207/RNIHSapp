@@ -3,10 +3,9 @@ import { StyleSheet, Dimensions } from "react-native";
 import { Provider as PaperProvider, Card } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
-import {CountdownCircleTimer} from 'react-native-countdown-circle-timer'
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import { MontoFri } from "./TabOneScreen";
-import { lightBlue100 } from "react-native-paper/lib/typescript/src/styles/colors";
+import { MontoFri } from "./MontoFri";
+import moment from 'moment'
 export const HorizontalCarousel = (props: any) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -114,6 +113,12 @@ export const HorizontalCarousel = (props: any) => {
     subtitle = "ended";
     subject = "School";
   }
+  let day = moment().format('dddd');
+  if (day==="Saturday"|| day==="Sunday"){
+    subject="Weekend!";
+    subtitle=""
+    timeLeft=0;
+  }
   const timeTracker = () => {
     
     const HorizontalTimer = () => {
@@ -152,7 +157,7 @@ export const HorizontalCarousel = (props: any) => {
               backgroundColor: 'transparent'
             }}
           >
-            <Text style={{fontSize: 30}} allowFontScaling={true}>{subject}</Text>
+            <Text style={{fontSize: 25}} allowFontScaling={true}>{subject}</Text>
             <Text style={styles.subheader}>{subtitle}</Text>
           </View>
           <View

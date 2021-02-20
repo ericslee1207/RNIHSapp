@@ -1,7 +1,7 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, StyleSheet, Button } from 'react-native';
 import {Intro} from '../screens/IntroScreen'
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -11,6 +11,8 @@ import { View } from 'react-native-animatable';
 import { ActivityIndicator } from 'react-native-paper';
 import {AuthContext} from '../components/AuthContext';
 import {TabOneNavigator} from './BottomTabNavigator'
+import OnboardingPageTwo from "../screens/OnboardingTwo"
+import OnboardingPageOne from "../screens/OnboardingOne"
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -46,17 +48,6 @@ function RootNavigator() {
       setIsLoading(false)
     }
   }), [])
-
-
-
-  // const [isTimePickerVisible, setTimePicker] = React.useState(false);
-  // const [chosenTime, setTime] = React.useState("");
-  // const [listofEvents, editList] = React.useState([]); //initial value of useState would be what you get from another API/database
-  // const [modalVisible, toggleModal] = React.useState(false);
-  // const [name, newName] = React.useState("");
-  // const [description, newDescription] = React.useState("");
-
-
   if (isLoading){
     return(
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
@@ -66,10 +57,6 @@ function RootNavigator() {
   }
   return (
     <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut,
-      // isTimePickerVisible: isTimePickerVisible, setTimePicker: setTimePicker, 
-      // chosenTime: chosenTime, setTime: setTime, listofEvents: listofEvents, editList: editList, modalVisible: modalVisible, 
-      // toggleModal: toggleModal, name: name, newName: newName, description: description, newDescription: newDescription
-    
     }}>
       {userToken===null?(
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
@@ -77,7 +64,9 @@ function RootNavigator() {
           <RootStack.Screen name="Login" component={Login}/>
         </RootStack.Navigator>
       ):
-        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+          <RootStack.Screen name="OnboardingOne" component={OnboardingPageOne}/>
+          <RootStack.Screen name="OnboardingTwo" component={OnboardingPageTwo} />
           <RootStack.Screen name="Root" component={BottomTabNavigator} />
           <RootStack.Screen name="Home" component={TabOneNavigator} />
         </RootStack.Navigator>}
@@ -85,3 +74,12 @@ function RootNavigator() {
     </AuthContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  headerStyle:{
+    backgroundColor: 'white'
+  },
+  topRight:{
+    paddingRight: 25
+  }
+})
