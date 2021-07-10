@@ -8,10 +8,30 @@ import club_data from "../clubs_2019-2020.json";
 import { Card, Avatar, IconButton, Title } from "react-native-paper";
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view'
 import {ClubContext} from './Tab3Screens/ClubContext'
+import { useContext } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 const firstRoute= (navigation) => {
   const [clubs, setClubs] = useState(club_data);
-  
+  const [preferences, setPreferences] = useState({
+    isCircle: false,
+    radius: 3,
+    colorObj: {
+      primary :"#04b5a7",
+      highlight : "hsl(165, 100%, 80%)",
+      lightbackground : "rgba(233, 251, 251, 0.96)",
+      darkbackground : "#D3E7EE"
+    }
+  })
+  const isFocused = useIsFocused()
+  useEffect(()=>{
+    const getPreferences = async() => {
+      let preferences = await AsyncStorage.getItem("SettingConfigurations")
+      let preferencesParsed = JSON.parse(preferences)
+      setPreferences(preferencesParsed)
+    }
+    getPreferences()
+  }, [isFocused])
 
   const onChange = (query: string) => {
     const queries = club_data.filter((club) => {
@@ -27,9 +47,11 @@ const firstRoute= (navigation) => {
     if (item.clubinfo === undefined) {
       clubinfo = "...";
     }
+    item["colorObj"] = preferences.colorObj
+
     //cant have direct actions for onPress. Need to put it into a const that holds the function first
     return (
-      <Card style={styles.card} onPress={()=>navigation.navigate('ClubScreen', item)}> 
+      <Card style={[styles.card, {borderColor: preferences.colorObj.primary}]} onPress={()=>navigation.navigate('ClubScreen', item)}> 
         <Card.Title
           title={item.clubname}
           subtitle={clubinfo}
@@ -54,59 +76,90 @@ const firstRoute= (navigation) => {
 }
 
 const secondRoute = (navigation) => {
-  // const {saved_clubs} = React.useContext(ClubContext)
-  // const [clubs, setClubs] = useState(club_data);
+  const [preferences, setPreferences] = useState({
+    isCircle: false,
+    radius: 3,
+    colorObj: {
+      primary :"#04b5a7",
+      highlight : "hsl(165, 100%, 80%)",
+      lightbackground : "rgba(233, 251, 251, 0.96)",
+      darkbackground : "#D3E7EE"
+    }
+  })
   
+  const isFocused = useIsFocused()
+  
+  const[finalClubs, setFinalClubs] = useState([])
+  const [clubs, setClubs] = useState([]);
+  let savedClubs = useContext(ClubContext).saved_clubs
+  useEffect(()=>{
+      revealSavedClubs();
+      
+        const getPreferences = async() => {
+          let preferences = await AsyncStorage.getItem("SettingConfigurations")
+          let preferencesParsed = JSON.parse(preferences)
+          setPreferences(preferencesParsed)
+        }
+        getPreferences()
+      
+  }, [isFocused])
+  const revealSavedClubs = async() => {
+      let saved = await AsyncStorage.getItem("savedClubs")
+      let savedParsed = JSON.parse(saved);
+      setClubs(savedParsed)
+      setFinalClubs(savedParsed)
+  }
+  const onChange = (query: string) => {
+    const queries = finalClubs.filter((club) => {
+      const clubdata = club.clubname.toLowerCase();
+      const query_data = query.toLowerCase();
+      return clubdata.indexOf(query_data) > -1;
+    });
+    setClubs(queries);
+  };
 
-  // const onChange = (query: string) => {
-  //   const queries = club_data.filter((club) => {
-  //     const clubdata = club.clubname.toLowerCase();
-  //     const query_data = query.toLowerCase();
-  //     return clubdata.indexOf(query_data) > -1;
-  //   });
-  //   setClubs(queries);
-  // };
-
-  // const renderListItem = ({ item }) => {
-  //   let clubinfo = item.clubinfo;
-  //   if (item.clubinfo === undefined) {
-  //     clubinfo = "...";
-  //   }
-  //   //cant have direct actions for onPress. Need to put it into a const that holds the function first
-  //   return (
-  //     <Card style={styles.card} onPress={()=>navigation.navigate('MyClubs', item)}> 
-  //       <Card.Title
-  //         title={item.clubname}
-  //         subtitle={clubinfo}
-  //         right={() => (
-  //           <IconButton style={styles.iconStyle} icon="chevron-right" />
-  //         )}
-  //       />
-  //     </Card>
-  //   );
-  // };
-  // return (
-  //   <View style={styles.container}>
-  //     <My_SearchBar change_function={onChange} />
-  //     <FlatList
-  //       style={styles.scrollview}
-  //       data={saved_clubs}
-  //       renderItem={renderListItem}
-  //       keyExtractor={(item) => item.clubname}
-  //     />
-  //   </View>
-  // );
-  return(
-    <View></View>
+  const renderListItem = ({ item }) => {
+    let clubinfo = item.clubinfo;
+    if (item.clubinfo === undefined) {
+      clubinfo = "...";
+    }
+    item["colorObj"] = preferences.colorObj
+    //cant have direct actions for onPress. Need to put it into a const that holds the function first
+    return (
+      <Card style={[styles.card, {borderColor: preferences.colorObj.primary}]} onPress={()=>navigation.navigate('ClubScreen', item)}> 
+        <Card.Title
+          title={item.clubname}
+          subtitle={clubinfo}
+          right={() => (
+            <IconButton style={styles.iconStyle} icon="chevron-right" />
+          )}
+        />
+      </Card>
+    )
+  }
+  return (
+    <View style={styles.container}>
+      <My_SearchBar change_function={onChange} />
+      <FlatList
+        style={styles.scrollview}
+        data={clubs}
+        renderItem={renderListItem}
+        keyExtractor={(item) => item.clubname}
+      />
+  </View>
   )
 }
 
 const renderTabBar= (props: any) => {
+  
   return(
     <TabBar
       {...props}
-      indicatorStyle={{backgroundColor: 'pink'}}
-      style={{backgroundColor: 'lightblue'}}
+      indicatorStyle={{backgroundColor: '#04b5a7'}}
+      style={{backgroundColor: 'rgba(233, 251, 251, 0.96)'}}
+      activeColor="#04b5a7"
+      inactiveColor="#04b5a7"
+      
     />
   )
 }
@@ -114,7 +167,7 @@ const renderTabBar= (props: any) => {
 export default function TabTwoScreen({navigation}) {
 
   const [index, setIndex]= useState(0);
-  const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'My clubs'}]
+  const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'Saved Clubs'}]
 
   const renderScene=SceneMap({
     first: ()=>firstRoute(navigation),
@@ -153,6 +206,7 @@ export default function TabTwoScreen({navigation}) {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{width: Dimensions.get('window').width}}
+        
       />
     </ClubContext.Provider>
   )  
@@ -182,12 +236,13 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginVertical: 8,
-    borderColor: "lightpink",
-    shadowRadius: 9,
-    shadowColor: "lightblue",
-    shadowOpacity: 1,
+    
     padding: 8,
     borderLeftWidth: 7,
+    shadowOpacity: 0.35, 
+    shadowRadius: 6, 
+    shadowOffset: {height: 1, width: 0},
+    shadowColor: 'grey'
   },
   iconStyle: {
     height: 20,

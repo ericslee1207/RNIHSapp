@@ -38,7 +38,6 @@ const OnboardingPageTwo = ({navigation}) => {
         </SafeAreaView>
     )
 }
-const window = Dimensions.get('window')
 const styles = StyleSheet.create({
     container:{
         flex: 1,

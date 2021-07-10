@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from "../../components/Themed";
 import {Card} from 'react-native-paper'
 import { StyleSheet, Dimensions } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import {Subtitle} from 'native-base'
 import {ClubContext} from './ClubContext'
+import AsyncStorage from "@react-native-community/async-storage";
+
 
 export const MyClubs= ({navigation, route})=>{
-    let {clubname, clubadvisor, clubroom, clubmeeting, clubleader, clubinfo} = route.params
+    const [savedClubs, saveClub] = useState([]);
+
+    let {clubname, clubadvisor, clubroom, clubmeeting, clubleader, clubinfo} = route.params.item
     let font_size=50
     if (clubinfo===undefined){
         clubinfo='NA'
@@ -30,7 +34,7 @@ export const MyClubs= ({navigation, route})=>{
                     <Text style={styles.additional_info_text}>{clubinfo}</Text>
                 </Card>
                 <Card style={styles.cardstyle}>
-                    <Text style={{fontSize: 23, fontWeight: 'bold', marginBottom: 5, fontFamily: 'Trebuchet MS'}}>Additional Info:</Text>
+                    <Text style={{fontSize: 23, fontWeight: 'bold', marginBottom: 5, fontFamily: 'OpenSansSemiBold'}}>Additional Info:</Text>
                     <View style={{backgroundColor: 'transparent', paddingRight: 160}}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={styles.additional_info_header}>President: </Text>
@@ -65,7 +69,7 @@ const styles=StyleSheet.create({
         padding: 15,
     },
     title: {
-        fontFamily: 'Trebuchet MS',
+        fontFamily: 'OpenSansSemiBold',
         fontWeight: 'bold',
         backgroundColor: 'transparent',
         textAlign: 'center', 
@@ -75,14 +79,14 @@ const styles=StyleSheet.create({
         fontSize: 18, 
         color: 'black', 
         marginTop: 6, 
-        fontFamily: 'Trebuchet MS'
+        fontFamily: 'OpenSansSemiBold'
     },
     additional_info_text: {
         fontSize: 17, 
         color: 'grey', 
         fontStyle: 'italic', 
         marginVertical: 6, 
-        fontFamily: 'Trebuchet MS'
+        fontFamily: 'OpenSansSemiBold'
     },
     cardstyle: {
         alignItems: 'flex-start', 
@@ -104,10 +108,10 @@ const styles=StyleSheet.create({
     infoHeader: {
         fontSize: 23, 
         fontWeight: 'bold', 
-        fontFamily: 'Trebuchet MS'
+        fontFamily: 'OpenSansSemiBold'
     },
     applyButton: {
-        width: Dimensions.get('window').width*0.92, 
+        width: '100%', 
         height: 60, 
         backgroundColor: 'rgba(0, 147, 135, 0.6)', 
         marginVertical: 20, 

@@ -1,0 +1,99 @@
+[
+    {
+      "period": 0,
+      "subject": "Collab",
+      "teacher": { "id": 0, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "8:00 AM",
+      "id": 0
+    },
+    {
+      "period": 1,
+      "subject": "Period 1",
+      "teacher": { "id": 1, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "9:00 AM",
+      "id":1
+    },
+    {
+      "period": 2,
+      "subject": "Period 2",
+      "teacher": { "id": 2, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "9:45 AM",
+      "id": 2
+    },
+    {
+      "period": "*",
+      "subject": "Break",
+      "teacher": { "id": 3, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "10:25 AM",
+      "id": 3
+    },
+    {
+      "period": 3,
+      "subject": "Period 3",
+      "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "10:40 AM",
+      "id": 4
+    },
+    {
+      "period": 4,
+      "subject": "Period 4",
+      "teacher": { "id": 5, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "11:25 AM",
+      "id": 5
+    },
+    {
+      "period": "*",
+      "subject": "Lunch",
+      "teacher": { "id": 6, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "12:05 PM",
+      "id": 6
+    },
+    {
+        "period": 5,
+        "subject": "Period 5",
+        "teacher": { "id": 7, "first_name": "NA", "last_name": "NA" },
+        "room": "NA",
+        "time": "12:45 PM",
+        "id": 7
+      },
+    {
+      "period": 6,
+      "subject": "Period 6",
+      "teacher": { "id": 8, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "1:30 PM",
+      "id": 8
+    },
+    {
+      "period": "*",
+      "subject": "Break",
+      "teacher": { "id": 9, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "2:10 PM",
+      "id": 9
+    },
+    {
+      "period": 7,
+      "subject": "Period 7",
+      "teacher": { "id": 10, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "2:25 PM",
+      "id": 10
+    },
+    {
+      "period": 8,
+      "subject": "Period 8",
+      "teacher": { "id": 11, "first_name": "NA", "last_name": "NA" },
+      "room": "NA",
+      "time": "3:10 PM",
+      "id": 11
+    }
+  ]
+  

@@ -16,6 +16,8 @@ export type BottomTabParamList = {
 
 export type TabOneParamList = {
   TabOneScreen: undefined;
+  ConfigurePersonalInfo: undefined;
+  ConfigureSettings: undefined;
 };
 
 export type TabTwoParamList = {

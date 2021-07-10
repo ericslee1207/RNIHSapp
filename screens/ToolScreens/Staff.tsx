@@ -13,15 +13,22 @@ import {
   Icon,
 } from "native-base";
 import { View, SectionList, StyleSheet, Alert } from "react-native";
-import DATA from "../../exStaff.json";
+import staffData from "../../exStaff.json";
 import { Staff_List } from "./staff_list";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
+import { moderateScale } from "react-native-size-matters";
+import { useIsFocused } from "@react-navigation/native";
 
 const DropDownMenu = (props) => {
+  const [allBackground, setAllBackground]= useState("darkgreen");
+  const [teacherBackground, setTeacherBackground]= useState("");
+  
   return (
     <View style={{ flexDirection: "row" }}>
       <TouchableHighlight
-        onPress={props.switchDatatoAll}
+        onPress={()=>{props.switchDatatoAll(); setTeacherBackground('transparent'); setAllBackground("darkgreen")}}
         style={{
           width: 85,
           height: 30,
@@ -31,12 +38,13 @@ const DropDownMenu = (props) => {
           justifyContent: "center",
           borderBottomLeftRadius: 10,
           borderTopLeftRadius: 10,
+          backgroundColor: allBackground
         }}
       >
         <Text style={{ fontSize: 12, color: "white" }}>All</Text>
       </TouchableHighlight>
       <TouchableHighlight
-        onPress={props.switchDatatoTeacher}
+        onPress={()=>{props.switchDatatoTeacher(); setTeacherBackground('darkgreen'); setAllBackground("transparent")}}
         style={{
           width: 85,
           height: 30,
@@ -47,6 +55,7 @@ const DropDownMenu = (props) => {
           justifyContent: "center",
           borderTopRightRadius: 10,
           borderBottomRightRadius: 10,
+          backgroundColor: teacherBackground
         }}
       >
         <Text style={{ fontSize: 12, color: "white" }}>My Teachers</Text>
@@ -54,14 +63,43 @@ const DropDownMenu = (props) => {
     </View>
   );
 };
-let my_teachers = [];
-// for (let i = 0; i < Teacher_Data.length; i++) {
-//   const period = Teacher_Data[i].period;
-//   if (period != "*") {
-//     my_teachers.push(Teacher_Data[i].teacher);
-//   }
-// }
+for (let i = 0; i < staffData.length; i++) {
+
+}
 export const Staff = () => {
+  const [preferences, setPreferences] = useState({
+    isCircle: false,
+    radius: 3,
+    colorObj: {
+      primary :"#04b5a7",
+      highlight : "hsl(165, 100%, 80%)",
+      lightbackground : "rgba(233, 251, 251, 0.96)",
+      darkbackground : "#D3E7EE"
+    }
+  })
+  const isFocused = useIsFocused()
+  useEffect(()=>{
+    const getPreferences = async() => {
+      let preferences = await AsyncStorage.getItem("SettingConfigurations")
+      let preferencesParsed = JSON.parse(preferences)
+      setPreferences(preferencesParsed)
+    }
+    getPreferences()
+  }, [isFocused])
+  let DATA = [...staffData];
+  // const [myTeachersObject, setMyTeachersObject] = useState({})
+  // useEffect(()=>{
+  //   const getTeacherData = async() => {
+  //     let my_Teachers = await AsyncStorage.getItem("Teachers")
+  //     let filtered = DATA.filter((teacher)=>my_Teachers.includes(teacher.Name))
+  //     setMyTeachersObject(filtered)
+  //   }
+  //   getTeacherData()
+  // }, [])
+  for (let i = 0; i < DATA.length; i++) {
+    let element = DATA[i];
+    element["id"]=i
+  }
   const [staffdata, setStaffData] = useState(DATA);
   const render_Item = (titles) => {
     return (
@@ -73,12 +111,14 @@ export const Staff = () => {
   const render_staffs = (data) => {
     return (
       <Content>
-        <Staff_List data={data.item} />
+        <Staff_List preferences={preferences} data={data.item} />
       </Content>
     );
   };
   const staff = staffdata.reduce((obj, worker) => {
-    const key = worker.last_name.charAt(0);
+    let names = worker.Name.split(" ");
+    let lastName = names[names.length-1]
+    const key = lastName.charAt(0);
     if (obj[key] === undefined) {
       obj[key] = [];
     }
@@ -87,6 +127,7 @@ export const Staff = () => {
       [key]: [...obj[key], worker],
     };
   }, []);
+  let index = 0;
   const workers = Object.keys(staff)
     .sort()
     .map((key) => ({
@@ -99,18 +140,17 @@ export const Staff = () => {
       <View
         style={{
           alignItems: "center",
-          backgroundColor: "lightblue",
-          padding: 10,
+          backgroundColor: "rgba(233, 251, 251, 0.96)",
         }}
       >
-        <DropDownMenu
-          switchDatatoTeacher={() => {
-            setStaffData((data) => my_teachers);
-          }}
+        {/* <DropDownMenu
+          // switchDatatoTeacher={() => {
+          //   setStaffData((data) => myTeachersObject);
+          // }}
           switchDatatoAll={() => {
             setStaffData((data) => DATA);
           }}
-        />
+        /> */}
       </View>
       <SectionList
         renderSectionHeader={render_Item}
@@ -125,7 +165,7 @@ const styles = StyleSheet.create({
   container: {},
   header: {
     fontSize: 30,
-    fontFamily: "Trebuchet MS",
+    fontFamily: "OpenSansSemiBold",
     fontWeight: "bold",
   },
   staff: {

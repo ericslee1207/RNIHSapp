@@ -1,18 +1,5 @@
 import * as React from "react";
 import { StyleSheet, Image, Button, Alert } from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  List,
-  ListItem,
-  Left,
-  Body,
-  Right,
-  Thumbnail,
-  Text,
-  Icon,
-} from "native-base";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { View } from "../components/Themed";
@@ -24,17 +11,22 @@ import { AuthContext } from "../components/AuthContext";
 
 const tools = [
   {
+    id: 3,
+    icon: "https://freeiconshop.com/wp-content/uploads/edd/calendar-flat.png",
+    type: "Calendar",
+    name: "Calendar",
+  },
+  {
+    id: 1,
+    icon: "https://falconpostjhs.com/wp-content/uploads/2020/09/malin.png",
+    type: "Flex Time",
+    name: "FlexTime"
+  },
+  {
     id: 0,
     icon: "https://image.flaticon.com/icons/png/512/426/426327.png",
     type: "ID Card",
     name: "IdCard",
-  },
-  {
-    id: 1,
-    icon:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Closed_Book_Icon.svg/1200px-Closed_Book_Icon.svg.png",
-    type: "Checked Out Books",
-    name: "CheckedOutBooks",
   },
   {
     id: 2,
@@ -44,19 +36,25 @@ const tools = [
     name: "Staff",
   },
   {
-    id: 3,
-    icon: "https://freeiconshop.com/wp-content/uploads/edd/calendar-flat.png",
-    type: "Calendar",
-    name: "Calendar",
+    id: 4,
+    icon:
+      "https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-70-512.png",
+    type: "El Vaquero",
+    name: "El Vaquero",
   },
+  {
+    id: 5,
+    icon: "https://cdn3.iconfinder.com/data/icons/basic-ui-15/512/1040_man_with_circle_c-512.png",
+    name: "Delete Account",
+    type: "Delete Account"
+  }
 ];
 
 function MainScreen(props) {
-  const {SignOut} = React.useContext(AuthContext)
   return (
     <View style={styles.container}>
       <ToolList tools={tools} navigation={props.navigation} />
-      <Button title='Sign out' onPress={()=>Alert.alert(
+      {/* <Button title='Sign out' onPress={()=>Alert.alert(
         "Sign Out",
         "",
         [
@@ -70,7 +68,7 @@ function MainScreen(props) {
         }
       ],
       {cancelable: false}
-      )}/>
+      )}/> */}
     </View>
   );
 }
@@ -83,7 +81,8 @@ export default function TabTwoScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 30
+    paddingBottom: 30,
+    //backgroundColor: "rgba(233, 251, 251, 0.96)"
   },
   title: {
     fontSize: 20,

@@ -1,15 +1,16 @@
 import React from 'react'
 import {View, Text, } from 'react-native'
+import { moderateScale } from 'react-native-size-matters'
 
-export const AdayorBday = ({day}) => {
-    if (day==='even'){
+export const AdayorBday = ({colorObj,day}) => {
+    if (day==='odd'){
         return(
             <View style={{alignSelf: 'center', flexDirection: 'row', alignItems: 'center', marginTop: 18}}>
-                <View style={{height: 40, width: 40, backgroundColor: 'white', borderRadius:20, borderWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'center', marginRight: 25, }}>
-                    <Text style={{color: 'lightgrey'}}>Odd</Text>
+                <View style={{height: moderateScale(48), width: moderateScale(48), backgroundColor: 'white', borderRadius:moderateScale(24), borderWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'center', marginRight: 25, }}>
+                    <Text style={{fontWeight: 'bold',color: 'lightgrey', fontSize:moderateScale(17)}}>E</Text>
                 </View>
-                <View style={{height: 45, width: 45, backgroundColor: 'lightblue', borderRadius: 22.5,borderWidth: 1, borderColor: 'lightblue', alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{color: 'white', fontSize: 15,}}>Even</Text>
+                <View style={{height: moderateScale(53), width: moderateScale(53), backgroundColor: colorObj.primary, borderRadius: moderateScale(26.5),borderWidth: 1, borderColor: 'lightblue', alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold',color: 'white', fontSize: moderateScale(19),}}>O</Text>
                 </View>
                 
             
@@ -19,11 +20,11 @@ export const AdayorBday = ({day}) => {
     else{
         return(
             <View style={{alignSelf: 'center', flexDirection: 'row', alignItems: 'center', marginTop: 18}}>
-                <View style={{height: 45, width: 45, backgroundColor: 'lightblue', borderRadius: 22.5,borderWidth: 1, borderColor: 'lightblue', alignItems: 'center', justifyContent: 'center', marginRight: 25, }}>
-                    <Text style={{color: 'white', fontSize: 15,}}>Odd</Text>
+                <View style={{height: moderateScale(53), width: moderateScale(53), backgroundColor: colorObj.primary, borderRadius: moderateScale(26.5),borderWidth: 1, borderColor: 'lightblue', alignItems: 'center', justifyContent: 'center', marginRight: 25, }}>
+                    <Text style={{fontWeight: 'bold', color: 'white', fontSize: moderateScale(19),}}>E</Text>
                 </View>
-                <View style={{height: 40, width: 40, backgroundColor: 'white', borderRadius:20, borderWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{color: 'lightgrey'}}>Even</Text>
+                <View style={{height: moderateScale(48), width: moderateScale(48), backgroundColor: 'white', borderRadius:moderateScale(24), borderWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold',color: 'lightgrey', fontSize:moderateScale(17)}}>O</Text>
                 </View>
             
             </View>

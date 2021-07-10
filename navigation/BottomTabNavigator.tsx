@@ -1,8 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
 import * as React from "react";
 import { Image, Dimensions, StyleSheet, View, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import { Foundation } from '@expo/vector-icons'; 
+
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
@@ -12,6 +16,9 @@ import { IdCard } from "../screens/ToolScreens/IdCard";
 import { CheckedOutBooks } from "../screens/ToolScreens/CheckedOutBooks";
 import { Calendar1 } from "../screens/ToolScreens/Calendar";
 import { Staff } from "../screens/ToolScreens/Staff";
+import {moderateScale, verticalScale, scale} from 'react-native-size-matters'
+import ConfigurePersonalInfoScreen from "../screens/ConfigurePersonalInfoScreen";
+import ConfigureSettingsScreen from "../screens/ConfigureSettingsScreen";
 import {
   BottomTabParamList,
   TabOneParamList,
@@ -28,11 +35,11 @@ export default function BottomTabNavigator({navigation}) {
 
   return (
     <>
-    <View style={styles.homebuttonbackground}>
+    {/* <View style={styles.homebuttonbackground}>
       <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={{backgroundColor: 'transparent'}}>
         <Image style={styles.homeButton} source={require('../assets/images/diffhome.png')}/>
       </TouchableOpacity>
-    </View>
+    </View> */}
     
     <BottomTab.Navigator
       initialRouteName="Profile"
@@ -40,7 +47,6 @@ export default function BottomTabNavigator({navigation}) {
       inactiveColor='grey'
       shifting={true}
       barStyle={{
-
       }}
     >
       <BottomTab.Screen
@@ -50,7 +56,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-bookmark" color={color} />
           ),
-          tabBarColor: 'lightblue',
+          tabBarColor: '#D3E7EE',
           tabBarLabel: ''
         }}
       />
@@ -59,9 +65,9 @@ export default function BottomTabNavigator({navigation}) {
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-contact" color={color} />
+            <TabBarIcon name="home" color={color} />
           ),
-          tabBarColor: 'rgba(233, 251, 251, 0.96)',
+          tabBarColor: '#D3E7EE',
           tabBarLabel: '',
           
         }}
@@ -73,7 +79,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-search" color={color} />
           ),
-          tabBarColor: 'lightblue',
+          tabBarColor: '#D3E7EE',
           tabBarLabel: ''
         }}
       />
@@ -96,23 +102,41 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
-export function TabOneNavigator() {
+export function TabOneNavigator({navigation}) {
+  const onPfpClick = () => {
+    navigation.navigate("ConfigurePersonalInfo")
+  }
+  const onSettingsClick = () => {
+    navigation.navigate("ConfigureSettings")
+  }
   return (
-    <TabOneStack.Navigator>
+    <TabOneStack.Navigator mode="modal">
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
         options={{
           headerTitle: (props) => (
             <Image
-              style={{ width: 300, height: 70, alignSelf: "center" }}
-              source={require("../assets/images/lightgreenIHSheader.png")}
-            />
+            style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "center",  }}
+            source={require("../assets/images/darkgreenIHSheader.png")}
+          />
+          // <></>
+          ),
+          
+          headerRight: (props)=>(
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            {/* <TouchableOpacity onPress={onPfpClick} style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: moderateScale(10)}}>
+              <MaterialCommunityIcons name="account-circle-outline" size={moderateScale(43)} color="darkgreen"/>
+            </TouchableOpacity> */}
+            <TouchableOpacity onPress={onSettingsClick} style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: moderateScale(20)}}>
+              <AntDesign name="setting" size={moderateScale(35)} color="darkgreen" />            
+              </TouchableOpacity>
+            </View>
           ),
           headerStyle: {
             backgroundColor: 'rgba(233, 251, 251, 0.96)',
-            height: 145,
-            shadowColor: "grey",
+            height: moderateScale(88),
+            shadowColor: "transparent",
             shadowOffset: {
               height: 0.2,
             },
@@ -121,7 +145,33 @@ export function TabOneNavigator() {
           headerTitleStyle: {
             color: "white",
           },
-          headerLeft: null
+          // headerLeft: (props)=>(
+          //   <Image
+          //   style={{ width: moderateScale(200), height: moderateScale(60), alignSelf: "center", marginLeft: moderateScale(20) }}
+          //   source={require("../assets/images/darkgreenIHSheader.png")}
+          // />
+          // )
+        }}
+      />
+      {/* <TabOneStack.Screen
+        name="ConfigurePersonalInfo"
+        component={ConfigurePersonalInfoScreen}
+        options={{
+          headerLeft: (props)=>(
+            <Foundation name="x" size={24} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+          ),
+          headerTitle: "Configure Personal Information"
+        }}
+      /> */}
+      <TabOneStack.Screen
+        name="ConfigureSettings"
+        component={ConfigureSettingsScreen}
+        options={{
+          headerLeft: (props)=>(
+            <Foundation name="x" size={24} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+          ),
+          headerTitle: "Configure Settings",
+          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
         }}
       />
     </TabOneStack.Navigator>
@@ -153,7 +203,7 @@ function TabTwoNavigator() {
           headerTitleStyle: styles.headerTitle,
         }}
       />
-      <TabTwoStack.Screen
+      {/* <TabTwoStack.Screen
         name="CheckedOutBooks"
         component={CheckedOutBooks}
         options={{
@@ -161,7 +211,7 @@ function TabTwoNavigator() {
           headerStyle: styles.header,
           headerTitleStyle: styles.headerTitle,
         }}
-      />
+      /> */}
       <TabTwoStack.Screen
         name="Staff"
         component={Staff}
@@ -191,12 +241,10 @@ function TabThreeNavigator() {
         name="TabThreeScreen"
         component={TabThreeScreen}
         options={{
-          headerTitle: "Courses and Clubs",
-          headerStyle: [styles.header, {height: Dimensions.get('window').height*0.11,
-        }],
+          headerTitle: "Clubs",
+          headerStyle: [styles.header],
           headerTitleStyle: styles.headerTitle,
           headerLeft: null
-
         }}
       />
 
@@ -227,11 +275,12 @@ function TabThreeNavigator() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "lightblue",
-    height: Dimensions.get('window').height*0.125,
+    backgroundColor: "rgba(233, 251, 251, 0.96)",
+    height: moderateScale(80),
+    shadowColor: "transparent",
   },
   headerTitle: {
-    color: "white",
+    color: "black",
   },
   homeButton: {
     width: 45, 
@@ -246,7 +295,7 @@ const styles = StyleSheet.create({
     height: 73,
     backgroundColor: 'white',
     alignSelf: 'center',
-    bottom: '4%',
+    bottom: '2%',
     borderWidth: 5,
     borderColor: '#009387',
     justifyContent: 'center'

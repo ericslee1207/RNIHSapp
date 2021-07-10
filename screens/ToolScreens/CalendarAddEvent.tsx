@@ -117,7 +117,7 @@
 //                 <Text
 //                   style={{
 //                     fontSize: 25,
-//                     fontFamily: "Trebuchet MS",
+//                     fontFamily: "OpenSansSemiBold",
 //                     alignSelf: "flex-start",
 //                   }}
 //                 >

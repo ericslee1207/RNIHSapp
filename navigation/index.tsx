@@ -13,6 +13,8 @@ import {AuthContext} from '../components/AuthContext';
 import {TabOneNavigator} from './BottomTabNavigator'
 import OnboardingPageTwo from "../screens/OnboardingTwo"
 import OnboardingPageOne from "../screens/OnboardingOne"
+import AsyncStorage from "@react-native-community/async-storage";
+import { ClubContext } from '../screens/Tab3Screens/ClubContext';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -20,7 +22,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === 'dark' ? DefaultTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
@@ -33,44 +35,60 @@ const RootStack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [userToken, setUserToken] = React.useState(null as any)
-
+  const [savedClubs, changeStatusClub1] = React.useState([])
   // React.useEffect(() => {
   //   setTimeout(()=>{setIsLoading(false)}, 2000)
   // }, []);
-
+  
+  
+  React.useEffect(()=>{
+    const func = async() => {
+      let user = await AsyncStorage.getItem("accountInfo");
+      let savedClubs = await AsyncStorage.getItem("savedClubs")
+      
+      if (user==null){
+        setUserToken(null);
+      }
+      else{
+        setUserToken("true")
+      }
+      if (savedClubs!==null){
+        savedClubs = JSON.parse(savedClubs);
+        changeStatusClub1(savedClubs);
+      }
+    }
+    func()
+  }, [])
   const verifyUser = React.useMemo(() => ({
     SignIn: ()=> {
-      setUserToken('fkld');
+      setUserToken('true');
       setIsLoading(false);
     },
     SignOut: ()=>{
       setUserToken(null);
+      //delete from asyncstorage
       setIsLoading(false)
     }
   }), [])
-  if (isLoading){
-    return(
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <ActivityIndicator color="lightblue" size="large"/>
-      </View>
-    )
-  }
   return (
     <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut,
     }}>
-      {userToken===null?(
-        <RootStack.Navigator screenOptions={{ headerShown: false }}>
-          <RootStack.Screen name="Introduction" component={Intro}/>
-          <RootStack.Screen name="Login" component={Login}/>
-        </RootStack.Navigator>
-      ):
-        <RootStack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
-          <RootStack.Screen name="OnboardingOne" component={OnboardingPageOne}/>
-          <RootStack.Screen name="OnboardingTwo" component={OnboardingPageTwo} />
-          <RootStack.Screen name="Root" component={BottomTabNavigator} />
-          <RootStack.Screen name="Home" component={TabOneNavigator} />
-        </RootStack.Navigator>}
-      
+      <ClubContext.Provider value={{saved_clubs: savedClubs, changeStatusClub: changeStatusClub1}}>
+        {userToken===null?(
+          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+            <RootStack.Screen name="Introduction" component={Intro}/>
+            <RootStack.Screen name="Login" component={Login}/>
+          </RootStack.Navigator>
+        ):
+          
+          <RootStack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+            {/* <RootStack.Screen name="OnboardingOne" component={OnboardingPageOne}/>
+            <RootStack.Screen name="OnboardingTwo" component={OnboardingPageTwo} /> */}
+            <RootStack.Screen name="Root" component={BottomTabNavigator} />
+            <RootStack.Screen name="Home" component={TabOneNavigator} />
+          </RootStack.Navigator>
+          } 
+      </ClubContext.Provider>
     </AuthContext.Provider>
   );
 }

@@ -1,21 +1,5 @@
 [
   {
-    "period": 0,
-    "subject": "Period 0",
-    "teacher": { "id": 0, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
-    "time": "7:00 AM",
-    "id": 0
-  },
-  {
-    "period": "*",
-    "subject": "Office Hours",
-    "teacher": { "id": 1, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
-    "time": "7:55 AM",
-    "id":1
-  },
-  {
     "period": 2,
     "subject": "Period 2",
     "teacher": { "id": 2, "first_name": "NA", "last_name": "NA" },
@@ -24,27 +8,27 @@
     "id": 2
   },
   {
-    "period": "*",
-    "subject": "Break",
+    "period": "Flex",
+    "subject": "Flex Time",
     "teacher": { "id": 3, "first_name": "NA", "last_name": "NA" },
     "room": "NA",
-    "time": "9:55 AM",
+    "time": "10:00 AM",
     "id": 3
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "10:30 AM",
+    "id": 4
   },
   {
     "period": 4,
     "subject": "Period 4",
-    "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
-    "time": "10:15 AM",
-    "id": 4
-  },
-  {
-    "period": 6,
-    "subject": "Period 6",
     "teacher": { "id": 5, "first_name": "NA", "last_name": "NA" },
     "room": "NA",
-    "time": "11:45 AM",
+    "time": "10:45 AM",
     "id": 5
   },
   {
@@ -52,16 +36,31 @@
     "subject": "Lunch",
     "teacher": { "id": 6, "first_name": "NA", "last_name": "NA" },
     "room": "NA",
-    "time": "1:10 PM",
+    "time": "12:10 PM",
     "id": 6
   },
-  
+  {
+    "period": 6,
+    "subject": "Period 6",
+    "teacher": { "id": 7, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "12:50 PM",
+    "id": 7
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "teacher": { "id": 8, "first_name": "NA", "last_name": "NA" },
+    "room": "NA",
+    "time": "2:15 PM",
+    "id": 8
+  },
   {
     "period": 8,
     "subject": "Period 8",
-    "teacher": { "id": 7, "first_name": "NA", "last_name": "NA" },
+    "teacher": { "id": 9, "first_name": "NA", "last_name": "NA" },
     "room": "NA",
-    "time": "1:45 PM",
-    "id": 7
+    "time": "2:25 PM",
+    "id": 9
   }
 ]
