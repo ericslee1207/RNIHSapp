@@ -7,6 +7,7 @@ import AppLoading from "expo-app-loading"
 import { moderateScale } from 'react-native-size-matters';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const Intro = ({navigation}) => {
     const[loading, setLoading] = useState(false);
@@ -27,20 +28,24 @@ export const Intro = ({navigation}) => {
         return (
             
                 <View style={styles.container}>
+                    <LinearGradient start={{ x: 0, y: 0 }} colors={["#009387", "#45b5ff"]} style={{ height: '100%', position: 'absolute', width: '100%' }} />
                     <ImageBackground style={{height: '100%', width: '100%'}} source={require('../assets/images/IHSAerielView_Cut.jpg')} imageStyle={{opacity: 0.4}}>
                         <View style={styles.top}>
                             <View style={styles.outercircle}>
                                 <View style={styles.innercircle}>
-                                    <Image source={require('../assets/images/IHSLOGO.png')} style={styles.logo}/>
+                                    <Image source={require('../assets/images/perfectSquareLogo.png')} style={styles.logo}/>
                                 </View>
                             </View>
-                            <Text style={styles.title}>Irvine High App</Text>
+                            {/* <Text style={styles.title}>IHS Mobile</Text> */}
                         </View>
                         <Animatable.View 
                         style={styles.bottom}
                         animation='fadeInUpBig'
                         >
-                            <Text style={styles.welcome}>Welcome IHS Student</Text>
+                            <Text style={styles.welcome}><Text style={{fontFamily: 'OpenSansRegular', color: 'grey'}}>Welcome</Text> IHS Student!</Text>
+                            <View style={{height: 2, backgroundColor: "#45b5ff", width: '30%'}}/>
+
+                            {/* <Image source={require("../assets/images/newlogowhite.png")} style={{height: moderateScale(45), width: moderateScale(300), marginTop: moderateScale(30)}}/> */}
                             <View style={{width: '100%'}}>
                                 <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: moderateScale(55), backgroundColor: '#04b5a7', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.3}}>
                                     <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Student Onboard</Text>
@@ -67,42 +72,45 @@ const styles=StyleSheet.create({
     },
     bottom: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         alignItems: 'center',
-        borderWidth: 5,
-        borderColor: 'white'
+        // borderWidth: 5,
+        // borderColor: 'white',
+        
     },
     logo: {
-        height: moderateScale(130),
-        width: moderateScale(130),
-        opacity: 0.8
+        height: moderateScale(175),
+        width: moderateScale(175),
+        opacity: 1,
+        borderRadius: moderateScale(200)
     },
     title: {
-        fontSize: 33,
+        fontSize: moderateScale(33),
         margin: 20,
         color: 'white',
         fontFamily: 'OpenSansSemiBold',
     },
     innercircle: {
-        borderWidth: 8, 
-        height: moderateScale(186), 
-        width: moderateScale(186), 
+        borderWidth: 5, 
+        height: moderateScale(189), 
+        width: moderateScale(189), 
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 150,
-        borderColor: 'darkslategrey',
+        borderColor: '#009387',
         backgroundColor: 'transparent'
     },
     welcome: {
-        margin: '8%',
+        marginHorizontal: '8%',
+        marginVertical: '8%',
         fontFamily: 'OpenSansSemiBold',
-        fontSize: moderateScale(20),
+        fontSize: moderateScale(24),
         fontStyle: 'italic',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start',
-
+        alignSelf: 'center',
+        color: "#009387"
     },
     outercircle: {
         height: moderateScale(200), 
@@ -110,6 +118,6 @@ const styles=StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 150,
-        backgroundColor: 'lightcyan'
+        backgroundColor: 'rgba(255, 255, 255, 1)'
     },
 })

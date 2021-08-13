@@ -7,7 +7,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  Modal
+  Modal,
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
@@ -18,14 +20,14 @@ import {
   Title,
   Paragraph,
   TextInput,
-  Button,
   FAB,
+  Button
 } from "react-native-paper";
 import { CalendarList, Agenda, Calendar } from "react-native-calendars";
 import IUSD_events from "../../IUSD_events.json";
 import moment from "moment";
 import { Madoka } from "react-native-textinput-effects";
-import { TouchableOpacity, ScrollView, FlatList } from "react-native-gesture-handler";
+import { ScrollView, FlatList } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AsyncStorage from "@react-native-community/async-storage";
 import { moderateScale } from "react-native-size-matters";
@@ -231,7 +233,9 @@ export const Calendar1 = () => {
       newData = [
         ...storedDataParsed,
         { name: name, description: description, time: chosenTime },
-      ].sort((a, b) => b.time - a.time);
+      ].sort(function (a, b) {
+        return new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
+      });
       await AsyncStorage.setItem(datePressed, JSON.stringify(newData));
     }
     if (newData !== []) {
@@ -245,7 +249,12 @@ export const Calendar1 = () => {
     editList(newData);
   };
   const submit = (name, description, chosenTime) => {
-    saveData(name, description, chosenTime);
+    if (name.length > 0 && description.length>0 && chosenTime!=""){
+      saveData(name, description, chosenTime);
+    }
+    else{
+      Alert.alert("Fields cannot be blank")
+    }
   };
   const cancel = () => {
     toggleModal(false);
@@ -294,6 +303,7 @@ export const Calendar1 = () => {
           <Feather name="x" size={moderateScale(24)} color="black" onPress={cancel} />
           <Title style={{ marginLeft: "25%" }}>New Event</Title>
         </View>
+
         <Fumi
           style={{ width: "90%", height: moderateScale(30), marginTop: "3%" }}
           // borderColor={"lightblue"}
@@ -346,6 +356,7 @@ export const Calendar1 = () => {
             {chosenTime}
           </Text>
         </View>
+        
         <DateTimePicker
           isVisible={isTimePickerVisible}
           onConfirm={(datetime) => [
@@ -357,22 +368,15 @@ export const Calendar1 = () => {
           display="spinner"
           is24Hour={false}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "transparent",
-            justifyContent: "center",
-          }}
-        >
+
           <TouchableOpacity
             style={[styles.addEventButton, {backgroundColor: preferences.colorObj.primary}]}
             onPress={() => submit(name, description, chosenTime)}
           >
-            <Text style={{ fontSize: 15, color: "white" }}>
+            <Text style={{ fontSize: moderateScale(15), color: "white" }}>
               Add Event
             </Text>
           </TouchableOpacity>
-        </View>
       </View>
     )
   }
@@ -447,6 +451,7 @@ const styles = StyleSheet.create({
     shadowColor: 'grey',
     shadowOpacity: 0.2,
     justifyContent: "space-between",
+    elevation: 3
   },
   addEventButton1: {
     margin: 16,
@@ -457,10 +462,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "lightblue",
-    height: 40,
-    width: moderateScale(250),
+    height: moderateScale(37),
+    width: '100%',
     borderRadius: 10,
-    marginRight: 5,
+    // marginRight: 5,
   },
   cancelEventButton: {
     justifyContent: "center",
@@ -485,5 +490,6 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 0.3,
+    elevation: 3
   },
 });

@@ -6,6 +6,7 @@ import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-g
 import {Subtitle} from 'native-base'
 import {ClubContext} from './ClubContext'
 import AsyncStorage from "@react-native-community/async-storage";
+import { Alert } from 'react-native';
 
 
 export const MyClubs= ({navigation, route})=>{
@@ -96,6 +97,7 @@ const styles=StyleSheet.create({
         shadowOpacity: 0.4, 
         shadowOffset: {width: 2, height: 2}, 
         marginTop: 10,
+        elevation: 5
 
     },
     clubTitle: {

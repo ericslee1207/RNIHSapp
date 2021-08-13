@@ -8,7 +8,7 @@ export const Staff_List = (props) => {
     const namearr = props.data.Name.split(" ")
     const firstNameInitial = namearr[0].charAt(0);
     const lastNameInitial = namearr[namearr.length-1].charAt(0)
-    let textColor="black"
+    let textColor="white"
     if (props.preferences.colorObj.primary =="#7361ff"){
         textColor="white"
     }
@@ -24,7 +24,7 @@ export const Staff_List = (props) => {
             </Body>
             <Right>
                 <TouchableHighlight style={{height: moderateScale(20), width: moderateScale(40)}} onPress={()=>{Linking.openURL(`mailto:${props.data.Email}`)}}>
-                    <Text style={{color: 'green', fontSize: moderateScale(15), fontFamily: 'OpenSansRegular'}}>Email</Text>
+                    <Text style={{color: 'green', fontSize: moderateScale(14), fontFamily: 'OpenSansRegular'}}>Email</Text>
                 </TouchableHighlight>
             </Right>
         </ListItem>

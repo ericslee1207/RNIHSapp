@@ -164,15 +164,16 @@ export const Staff = () => {
 const styles = StyleSheet.create({
   container: {},
   header: {
-    fontSize: 30,
+    fontSize: moderateScale(25),
     fontFamily: "OpenSansSemiBold",
     fontWeight: "bold",
   },
   staff: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
   },
   title: {
-    padding: 15,
+    padding: moderateScale(10),
+    paddingLeft: moderateScale(30),
     borderBottomColor: "lightgrey",
     shadowColor: "lightgrey",
     shadowOffset: {

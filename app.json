@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "IrvineHighApp",
-    "slug": "IrvineHighApp",
-    "version": "1.0.0",
+    "name": "Irvine High Mobile",
+    "slug": "ihsApp",
+    "version": "1.0.4",
+    "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/correctCropLogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/splashscreen.png",
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,10 +19,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ericslee1207.ihsApp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "android": {
+      "package": "com.ericslee1207.ihsApp"
     }
   }
 }

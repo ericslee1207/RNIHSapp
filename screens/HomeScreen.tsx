@@ -7,6 +7,7 @@ import {
   ScrollView,
   Linking,
   Dimensions,
+  Alert,
 } from "react-native";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -26,28 +27,66 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import CircleTimer from "./CircleTimer"
+import { AuthContext } from "../components/AuthContext";
 
 const currentDate = new Date();
 const day = moment(currentDate).format('l').split("/")[0];
 const dayOfWeek = moment(currentDate).format('dddd')
-let periods: any;
+// const dayOfWeek = "Tuesday"
 let evenOrOdd: any;
+let currentPeriod: any;
+let comingPeriod: any;
 if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
-  periods=oddPeriods;
   evenOrOdd="odd"
+  currentPeriod = {
+    period: 1,
+    subject: "NA",
+    room: "NA",
+    time: "8:30 AM",
+    id: 2
+  };
+  comingPeriod = {
+    period: 2,
+    subject: "NA",
+    room: "NA",
+    time: "10:00 AM",
+    id: 3
+  };
 }
 else if(dayOfWeek=="Wednesday" || dayOfWeek=="Friday"){
-  periods=evenPeriods;
   evenOrOdd="even"
+  currentPeriod = {
+    period: 1,
+    subject: "NA",
+    room: "NA",
+    time: "8:30 AM",
+    id: 2
+  };
+  comingPeriod = {
+    period: 2,
+    subject: "NA",
+    room: "NA",
+    time: "10:00 AM",
+    id: 3
+  };
 }
-else if (dayOfWeek=="Monday"){
-  periods=mondayPeriods;
+else{
+  evenOrOdd="neither"
+  currentPeriod = {
+    period: 1,
+    subject: "NA",
+    room: "NA",
+    time: "8:00 AM",
+    id: 0
+  };
+  comingPeriod = {
+    period: 2,
+    subject: "NA",
+    room: "NA",
+    time: "9:00 AM",
+    id: 1
+  };
 }
-
-let count = 0;
-
-let currentPeriod = periods[0];
-let comingPeriod = periods[1];
 
 function inbetween(first: string, second: string, now: string) {
   const arr = now.split(" ").join(",").split(":").join(",").split(",");
@@ -97,6 +136,7 @@ function inbetween(first: string, second: string, now: string) {
 
 const ScheduleItem = (props: any) => {
   const datenow = moment().format('LT');
+  // const datenow = "7:59 AM"
   const datenow_split = datenow
     .split(" ")
     .join(",")
@@ -104,42 +144,33 @@ const ScheduleItem = (props: any) => {
     .join(",")
     .split(",");
   const datenow_hour = parseInt(datenow_split[0]);
+  const datenow_minute = parseInt(datenow_split[1])
   const datenow_ampm = datenow_split[2];
   let nextPeriod = {};
   let trueperiod = true;
-  
-  // const notSummer = () => {
-  //   const datearr = moment().format("l").split("/")
-  //   if (parseInt(datearr[0])>=6 && parseInt(datearr[0])<=8){
-  //     if (parseInt(datearr[1])>=6 && parseInt(datearr[1])<=13){
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 
   if (props.data.period === "*") {
     trueperiod = false;
   }
   let curPeriod = {};
   let stoppingPoint = 0;
-  for (let i = 0; i < periods.length - 1; i++) {
-    if (inbetween(periods[i].time, periods[i + 1].time, datenow)) {
-      curPeriod = periods[i];
-      nextPeriod = periods[i + 1];
+  for (let i = 0; i < props.periods.length - 1; i++) {
+    if (inbetween(props.periods[i].time, props.periods[i + 1].time, datenow)) {
+      curPeriod = props.periods[i];
+      nextPeriod = props.periods[i + 1];
       stoppingPoint = i;
     }
   }
   let lastObj = {
-    period: 9,
+    period: "*",
     subject: "Finishing Time",
     time: "3:50 PM",
     id: 10,
   };
-  if (inbetween(periods[periods.length - 1].time, lastObj.time, datenow)) {
-    curPeriod = periods[periods.length - 1];
+  if (inbetween(props.periods[props.periods.length - 1].time, lastObj.time, datenow)) {
+    curPeriod = props.periods[props.periods.length - 1];
     nextPeriod = lastObj;
-    stoppingPoint = periods.length - 1;
+    stoppingPoint = props.periods.length - 1;
   }
 
   // const Detailbutton = () => {
@@ -169,29 +200,34 @@ const ScheduleItem = (props: any) => {
   //   nextPeriod=periods[0]
   // }
   if (datenow_ampm === "AM" && datenow_hour < 8) {
-    nextPeriod = periods[0];
+    comingPeriod = props.periods[0];
+  }
+  if (dayOfWeek!="Monday" && datenow_ampm === "AM" && datenow_hour == 8 && datenow_minute<30) {
+    comingPeriod = props.periods[0];
   }
   
   const inRadius = (data, curPeriod) => {
-    let radius = (props.preferences.radius-1)/2;
-    if (Math.abs(data.id - curPeriod.id)<=radius && Math.abs(data.id - curPeriod.id) >0){
+    let radius = props.preferences.radius;
+    if (Math.abs(data.id - curPeriod.id)<radius && (data.id - curPeriod.id) >0){
       return true;
     }
     return false;
   }
   let xDomain = Math.abs(props.data.id - curPeriod.id)
+  if (xDomain>1){
+    xDomain=1;
+  }
+  let fontSize = moderateScale(25) - xDomain*moderateScale(4)
+  let subFontSize = moderateScale(16) - xDomain*moderateScale(0.9)
+  let height = moderateScale(100) - xDomain*moderateScale(15)
+  let width = `${(72 - 11 * xDomain)}%`
 
-
-  let fontSize = moderateScale(25) - xDomain*moderateScale(6)
-  let subFontSize = moderateScale(16) - xDomain*moderateScale(1)
-  let height = moderateScale(100) - xDomain*moderateScale(20)
-  let width = `${(70 - 10 * xDomain)}%`
   if (curPeriod === props.data ) {
     comingPeriod = nextPeriod;
-    currentPeriod = props.data;
+    currentPeriod = curPeriod;
     return (
       <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-        <View style={[styles.scheduleFormat1, {height: height, width: width, backgroundColor: props.preferences.colorObj.highlight, borderRadius: moderateScale(55)}]}>
+        <View style={[styles.scheduleFormat1, {height: height, width: width, backgroundColor: props.preferences.colorObj.primary, opacity: 0.8, borderRadius: moderateScale(55)}]}>
           {/* <Text
             style={{
               fontFamily: "OpenSansSemiBold",
@@ -201,7 +237,7 @@ const ScheduleItem = (props: any) => {
           >
             {props.data.period}
           </Text> */}
-          <Text style={{ fontFamily: "OpenSansSemiBold", fontSize:  fontSize}}>
+          <Text style={{ fontFamily: "OpenSansSemiBold", fontSize:  fontSize, color: 'white'}}>
             {props.data.subject}
           </Text>
           <View
@@ -236,7 +272,7 @@ const ScheduleItem = (props: any) => {
         >
           {props.data.period}
         </Text> */}
-        <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: fontSize }}>
+        <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: fontSize, color: props.preferences.colorObj.primary }}>
           {props.data.subject}
         </Text>
         <View
@@ -267,9 +303,20 @@ const ScheduleItem = (props: any) => {
 
 
 export default function TabOneScreen() {
+//   AsyncStorage.getAllKeys((err, keys) => {
+//   AsyncStorage.multiGet(keys, (error, stores) => {
+//     stores.map((result, i, store) => {
+//       console.log({ [store[i][0]]: store[i][1] });
+//       return true;
+//     });
+//   });
+// });
+  const { Schedule } = React.useContext(AuthContext)
+  let periods: any;
   const currentDate = new Date();
   const [datenow, updateDate] = useState(moment(currentDate));
   const withSeconds = moment(currentDate).format("LTS");
+  const [fontSize, setFontSize] = useState(moderateScale(27))
   const [preferences, setPreferences] = useState({
     isCircle: false,
     radius: 3,
@@ -280,6 +327,23 @@ export default function TabOneScreen() {
       darkbackground : "#D3E7EE"
     },
   })
+  const dayOfWeek = moment(currentDate).format('dddd')
+  if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
+    periods=Schedule.odd
+  }
+  else if(dayOfWeek=="Wednesday"){
+    periods=Schedule.even
+  }
+  else if(dayOfWeek=="Friday"){
+    periods = Schedule.even
+  }
+  else if (dayOfWeek=="Monday"){
+    periods = Schedule.monday;
+  }
+  else{
+    periods=Schedule.monday
+  }
+  // console.log(upcomingPeriods)
   const [user, setUser] = useState({})
   const secondarr = withSeconds
     .split(" ")
@@ -298,16 +362,22 @@ export default function TabOneScreen() {
       setPreferences(preferencesParsed)
       let user = await AsyncStorage.getItem("accountInfo")
       let userParsed = JSON.parse(user)
+      if (userParsed.firstName.length >=9){
+        let size = moderateScale(27) - moderateScale(0.4)*userParsed.firstName.length
+        setFontSize(size)
+      }
       setUser(userParsed)
 
     }
     getPreferences()
   }, [isFocused])
   useEffect(() => {
+    updateDate(moment(new Date()))
     setTimeout(() => {
+      updateDate(moment(new Date()))
       setInterval(() => {
         setIndex((index) => index + 1);
-      }, 30000);
+      }, 5000);
     }, secondsLeft);
     
   }, []);
@@ -318,23 +388,16 @@ export default function TabOneScreen() {
 
   const classes = periods.map((period) => (
     <View key={period.id} style={{ backgroundColor: "transparent"}}>
-      <ScheduleItem preferences = {preferences} date={datenow} data={period} key={period.id} />
+      <ScheduleItem periods={periods} preferences = {preferences} date={datenow} data={period} key={period.id} />
     </View>
-
   ));
-  
-  const pointers = periods.map((period) => {
-    if (Math.abs(period.id - currentPeriod.id) <= (preferences.radius-1)/2){
-      return(
-        <View key = {period.id} style={{height: moderateScale(10), width: moderateScale(10), borderRadius: moderateScale(5), backgroundColor: 'red'}}/>
-      )
-    }
-});
-  let height = "73%"
+    
+  // if (user.firstName.length >=9){
+  //   fontSize = fontSize - moderateScale(2)*user.firstName.length
+  // }
   return (
     <>
     <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)', }}>
-
       <View style={styles.container}>
       <LinearGradient colors={["rgba(233, 251, 251, 0.96)", "#D3E7EE"]} style={{position: 'absolute', top: -moderateScale(100), right:0, left: 0, height: moderateScale(1000)}}/>
 
@@ -343,38 +406,39 @@ export default function TabOneScreen() {
           style={{flex: 1, width: "100%", height: "100%"}}
           imageStyle={{opacity: 0.5}}
         > */}
-          <View style={{flexDirection: 'row', backgroundColor: 'transparent', justifyContent: 'space-between', marginTop: moderateScale(-3)}}>
+          <View style={{flexDirection: 'row', backgroundColor: 'transparent', justifyContent: 'space-between', marginTop: moderateScale(5), alignItems: 'center'}}>
               <View style={{flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft: moderateScale(15)}}>
               <Text
                 style={{
                   fontFamily: "OpenSansLight",
-                  fontSize: moderateScale(27),
+                  fontSize: fontSize,
                   // fontWeight: "bold",
                   //marginTop: 25,
                   alignSelf: "flex-end",
-                  marginLeft: "5%",
-                  marginBottom: moderateScale(5)
+                  marginLeft: moderateScale(9),
+                  // marginBottom: moderateScale(5)
                 }}
               >
-                Hello
+                Hello,
               </Text>
               <Text
+                allowFontScaling={true}
                 style={{
                   fontFamily: "OpenSansSemiBold",
-                  fontSize: moderateScale(27),
+                  fontSize: fontSize,
                   // fontWeight: "bold",
                   //marginTop: 25,
                   alignSelf: "flex-end",
-                  marginLeft: "5%",
-                  marginBottom: moderateScale(5)
+                  marginLeft: moderateScale(8),
+                  // marginBottom: moderateScale(5)
 
                 }}
               >
-                {user.firstName}
+                {user.firstName}!
               </Text>
               </View>
               
-            <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center', marginLeft: moderateScale(30)}}>
+            <View style={{backgroundColor: 'transparent',justifyContent: 'center',  marginRight: moderateScale(20), marginTop: moderateScale(0)}}>
               <AdayorBday colorObj={preferences.colorObj} day={evenOrOdd}/>
             </View>
             
@@ -395,14 +459,15 @@ export default function TabOneScreen() {
             date={datenow}
             colorObj={preferences.colorObj}
             isCircle={preferences.isCircle}
+            preferences={preferences}
+            fontSize={fontSize}
           />:
             <CircleTimer 
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
             date={datenow}/>
           }
-          
-
+          {(dayOfWeek!="Saturday" && dayOfWeek!="Sunday") ? 
           <View
             style={{
               backgroundColor: "rgba(0,0,0,0)",
@@ -411,35 +476,6 @@ export default function TabOneScreen() {
               paddingBottom: 20,
             }}
           >
-            <View style={{backgroundColor: 'transparent', flexDirection: 'row'}}>
-            <Text
-                style={{
-                  marginVertical: moderateScale(5),
-                  fontFamily: "OpenSansLight",
-                  fontSize: moderateScale(25),
-                  // fontWeight: "bold",
-                  //marginTop: 25,
-                  alignSelf: "flex-end",
-                  marginLeft: "2%",
-                }}
-              >
-                Your
-              </Text>
-              <Text
-                style={{
-                  marginVertical: moderateScale(5),
-
-                  fontFamily: "OpenSansSemiBold",
-                  fontSize: moderateScale(25),
-                  // fontWeight: "bold",
-                  //marginTop: 25,
-                  // alignSelf: "flex-end",
-                  marginLeft: "3%",
-                }}
-              >
-                Schedule
-              </Text>
-            </View>
             <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row',  justifyContent: 'space-between', alignItems: 'center'}}>
               <View style={{backgroundColor: 'transparent', width: '100%'}}>
                 {classes}
@@ -450,8 +486,12 @@ export default function TabOneScreen() {
 
             </View>
             
+
             
-          </View>
+            
+          </View>:
+          <></>
+          }
         {/* </ImageBackground> */}
 
         {/* <View style={{ width: "100%", height: 70 }}>
@@ -559,7 +599,8 @@ const styles = StyleSheet.create({
     shadowOffset: {height: 1, width: 1},
     shadowOpacity: 0.1,
     // alignSelf: 'center',
-    marginVertical: "2%"
+    marginVertical: "2%",
+    elevation: 2
   },
   title: {
     fontSize: 90,

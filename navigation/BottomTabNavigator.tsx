@@ -2,18 +2,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
 import * as React from "react";
-import { Image, Dimensions, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Image, Dimensions, StyleSheet, View, TouchableOpacity, Platform } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
 import { Foundation } from '@expo/vector-icons'; 
-
+import { Entypo } from '@expo/vector-icons'; 
 import Colors from "../constants/Colors";
+import { Feather } from '@expo/vector-icons'; 
 import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import TabThreeScreen from "../screens/TabThreeScreen";
 import { IdCard } from "../screens/ToolScreens/IdCard";
-import { CheckedOutBooks } from "../screens/ToolScreens/CheckedOutBooks";
 import { Calendar1 } from "../screens/ToolScreens/Calendar";
 import { Staff } from "../screens/ToolScreens/Staff";
 import {moderateScale, verticalScale, scale} from 'react-native-size-matters'
@@ -28,11 +28,12 @@ import {
 import { Club_Page } from "../screens/Tab3Screens/Club_Screens";
 import { MyClubs } from "../screens/Tab3Screens/MyClubs"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import PreferencesScreen from "../screens/PreferencesScreen";
+import AboutScreen from "../screens/AboutScreen";
 
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator({navigation}) {
-
   return (
     <>
     {/* <View style={styles.homebuttonbackground}>
@@ -117,30 +118,37 @@ export function TabOneNavigator({navigation}) {
         options={{
           headerTitle: (props) => (
             <Image
-            style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "center",  }}
+            style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
             source={require("../assets/images/darkgreenIHSheader.png")}
           />
+          
           // <></>
           ),
-          
+          headerLeft: (props)=>(
+            null
+          ),
+          // headerTitle: (props)=>(<></>),
           headerRight: (props)=>(
+            <>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
             {/* <TouchableOpacity onPress={onPfpClick} style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: moderateScale(10)}}>
               <MaterialCommunityIcons name="account-circle-outline" size={moderateScale(43)} color="darkgreen"/>
             </TouchableOpacity> */}
             <TouchableOpacity onPress={onSettingsClick} style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: moderateScale(20)}}>
-              <AntDesign name="setting" size={moderateScale(35)} color="darkgreen" />            
+              <Entypo name="dots-three-horizontal" size={moderateScale(35)} color="darkgreen" />              
               </TouchableOpacity>
             </View>
+            </>
           ),
           headerStyle: {
             backgroundColor: 'rgba(233, 251, 251, 0.96)',
-            height: moderateScale(88),
+            height: verticalScale(78),
             shadowColor: "transparent",
             shadowOffset: {
               height: 0.2,
             },
             shadowOpacity: 0.8,
+            elevation: 0
           },
           headerTitleStyle: {
             color: "white",
@@ -153,28 +161,54 @@ export function TabOneNavigator({navigation}) {
           // )
         }}
       />
-      {/* <TabOneStack.Screen
-        name="ConfigurePersonalInfo"
+      <TabOneStack.Screen
+        name="SetClasses"
         component={ConfigurePersonalInfoScreen}
         options={{
           headerLeft: (props)=>(
-            <Foundation name="x" size={24} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
-          headerTitle: "Configure Personal Information"
+          headerTitle: "Personalize Classes",
+          headerStyle:{
+            backgroundColor: 'rgba(233, 251, 251, 0.96)',
+
+          }
         }}
-      /> */}
+      />
       <TabOneStack.Screen
         name="ConfigureSettings"
         component={ConfigureSettingsScreen}
         options={{
           headerLeft: (props)=>(
-            <Foundation name="x" size={24} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
-          headerTitle: "Configure Settings",
+          headerTitle: "Settings",
           headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
         }}
       />
-    </TabOneStack.Navigator>
+      <TabOneStack.Screen
+        name="Preferences"
+        component={PreferencesScreen}
+        options={{
+          headerLeft: (props)=>(
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+          ),
+          headerTitle: "Preferences",
+          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
+        }}
+      />
+      <TabOneStack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          headerLeft: (props)=>(
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+          ),
+          headerTitle: "About",
+          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
+        }}
+      />
+</TabOneStack.Navigator>
   );
 }
 
@@ -278,6 +312,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(233, 251, 251, 0.96)",
     height: moderateScale(80),
     shadowColor: "transparent",
+    elevation: 0
+
   },
   headerTitle: {
     color: "black",
@@ -299,5 +335,6 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: '#009387',
     justifyContent: 'center'
-  }
+  },
+  
 });

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, Alert, Linking, StyleSheet } from "react-native";
+import { Image, Alert, StyleSheet } from "react-native";
 import {
   Container,
   Content,
@@ -20,6 +20,7 @@ import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import * as WebBrowser from "expo-web-browser";
 
 export const ToolList = (props) => {
   const onDelete = async () => {
@@ -36,7 +37,9 @@ export const ToolList = (props) => {
       darkbackground : "#D3E7EE"
     }
   })
-  
+  const handleLink = async (link) => {
+    await WebBrowser.openBrowserAsync(link);
+  };
   const isFocused = useIsFocused()
   React.useEffect(()=>{
     const getPreferences = async() => {
@@ -71,10 +74,10 @@ export const ToolList = (props) => {
           )
         }
         else if (tool.name == "El Vaquero") {
-          Linking.openURL("https://ihselvaquero.com/")
+          handleLink("https://ihselvaquero.com/")
         }
         else if (tool.name == "FlexTime") {
-          Linking.openURL("https://teachmore.org/irvine/students/")
+          handleLink("https://teachmore.org/irvine/students/")
         }
         else {
           props.navigation.navigate(tool.name)
@@ -103,34 +106,34 @@ export const ToolList = (props) => {
   return (
     <View style={{ flex: 3, padding: moderateScale(25) }}>
       <View style={styles.row}>
-        <TouchableOpacity onPress={() => props.navigation.navigate(tools[0].name)} style={{ flex: 2 / 5, height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0} }}>
+        <TouchableOpacity onPress={() => props.navigation.navigate(tools[0].name)} style={{ flex: 2.5 / 5, height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation: 7 }}>
           <AntDesign name="calendar" size={moderateScale(38)} color={preferences.colorObj.primary} />
           <Text style={[styles.text, {color: "black"}]}>{tools[0].type}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => Linking.openURL("https://teachmore.org/irvine/students/")} style={{ flex: 3 / 5,  height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center' , shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0} }}>
+        <TouchableOpacity onPress={() => handleLink("https://teachmore.org/irvine/students/")} style={{ flex: 2.5 / 5,  height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center' , shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation: 7 }}>
           <AntDesign name="clockcircleo" size={moderateScale(38)} color={preferences.colorObj.primary} />
           <Text style={styles.text}>{tools[1].type}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity onPress={() => props.navigation.navigate(tools[2].name)} style={{ flex: 3 / 5,  height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0} }}>
+        <TouchableOpacity onPress={() => props.navigation.navigate(tools[2].name)} style={{ flex: 2.5 / 5,  height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation:7 }}>
           <AntDesign name="idcard" size={moderateScale(38)} color={preferences.colorObj.primary} />
           <Text style={styles.text}>{tools[2].type}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => props.navigation.navigate(tools[3].name)} style={{ flex: 2 / 5,  height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}  }}>
+        <TouchableOpacity onPress={() => props.navigation.navigate(tools[3].name)} style={{ flex: 2.5 / 5,  height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation: 7  }}>
           <Feather name="users" size={moderateScale(38)} color={preferences.colorObj.primary} />          
         <Text style={styles.text}>{tools[3].type}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity onPress={() => Linking.openURL("https://ihselvaquero.com/")} style={{ flex: 2 / 5,  height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: 'grey', shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}  }}>
+        <TouchableOpacity onPress={() => handleLink("https://ihselvaquero.com/")} style={{ flex: 2.5 / 5,  height: '100%', borderRadius: moderateScale(20), marginRight: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: 'grey', shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation: 7  }}>
           <Ionicons name="newspaper-outline" size={moderateScale(38)} color={preferences.colorObj.primary} />
           <Text style={styles.text}>{tools[4].type}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() =>
           Alert.alert(
-            "Delete Account",
-            "",
+            "Are you sure?",
+            "This will permanently delete your account and its data",
             [
               {
                 text: 'Yes',
@@ -144,7 +147,7 @@ export const ToolList = (props) => {
             { cancelable: false }
 
           )
-        } style={{ flex: 3 / 5, height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}  }}>
+        } style={{ flex: 2.5 / 5, height: '100%', borderRadius: moderateScale(20), marginLeft: moderateScale(6), justifyContent: 'center', alignItems: 'center', shadowColor: "grey", shadowOpacity: 0.3, shadowRadius: 5, backgroundColor: "white", shadowOffset: {height: 1, width: 0}, elevation: 7  }}>
           <AntDesign name="deleteuser" size={moderateScale(38)} color={preferences.colorObj.primary} />
           <Text style={styles.text}>{tools[5].type}</Text>
         </TouchableOpacity>

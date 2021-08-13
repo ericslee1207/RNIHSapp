@@ -1,54 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Image } from "react-native";
 import { Provider as PaperProvider, Card } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { MontoFri } from "./MontoFri";
 import moment from 'moment'
-import { moderateScale } from "react-native-size-matters";
+import { moderateScale, verticalScale, moderateVerticalScale, } from "react-native-size-matters";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { BlurView } from 'expo-blur';
+import { AuthContext } from "../components/AuthContext";
+
 export const HorizontalCarousel = (props: any) => {
+  const { Schedule } = React.useContext(AuthContext)
+  const currentDate = new Date();
   const [activeIndex, setActiveIndex] = useState(0);
+  const dayOfWeek = moment(currentDate).format('dddd')
+  let upcomingPeriods = [];
+  // const dayOfWeek = "Tuesday"
   
-  const datenow = props.date;
-  const today = () => {
-    return (
-      <Card
-        style={{
-          borderRadius: 15,
-          height: moderateScale(180),
-          marginBottom: 10,
-          backgroundColor: 'white',
-          borderWidth: 1, borderColor: 'white',
-          padding: 25,
-          paddingBottom: 40,
-          width: '90%',
-          marginLeft: '5%',
-          marginTop: '5%',
-          shadowOffset:{height: 2, width: 2},
-          shadowOpacity: 0.1
-        }}
-      >
-        <View style={styles.header}>
-          
-          <View
-            style={{
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 20,
-              backgroundColor: "rgba(0,0,0,0)",
-              flex: 1
-            }}
-          >
-            <Text style={styles.dateFormat}>{datenow.format("LL")}</Text>
-            <MontoFri date={datenow} />
-          </View>
-        </View>
-      </Card>
-    );
-  };
+  const datenow = props.date.format("LT");
+
   const arr = props.comingPeriod.time
     .split(" ")
     .join(",")
@@ -62,8 +34,14 @@ export const HorizontalCarousel = (props: any) => {
     .join(",")
     .split(",");
     //datenow.format("LT")
+  // const dateLT = datenow
+  //   .format("LT")
+  //   .split(" ")
+  //   .join(",")
+  //   .split(":")
+  //   .join(",")
+  //   .split(",");
   const dateLT = datenow
-    .format("LT")
     .split(" ")
     .join(",")
     .split(":")
@@ -93,11 +71,20 @@ export const HorizontalCarousel = (props: any) => {
   if (befhour != 12 && befampm === "PM") {
     befhour += 12;
   }
-
   let hourdiff1 = nexthour - befhour;
   let minutediff1 = nextminute - befminute;
   let timeLeft1 = hourdiff1 * 60 + minutediff1;
-  if (props.comingPeriod.period!="*"){
+  if (dayOfWeek=="Monday" && props.comingPeriod.period!="*" && props.comingPeriod.id!=0){
+    timeLeft-=5;
+    timeLeft1-=5;
+    if (timeLeft <= 0 ){
+      subject = props.comingPeriod.subject;
+      subtitle="starts in"
+      timeLeft+=5
+      timeLeft1=5;
+    }
+  }
+  if (dayOfWeek!="Monday" && props.comingPeriod.period!="*" && props.comingPeriod.id!=1){
     timeLeft-=5;
     timeLeft1-=5;
     if (timeLeft <= 0 ){
@@ -108,6 +95,7 @@ export const HorizontalCarousel = (props: any) => {
     }
   }
   let rightPercentage=((timeLeft/timeLeft1))*100;
+ 
   if (
     (nowampm === "PM" && nowhour > 15) ||
     (nowampm === "AM" && nowhour === 12)
@@ -120,42 +108,119 @@ export const HorizontalCarousel = (props: any) => {
     subtitle = "starts in";
     subject = "School";
     rightPercentage=100
-  } else if (nowampm === "PM" && nowhour === 15 && nowminute >= 25) {
+  } else if (nowampm === "PM" && nowhour === 15 && nowminute >= 50) {
     timeLeft = 0;
     rightPercentage = 0
     subtitle = "ended";
     subject = "School";
   }
   else if (nowhour==8 && nowampm=="AM"){
-    if (nowminute<=30){
+    if (nowminute<30 && dayOfWeek!="Monday"){
       subtitle = "starts in";
       subject = "School";
       rightPercentage=100
     }
   }
-  let day = moment().format('dddd');
-  if (day==="Saturday"|| day==="Sunday"){
+  if (dayOfWeek==="Saturday"|| dayOfWeek==="Sunday"){
     subject="Weekend!";
     subtitle=""
     timeLeft=0;
     rightPercentage=0
   }
-
-  const notSummer = () => {
-    const datearr = moment().format("l").split("/")
-    if (parseInt(datearr[0])>=6 && parseInt(datearr[0])<=8){
-      if (parseInt(datearr[1])>=6 && parseInt(datearr[1])<=13){
-        return true;
-      }
-    }
-    return false;
+  let fontColor = props.colorObj.primary;
+  if (subtitle == "starts in"){
+    fontColor = "#FF6E7A"
   }
+
+  if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
+    if (subject=="School" && subtitle=="starts in"){
+      upcomingPeriods = Schedule.odd
+    }
+    if (subject=="School" && subtitle=="ended"){
+      upcomingPeriods=Schedule.even
+    }
+  }
+  else if(dayOfWeek=="Wednesday"){
+    if (subject=="School" && subtitle=="starts in"){
+      upcomingPeriods = Schedule.even
+    }
+    if (subject=="School" && subtitle=="ended"){
+      upcomingPeriods=Schedule.odd
+    }
+  }
+  else if(dayOfWeek=="Friday"){
+    if (subject=="School" && subtitle=="starts in"){
+      upcomingPeriods = Schedule.even
+    }
+    if (subject=="School" && subtitle=="ended"){
+      upcomingPeriods=Schedule.monday
+    }
+  }
+  else if (dayOfWeek=="Monday"){
+    if (subject=="School" && subtitle=="starts in"){
+      upcomingPeriods = Schedule.monday
+    }
+    if (subject=="School" && subtitle=="ended"){
+      upcomingPeriods=Schedule.odd
+    }
+  }
+  else{
+    upcomingPeriods=Schedule.monday
+  }
+  let count = 0
+  const upcomingClasses = upcomingPeriods.map((period)=>{
+    const arr = period.time
+      .split(" ")
+      .join(",")
+      .split(":")
+      .join(",")
+      .split(",");
+    const nowhour = arr[0];
+    const nowminute = arr[1];
+    const nowampm = arr[2];
+    count++
+    if (count<=props.preferences.radius){
+    return(
+    <View key={period.id} style={{ backgroundColor: "transparent"}}>
+      <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+      <View style={[styles.scheduleFormat1, {height: moderateScale(85), width: "61%"}]}>
+        {/* <Text
+          style={{
+            fontFamily: "OpenSansSemiBold",
+            fontSize: 27,
+            fontStyle: "italic",
+          }}
+        >
+          {props.data.period}
+        </Text> */}
+        <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: moderateScale(21), color: props.preferences.colorObj.primary }}>
+          {period.subject}
+        </Text>
+        <View
+          style={{ alignItems: "flex-end", backgroundColor: "rgba(0,0,0,0)" }}
+        >
+          
+        </View>
+      </View>
+      <Text
+            style={{
+              fontFamily: "OpenSansSemiBold",
+              fontSize: moderateScale(15.1),
+              fontWeight: "bold",
+              marginVertical: 1,
+            }}
+          >
+            {nowhour}:{nowminute} {nowampm}
+          </Text> 
+      </View>
+    </View>
+  )}})
   const timeTracker = () => {
     
     const HorizontalTimer = () => {
       return(
-        <View style={{backgroundColor: 'transparent', width: '91.5%', height: moderateScale(3), marginTop: '5%', borderColor: 'white', justifyContent: 'center', flexDirection: 'column', borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(-0.5), alignSelf: 'center'}}>
-          {<View style={{backgroundColor: props.colorObj.primary, height: moderateScale(3), marginRight: `${rightPercentage}%`, borderColor: 'white',  borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(1), }}>
+        <View style={{backgroundColor: 'transparent', width: '91.5%', height: moderateScale(2.5), marginTop: '5%', borderColor: 'white', justifyContent: 'center', flexDirection: 'column', borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(-0.5), alignSelf: 'center'}}>
+          {<View style={{backgroundColor: props.colorObj.primary, height: moderateScale(2.5), marginRight: `${rightPercentage}%`, borderColor: 'white',  borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(1), }}>
             {/* <MaterialCommunityIcons style={{marginLeft: `${rightPercentage-1}%`}} size={40} name="chevron-right"/> */}
           </View>
         //   :
@@ -171,11 +236,12 @@ export const HorizontalCarousel = (props: any) => {
 
 
     return (
-      <Card
+      <>
+      <View
         style={{
           borderRadius: moderateScale(20),
-          height: moderateScale(180),
-          marginBottom: 10,
+          height: moderateVerticalScale(177),
+          marginBottom: moderateScale(10),
           backgroundColor: 'white',
           //padding: 20,
           //paddingBottom: 30,
@@ -183,8 +249,9 @@ export const HorizontalCarousel = (props: any) => {
           marginLeft: '5%',
           marginTop: '4%',
           shadowOffset: {height: 0, width: 0},
-    shadowOpacity: 0.12,
-    shadowRadius: 8
+          shadowOpacity: 0.12,
+          shadowRadius: 8,
+          elevation: 5
           // justifyContent: 'center',
           // paddingTop: '8%'
         }}
@@ -196,15 +263,16 @@ export const HorizontalCarousel = (props: any) => {
               backgroundColor: props.colorObj.primary, 
               borderTopRightRadius: moderateScale(20), 
               borderTopLeftRadius: moderateScale(20),
-              padding: moderateScale(15),
+              padding: moderateScale(10),
               maxHeight: moderateScale(60),
               flexDirection: 'row',
-              alignItems: 'flex-end'
+              alignItems: 'flex-end',
             }}>
             <Text style={{
               fontFamily: 'OpenSansBold', 
               fontSize: moderateScale(25),
-              color: 'white'
+              color: 'white',
+              marginLeft: moderateScale(12)
             }}>{subject}</Text>
             <Text style={{
               fontFamily: 'OpenSansRegular', 
@@ -247,14 +315,17 @@ export const HorizontalCarousel = (props: any) => {
             <Text style={{
               fontFamily: 'OpenSansBold', 
               fontSize: moderateScale(25),
-              color: props.colorObj.primary
+              color: props.colorObj.primary,
+              alignSelf: 'center',
             }} allowFontScaling={true}>{subject}</Text>
+            {subtitle!=""? 
             <Text style={{
               fontFamily: 'OpenSansRegular', 
               fontSize: moderateScale(25),
-              color: props.colorObj.primary,
-              marginLeft: moderateScale(8)
+              color: fontColor,
+              // marginLeft: moderateScale(-20)
             }}>{subtitle}</Text>
+            :<></>}
           </View>
           <View
             style={{
@@ -284,7 +355,92 @@ export const HorizontalCarousel = (props: any) => {
         </View>}
         {/* <HorizontalTimer/> */}
         
-      </Card>
+      </View>
+      {subtitle !="ended" && (subtitle!="starts in" || subject!="School") && subject!= "Weekend!"? 
+      <View style={{backgroundColor: 'transparent', flexDirection: 'row', marginLeft: '5%'}}>
+      <Text
+          style={{
+            marginVertical: moderateScale(5),
+            fontFamily: "OpenSansLight",
+            fontSize: props.fontSize-moderateScale(2),
+            // fontWeight: "bold",
+            //marginTop: 25,
+            alignSelf: "flex-end",
+            marginLeft: "2%",
+          }}
+        >
+          Current
+        </Text>
+        <Text
+          style={{
+            marginVertical: moderateScale(5),
+
+            fontFamily: "OpenSansSemiBold",
+            fontSize: props.fontSize-moderateScale(2),
+            // fontWeight: "bold",
+            //marginTop: 25,
+            // alignSelf: "flex-end",
+            marginLeft: "3%",
+          }}
+        >
+          Schedule
+        </Text>
+      </View>:
+      <>
+      <View style={{backgroundColor: 'transparent', flexDirection: 'row', marginLeft: '5%'}}>        
+      <Text
+          style={{
+            marginVertical: moderateScale(5),
+            fontFamily: "OpenSansLight",
+            fontSize: props.fontSize-moderateScale(2),
+            // fontWeight: "bold",
+            //marginTop: 25,
+            alignSelf: "flex-end",
+            marginLeft: "2%",
+          }}
+        >
+          Upcoming
+        </Text>
+        <Text
+          style={{
+            marginVertical: moderateScale(5),
+
+            fontFamily: "OpenSansSemiBold",
+            fontSize: props.fontSize-moderateScale(2),
+            // fontWeight: "bold",
+            //marginTop: 25,
+            // alignSelf: "flex-end",
+            marginLeft: "3%",
+          }}
+        >
+          Schedule
+        </Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: "rgba(0,0,0,0)",
+            width: "90%",
+            alignSelf: "center",
+            paddingBottom: 20,
+          }}
+        >
+          <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row',  justifyContent: 'space-between', alignItems: 'center'}}>
+            <View style={{backgroundColor: 'transparent', width: '100%'}}>
+              {upcomingClasses}
+            </View>
+            {/* <View style={{ height: height, width: 1, backgroundColor: "grey", justifyContent: 'space-between', alignItems: 'center'}}>
+              {pointers}
+            </View>  */}
+
+          </View>
+          
+
+          
+          
+        </View>
+      </>
+      }
+      </>
     );
   };
   const carouselItems = [
@@ -409,5 +565,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: 22,
     marginHorizontal: 2,
+  },
+  scheduleFormat1: {
+    justifyContent: "center",
+    flexDirection: "row",
+    padding: moderateScale(20),
+    borderRadius: moderateScale(45),
+    alignItems: 'center',
+    shadowOffset: {height: 1, width: 1},
+    shadowOpacity: 0.1,
+    // alignSelf: 'center',
+    marginVertical: "2%",
+    elevation: 2
   },
 });

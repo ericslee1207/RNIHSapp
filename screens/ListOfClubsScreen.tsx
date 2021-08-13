@@ -10,6 +10,7 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view'
 import {ClubContext} from './Tab3Screens/ClubContext'
 import { useContext } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { moderateScale, moderateVerticalScale } from "react-native-size-matters";
 
 const firstRoute= (navigation) => {
   const [clubs, setClubs] = useState(club_data);
@@ -75,34 +76,15 @@ const firstRoute= (navigation) => {
   );
 }
 
-const secondRoute = (navigation) => {
-  const [preferences, setPreferences] = useState({
-    isCircle: false,
-    radius: 3,
-    colorObj: {
-      primary :"#04b5a7",
-      highlight : "hsl(165, 100%, 80%)",
-      lightbackground : "rgba(233, 251, 251, 0.96)",
-      darkbackground : "#D3E7EE"
-    }
-  })
+const secondRoute = (navigation, preferences) => {
   
-  const isFocused = useIsFocused()
   
   const[finalClubs, setFinalClubs] = useState([])
   const [clubs, setClubs] = useState([]);
   let savedClubs = useContext(ClubContext).saved_clubs
   useEffect(()=>{
       revealSavedClubs();
-      
-        const getPreferences = async() => {
-          let preferences = await AsyncStorage.getItem("SettingConfigurations")
-          let preferencesParsed = JSON.parse(preferences)
-          setPreferences(preferencesParsed)
-        }
-        getPreferences()
-      
-  }, [isFocused])
+  }, [])
   const revealSavedClubs = async() => {
       let saved = await AsyncStorage.getItem("savedClubs")
       let savedParsed = JSON.parse(saved);
@@ -150,63 +132,58 @@ const secondRoute = (navigation) => {
   )
 }
 
-const renderTabBar= (props: any) => {
-  
-  return(
-    <TabBar
-      {...props}
-      indicatorStyle={{backgroundColor: '#04b5a7'}}
-      style={{backgroundColor: 'rgba(233, 251, 251, 0.96)'}}
-      activeColor="#04b5a7"
-      inactiveColor="#04b5a7"
-      
-    />
-  )
-}
 
 export default function TabTwoScreen({navigation}) {
-
+  const [preferences, setPreferences] = useState({
+    isCircle: false,
+    radius: 3,
+    colorObj: {
+      primary :"#04b5a7",
+      highlight : "hsl(165, 100%, 80%)",
+      lightbackground : "rgba(233, 251, 251, 0.96)",
+      darkbackground : "#D3E7EE"
+    }
+  })
+  const isFocused = useIsFocused()
+  useEffect(()=>{    
+      const getPreferences = async() => {
+        let preferences = await AsyncStorage.getItem("SettingConfigurations")
+        let preferencesParsed = JSON.parse(preferences)
+        setPreferences(preferencesParsed)
+      }
+      getPreferences()
+    
+}, [isFocused])
   const [index, setIndex]= useState(0);
-  const routes=[{key: 'first', title: 'Clubs'}, {key: 'second', title: 'Saved Clubs'}]
+  const routes=[{key: 'first', title: 'All Clubs'}, {key: 'second', title: 'Saved Clubs'}]
 
   const renderScene=SceneMap({
     first: ()=>firstRoute(navigation),
-    second: () => secondRoute(navigation)
+    second: () => secondRoute(navigation, preferences)
   })
 
 
   const [saved_clubs, save_club] = useState([])
 
-  // const startup = async () => {
-  //   const storedData = await AsyncStorage.getItem("saved_clubs");
-
-  //   let newData = [] as any;
-
-  //   if (storedData === null) {
-  //     // save
-  //     await AsyncStorage.setItem("saved_clubs", JSON.stringify([]));
-  //   } else {
-  //     const storedDataParsed = JSON.parse(storedData);
-  //     newData = [
-  //       ...storedDataParsed]
-  //     await AsyncStorage.setItem("saved_clubs", JSON.stringify(newData));
-  //   }
-
-  //   save_club(newData)
-  // };
-  // useEffect(() => {
-  //   startup();
-  // }, []);
-
   return(
     <ClubContext.Provider value={{saved_clubs: saved_clubs, save_club: save_club}}>
       <TabView
-        renderTabBar={renderTabBar}
+        renderTabBar={props => <TabBar
+          {...props}
+          indicatorStyle={{backgroundColor: preferences.colorObj.primary}}
+          style={{backgroundColor: 'rgba(233, 251, 251, 0.96)', height: moderateScale(40)}}
+          activeColor={preferences.colorObj.primary}
+          inactiveColor={preferences.colorObj.primary}
+          renderLabel={({ route, focused, color }) => (
+            <Text style={{ color, fontFamily: "OpenSansSemiBold" }}>
+              {route.title}
+            </Text>
+          )}
+        />}
         navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{width: Dimensions.get('window').width}}
-        
       />
     </ClubContext.Provider>
   )  
@@ -242,7 +219,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35, 
     shadowRadius: 6, 
     shadowOffset: {height: 1, width: 0},
-    shadowColor: 'grey'
+    shadowColor: 'grey',
+    elevation: 5
   },
   iconStyle: {
     height: 20,

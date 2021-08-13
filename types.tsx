@@ -6,6 +6,8 @@ export type RootStackParamList = {
   Login: undefined;
   OnboardingOne: undefined;
   OnboardingTwo: undefined;
+  Summer: undefined;
+  Banner: undefined;
 };
 
 export type BottomTabParamList = {
@@ -18,6 +20,9 @@ export type TabOneParamList = {
   TabOneScreen: undefined;
   ConfigurePersonalInfo: undefined;
   ConfigureSettings: undefined;
+  Preferences: undefined;
+  SetClasses: undefined,
+  About: undefined
 };
 
 export type TabTwoParamList = {

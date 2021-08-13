@@ -9,11 +9,12 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
 import {firebaseConfig} from './config'
+import firebase from "firebase"
+// firebase.initializeApp(firebaseConfig
+// Initialize Firebase
+import { registerRootComponent } from 'expo';
 
-// import * as firebase from 'firebase'
-// firebase.initializeApp(firebaseConfig)
-
-
+registerRootComponent(App);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

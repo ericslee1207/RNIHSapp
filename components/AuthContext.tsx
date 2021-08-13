@@ -2,5 +2,11 @@ import React from 'react';
 
 export const AuthContext = React.createContext({
     SignIn: ()=>{},
-    SignOut: ()=>{}
+    SignOut: ()=>{},
+    Schedule: [],
+    setSchedule: (val: any)=>{},
+    currentPeriod: {},
+    setCurrentPeriod: (val: any)=>{},
+    nextPeriod: {},
+    setNextPeriod: (val: any)=>{}
 })
