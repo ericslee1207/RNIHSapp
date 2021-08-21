@@ -33,7 +33,7 @@ export const Intro = ({navigation}) => {
                         <View style={styles.top}>
                             <View style={styles.outercircle}>
                                 <View style={styles.innercircle}>
-                                    <Image source={require('../assets/images/perfectSquareLogo.png')} style={styles.logo}/>
+                                    <Image source={require('../assets/images/IHSLOGOSquare.png')} style={styles.logo}/>
                                 </View>
                             </View>
                             {/* <Text style={styles.title}>IHS Mobile</Text> */}
@@ -82,10 +82,10 @@ const styles=StyleSheet.create({
         
     },
     logo: {
-        height: moderateScale(175),
-        width: moderateScale(175),
+        height: moderateScale(155),
+        width: moderateScale(155),
         opacity: 1,
-        borderRadius: moderateScale(200)
+        borderRadius: moderateScale(0)
     },
     title: {
         fontSize: moderateScale(33),

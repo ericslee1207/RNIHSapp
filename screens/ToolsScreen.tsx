@@ -74,7 +74,7 @@ function MainScreen(props) {
 }
 
 const Stack = createStackNavigator();
-export default function TabTwoScreen({ navigation }) {
+export default function ToolsScreen({ navigation }) {
   return <MainScreen navigation={navigation} />;
 }
 

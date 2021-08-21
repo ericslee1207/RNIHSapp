@@ -6,9 +6,11 @@ const AboutScreen = () => {
     
     return(
         <ScrollView style={styles.container}>
-            <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: moderateScale(75), width: moderateScale(150), height: moderateScale(150), borderWidth: 6, borderColor: "#04b5a7", alignSelf: 'center'}}>
-                <Image style={{height: moderateScale(130), width: moderateScale(130), borderRadius: moderateScale(65)}} source={require("../assets/images/correctCropLogo.png")}/>
-            </View>
+           <View style={styles.outercircle}>
+                                <View style={styles.innercircle}>
+                                    <Image source={require('../assets/images/IHSLOGOSquare.png')} style={styles.logo}/>
+                                </View>
+                            </View>
             <View style={{width: '100%', backgroundColor: 'white', marginTop: moderateScale(20), borderRadius: moderateScale(20), padding: moderateScale(15)}}>
                 <Text style={{alignSelf: 'center', fontFamily: "OpenSansSemiBold", fontSize: moderateScale(19)}}>
                     The Beginning
@@ -67,7 +69,63 @@ const styles = StyleSheet.create({
         paddingTop: moderateScale(20),
         paddingHorizontal: moderateScale(30),
 
-    }
+    },
+    top: {
+        flex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bottom: {
+        flex: 1,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        alignItems: 'center',
+        // borderWidth: 5,
+        // borderColor: 'white',
+        
+    },
+    logo: {
+        height: moderateScale(125),
+        width: moderateScale(125),
+        opacity: 1,
+        borderRadius: moderateScale(0)
+    },
+    title: {
+        fontSize: moderateScale(33),
+        margin: 20,
+        color: 'white',
+        fontFamily: 'OpenSansSemiBold',
+    },
+    innercircle: {
+        borderWidth: 7, 
+        height: moderateScale(159), 
+        width: moderateScale(159), 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 150,
+        borderColor: '#009387',
+        backgroundColor: 'transparent'
+    },
+    welcome: {
+        marginHorizontal: '8%',
+        marginVertical: '8%',
+        fontFamily: 'OpenSansSemiBold',
+        fontSize: moderateScale(24),
+        fontStyle: 'italic',
+        alignSelf: 'center',
+        color: "#009387"
+    },
+    outercircle: {
+        height: moderateScale(175), 
+        width: moderateScale(175), 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 150,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        alignSelf: 'center'
+    },
 })
 
 export default AboutScreen

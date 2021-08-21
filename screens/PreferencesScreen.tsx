@@ -78,7 +78,7 @@ const PreferencesScreen = ({navigation}) => {
         }
         setColorObj(colorObj)
         await AsyncStorage.setItem("SettingConfigurations", JSON.stringify(obj))
-        navigation.navigate("TabOneScreen")
+        navigation.navigate("HomeScreen")
     }
     return(
         <ScrollView style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)'}}>

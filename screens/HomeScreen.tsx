@@ -16,11 +16,16 @@ import { Text, View } from "../components/Themed";
 import {AdayorBday} from "./AdayorBday"
 import moment from "moment";
 import { classDetail } from "./classDetails";
+import firebase from 'firebase'
 
 import { HorizontalCarousel } from "./HorizontalCarousel";
 import {MontoFri} from "./MontoFri"
 import oddPeriods from "../OddPeriods.json";
 import mondayPeriods from "../MondayPeriods.json"
+import tuesdayPeriods from "../TuesdayPeriods.json"
+import wednesdayPeriods from "../WednesdayPeriods.json"
+import thursdayPeriods from "../ThursdayPeriods.json"
+import fridayPeriods from "../FridayPeriods.json"
 import evenPeriods from "../EvenPeriods.json";
 import { moderateScale } from "react-native-size-matters";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
@@ -28,65 +33,12 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import CircleTimer from "./CircleTimer"
 import { AuthContext } from "../components/AuthContext";
+import { firebaseConfig } from "../config";
 
-const currentDate = new Date();
-const day = moment(currentDate).format('l').split("/")[0];
-const dayOfWeek = moment(currentDate).format('dddd')
-// const dayOfWeek = "Tuesday"
-let evenOrOdd: any;
-let currentPeriod: any;
-let comingPeriod: any;
-if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
-  evenOrOdd="odd"
-  currentPeriod = {
-    period: 1,
-    subject: "NA",
-    room: "NA",
-    time: "8:30 AM",
-    id: 2
-  };
-  comingPeriod = {
-    period: 2,
-    subject: "NA",
-    room: "NA",
-    time: "10:00 AM",
-    id: 3
-  };
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
-else if(dayOfWeek=="Wednesday" || dayOfWeek=="Friday"){
-  evenOrOdd="even"
-  currentPeriod = {
-    period: 1,
-    subject: "NA",
-    room: "NA",
-    time: "8:30 AM",
-    id: 2
-  };
-  comingPeriod = {
-    period: 2,
-    subject: "NA",
-    room: "NA",
-    time: "10:00 AM",
-    id: 3
-  };
-}
-else{
-  evenOrOdd="neither"
-  currentPeriod = {
-    period: 1,
-    subject: "NA",
-    room: "NA",
-    time: "8:00 AM",
-    id: 0
-  };
-  comingPeriod = {
-    period: 2,
-    subject: "NA",
-    room: "NA",
-    time: "9:00 AM",
-    id: 1
-  };
-}
+let scheduleRef = firebase.firestore().collection("schedule")
 
 function inbetween(first: string, second: string, now: string) {
   const arr = now.split(" ").join(",").split(":").join(",").split(",");
@@ -135,58 +87,11 @@ function inbetween(first: string, second: string, now: string) {
 }
 
 const ScheduleItem = (props: any) => {
-  const datenow = moment().format('LT');
-  // const datenow = "7:59 AM"
-  const datenow_split = datenow
-    .split(" ")
-    .join(",")
-    .split(":")
-    .join(",")
-    .split(",");
-  const datenow_hour = parseInt(datenow_split[0]);
-  const datenow_minute = parseInt(datenow_split[1])
-  const datenow_ampm = datenow_split[2];
-  let nextPeriod = {};
   let trueperiod = true;
-
   if (props.data.period === "*") {
     trueperiod = false;
   }
-  let curPeriod = {};
-  let stoppingPoint = 0;
-  for (let i = 0; i < props.periods.length - 1; i++) {
-    if (inbetween(props.periods[i].time, props.periods[i + 1].time, datenow)) {
-      curPeriod = props.periods[i];
-      nextPeriod = props.periods[i + 1];
-      stoppingPoint = i;
-    }
-  }
-  let lastObj = {
-    period: "*",
-    subject: "Finishing Time",
-    time: "3:50 PM",
-    id: 10,
-  };
-  if (inbetween(props.periods[props.periods.length - 1].time, lastObj.time, datenow)) {
-    curPeriod = props.periods[props.periods.length - 1];
-    nextPeriod = lastObj;
-    stoppingPoint = props.periods.length - 1;
-  }
 
-  // const Detailbutton = () => {
-  //   if (trueperiod) {
-  //     return (
-  //       <TouchableOpacity
-  //         style={{ width: 50, height: 20, backgroundColor: "rgba(0,0,0,0)" }}
-  //         onPress={() => classDetail(props.data)}
-  //       >
-  //         <Text style={{ color: "#1e90ff" }}>Details</Text>
-  //       </TouchableOpacity>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
   const arr = props.data.time
     .split(" ")
     .join(",")
@@ -196,24 +101,17 @@ const ScheduleItem = (props: any) => {
   let nowhour = arr[0];
   const nowminute = arr[1];
   const nowampm = arr[2];
-  // if (nowampm=='AM' && (nowhour===12 || nowhour<8)){
-  //   nextPeriod=periods[0]
-  // }
-  if (datenow_ampm === "AM" && datenow_hour < 8) {
-    comingPeriod = props.periods[0];
-  }
-  if (dayOfWeek!="Monday" && datenow_ampm === "AM" && datenow_hour == 8 && datenow_minute<30) {
-    comingPeriod = props.periods[0];
-  }
+
   
-  const inRadius = (data, curPeriod) => {
+  
+  const inRadius = (data, currentPeriod) => {
     let radius = props.preferences.radius;
-    if (Math.abs(data.id - curPeriod.id)<radius && (data.id - curPeriod.id) >0){
+    if (Math.abs(data.id - currentPeriod.id)<radius && (data.id - currentPeriod.id) >0){
       return true;
     }
     return false;
   }
-  let xDomain = Math.abs(props.data.id - curPeriod.id)
+  let xDomain = Math.abs(props.data.id - props.currentPeriod.id)
   if (xDomain>1){
     xDomain=1;
   }
@@ -221,10 +119,11 @@ const ScheduleItem = (props: any) => {
   let subFontSize = moderateScale(16) - xDomain*moderateScale(0.9)
   let height = moderateScale(100) - xDomain*moderateScale(15)
   let width = `${(72 - 11 * xDomain)}%`
-
-  if (curPeriod === props.data ) {
-    comingPeriod = nextPeriod;
-    currentPeriod = curPeriod;
+  let subject = props.data.subject;
+  if (props.data.period !== "*" && props.data.period !== "Flex"){
+    subject = props.periodNames[props.data.subject]
+  }
+  if (props.highlightPeriod) {
     return (
       <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
         <View style={[styles.scheduleFormat1, {height: height, width: width, backgroundColor: props.preferences.colorObj.primary, opacity: 0.8, borderRadius: moderateScale(55)}]}>
@@ -238,7 +137,7 @@ const ScheduleItem = (props: any) => {
             {props.data.period}
           </Text> */}
           <Text style={{ fontFamily: "OpenSansSemiBold", fontSize:  fontSize, color: 'white'}}>
-            {props.data.subject}
+            {subject}
           </Text>
           <View
             style={{ alignItems: "flex-end", backgroundColor: "rgba(0,0,0,0)" }}
@@ -259,7 +158,7 @@ const ScheduleItem = (props: any) => {
           </Text>
         </View>
     );
-  } else if (inRadius(props.data, curPeriod)) {
+  } else if (inRadius(props.data, props.currentPeriod)) {
     return (
       <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
       <View style={[styles.scheduleFormat1, {height: height, width: width}]}>
@@ -273,7 +172,7 @@ const ScheduleItem = (props: any) => {
           {props.data.period}
         </Text> */}
         <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: fontSize, color: props.preferences.colorObj.primary }}>
-          {props.data.subject}
+          {subject}
         </Text>
         <View
           style={{ alignItems: "flex-end", backgroundColor: "rgba(0,0,0,0)" }}
@@ -302,20 +201,16 @@ const ScheduleItem = (props: any) => {
 
 
 
-export default function TabOneScreen() {
-//   AsyncStorage.getAllKeys((err, keys) => {
-//   AsyncStorage.multiGet(keys, (error, stores) => {
-//     stores.map((result, i, store) => {
-//       console.log({ [store[i][0]]: store[i][1] });
-//       return true;
-//     });
-//   });
-// });
+export default function HomeScreen() {
   const { Schedule } = React.useContext(AuthContext)
-  let periods: any;
+  const [periods, setPeriods] = useState()
+  const [currentPeriod, setCurrentPeriod] = useState()
+  const [comingPeriod, setComingPeriod] = useState()
+  const [evenOrOdd, setEvenOrOdd] = useState()
   const currentDate = new Date();
   const [datenow, updateDate] = useState(moment(currentDate));
-  const withSeconds = moment(currentDate).format("LTS");
+  const withSeconds = datenow.format("LTS");
+  const dayOfWeek = datenow.format('dddd')
   const [fontSize, setFontSize] = useState(moderateScale(27))
   const [preferences, setPreferences] = useState({
     isCircle: false,
@@ -327,23 +222,6 @@ export default function TabOneScreen() {
       darkbackground : "#D3E7EE"
     },
   })
-  const dayOfWeek = moment(currentDate).format('dddd')
-  if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
-    periods=Schedule.odd
-  }
-  else if(dayOfWeek=="Wednesday"){
-    periods=Schedule.even
-  }
-  else if(dayOfWeek=="Friday"){
-    periods = Schedule.even
-  }
-  else if (dayOfWeek=="Monday"){
-    periods = Schedule.monday;
-  }
-  else{
-    periods=Schedule.monday
-  }
-  // console.log(upcomingPeriods)
   const [user, setUser] = useState({})
   const secondarr = withSeconds
     .split(" ")
@@ -351,10 +229,80 @@ export default function TabOneScreen() {
     .split(":")
     .join(",")
     .split(",");
+    
   const curSecond = parseInt(secondarr[2]);
   const [index, setIndex] = useState(curSecond);
-  const secondsLeft = 60000 - curSecond * 1000;
   const isFocused = useIsFocused();
+  const timeNow = datenow.format("LT");
+    // const datenow = "10:40 AM"
+    const datenow_split = timeNow
+      .split(" ")
+      .join(",")
+      .split(":")
+      .join(",")
+      .split(",");
+    const datenow_hour = parseInt(datenow_split[0]);
+    const datenow_minute = parseInt(datenow_split[1])
+    const datenow_ampm = datenow_split[2];
+  
+  useEffect(()=>{
+    const setUp = async() => {
+      const dayOfWeek = datenow.format("dddd")
+      // const dayOfWeek = "Thursday"
+        if (dayOfWeek=="Tuesday"){
+          await scheduleRef.doc("tuesday").get().then((doc)=>{
+            setPeriods(doc.data().tuesday)
+            setEvenOrOdd('odd')
+          })
+        }
+        else if (dayOfWeek == "Wednesday"){
+          await scheduleRef.doc("wednesday").get().then((doc)=>{
+            setPeriods(doc.data().wednesday)
+            setEvenOrOdd('even')
+          })
+        }
+        else if(dayOfWeek=="Thursday"){
+          await scheduleRef.doc("thursday").get().then((doc)=>{
+            setPeriods(doc.data().thursday)
+            setEvenOrOdd('odd')
+          })
+        }
+        else if(dayOfWeek=="Friday"){
+          await scheduleRef.doc("friday").get().then((doc)=>{
+            setPeriods(doc.data().friday)
+            setEvenOrOdd('even')
+          })
+        }
+        else if (dayOfWeek=="Monday"){
+          await scheduleRef.doc("monday").get().then((doc)=>{
+            setPeriods(doc.data().monday)
+            setEvenOrOdd('neither')
+          })
+        }
+        else{
+          await scheduleRef.doc("monday").get().then((doc)=>{
+            setPeriods(doc.data().monday)
+            setEvenOrOdd('neither')
+          })
+        }
+    }
+    setUp()
+    
+  },[datenow_hour])
+  
+  useEffect(() => {
+    updateDate(moment(new Date()))
+      setInterval(() => {
+        setIndex((index) => index + 1);
+      }, 1000);
+    },
+    []);
+  useEffect(() => {
+    updateDate(moment(new Date()));
+    if (periods!==undefined){
+      checkCurrentandNextPeriod()
+    }
+  }, [index]);
   useEffect(()=>{
     const getPreferences = async() => {
       let preferences = await AsyncStorage.getItem("SettingConfigurations")
@@ -371,30 +319,40 @@ export default function TabOneScreen() {
     }
     getPreferences()
   }, [isFocused])
-  useEffect(() => {
-    updateDate(moment(new Date()))
-    setTimeout(() => {
-      updateDate(moment(new Date()))
-      setInterval(() => {
-        setIndex((index) => index + 1);
-      }, 5000);
-    }, secondsLeft);
-    
-  }, []);
-  useEffect(() => {
-    updateDate(moment(new Date()));
-  }, [index]);
+  let classes = [];
   
-
-  const classes = periods.map((period) => (
-    <View key={period.id} style={{ backgroundColor: "transparent"}}>
-      <ScheduleItem periods={periods} preferences = {preferences} date={datenow} data={period} key={period.id} />
-    </View>
-  ));
+  if (periods!==undefined && currentPeriod!==undefined){
+    classes = periods.map((period) => {
+      let highlightPeriod = false;
+      if (period==currentPeriod){
+        highlightPeriod = true
+      }
+      return(
+      <View key={period.id} style={{ backgroundColor: "transparent"}}>
+        <ScheduleItem periods={periods} preferences = {preferences} date={datenow} data={period} key={period.id} periodNames={Schedule} highlightPeriod={highlightPeriod} currentPeriod={currentPeriod}/>
+      </View>)})
+    }
+  
+    const checkCurrentandNextPeriod = () => {
+      
+  
+    for (let i = 0; i < periods.length - 1; i++) {
+      if (inbetween(periods[i].time, periods[i + 1].time, timeNow)) {
+        setCurrentPeriod(periods[i]);
+        setComingPeriod(periods[i + 1]);
+      }
+    }
+    if (datenow_ampm === "AM" && datenow_hour < 8) {
+      setComingPeriod(periods[0]);
+    }
+    if (dayOfWeek!="Monday" && datenow_ampm === "AM" && datenow_hour == 8 && datenow_minute<30) {
+      setComingPeriod(periods[0]);
+    }
+    }
+    // if (periods!=undefined){
+    //   checkCurrentandNextPeriod()
+    // }
     
-  // if (user.firstName.length >=9){
-  //   fontSize = fontSize - moderateScale(2)*user.firstName.length
-  // }
   return (
     <>
     <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)', }}>
@@ -452,7 +410,7 @@ export default function TabOneScreen() {
             lightColor="#009387"
             darkColor="#009387"
           /> */}
-          {true ? 
+          {periods!=undefined && currentPeriod!=undefined && comingPeriod!=undefined? 
           <HorizontalCarousel
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
@@ -461,12 +419,9 @@ export default function TabOneScreen() {
             isCircle={preferences.isCircle}
             preferences={preferences}
             fontSize={fontSize}
-          />:
-            <CircleTimer 
-            currentPeriod={currentPeriod}
-            comingPeriod={comingPeriod}
-            date={datenow}/>
-          }
+            periods = {periods}
+            periodNames= {Schedule}
+          />:<></>}
           {(dayOfWeek!="Saturday" && dayOfWeek!="Sunday") ? 
           <View
             style={{
@@ -478,11 +433,9 @@ export default function TabOneScreen() {
           >
             <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row',  justifyContent: 'space-between', alignItems: 'center'}}>
               <View style={{backgroundColor: 'transparent', width: '100%'}}>
+
                 {classes}
               </View>
-              {/* <View style={{ height: height, width: 1, backgroundColor: "grey", justifyContent: 'space-between', alignItems: 'center'}}>
-                {pointers}
-              </View>  */}
 
             </View>
             

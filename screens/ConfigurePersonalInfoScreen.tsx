@@ -12,16 +12,7 @@ import { AuthContext } from '../components/AuthContext';
 const ConfigurePersonalInfoScreen = ({navigation, route}) => {
     const colorObj = route.params.colorObj
     const {Schedule, setSchedule} = React.useContext(AuthContext)
-    let obj = {
-      p1: Schedule.odd[0].subject,
-      p2: Schedule.even[0].subject,
-      p3: Schedule.odd[3].subject,
-      p4: Schedule.even[3].subject,
-      p5: Schedule.odd[5].subject,
-      p6: Schedule.even[5].subject,
-      p7: Schedule.odd[7].subject,
-      p8: Schedule.even[7].subject,
-  }
+    let obj = Schedule
     const [object, setObject] = useState(obj)
     const swiperRef = useRef(null);
     const [index, updateIndex] = useState(0);
@@ -100,29 +91,10 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
         });
         if (goAhead){
           setLoading(true)
-            setSchedule((prev)=>{
-              let newVal = Object.assign(prev, {})
-              newVal.odd[0].subject = object["p1"]
-              newVal.odd[3].subject = object["p3"]
-              newVal.odd[5].subject = object["p5"]
-              newVal.odd[7].subject = object["p7"]
-              newVal.even[0].subject = object["p2"]
-              newVal.even[3].subject = object["p4"]
-              newVal.even[5].subject = object["p6"]
-              newVal.even[7].subject = object["p8"]
-              newVal.monday[1].subject = object["p1"]
-              newVal.monday[2].subject = object["p2"]
-              newVal.monday[4].subject = object["p3"]
-              newVal.monday[5].subject = object["p4"]
-              newVal.monday[7].subject = object["p5"]
-              newVal.monday[8].subject = object["p6"]
-              newVal.monday[10].subject = object["p7"]
-              newVal.monday[11].subject = object["p8"]
-              return newVal
-            })
+            setSchedule(object)
             await AsyncStorage.setItem("scheduleDetails", JSON.stringify(Schedule))
             .then(()=>setLoading(false))
-            navigation.navigate("TabOneScreen")
+            navigation.navigate("HomeScreen")
         }
     }
     const FumiInput = ({ objKey, type, icon }) => {
@@ -182,19 +154,19 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
                   <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Odd Periods</Text>
                   </View>
-                    <FumiInput objKey="p1" type={Schedule.odd[0].subject}icon="pencil"/>
-                    <FumiInput objKey="p3" type={Schedule.odd[3].subject} icon="pencil"/>
-                    <FumiInput objKey="p5" type={Schedule.odd[5].subject} icon="pencil"/>
-                    <FumiInput objKey="p7" type={Schedule.odd[7].subject} icon="pencil"/>
+                    <FumiInput objKey="Period 1" type={Schedule["Period 1"]}icon="pencil"/>
+                    <FumiInput objKey="Period 3" type={Schedule["Period 3"]} icon="pencil"/>
+                    <FumiInput objKey="Period 5" type={Schedule["Period 5"]} icon="pencil"/>
+                    <FumiInput objKey="Period 7" type={Schedule["Period 7"]} icon="pencil"/>
                 </View>
                 <View style={styles.customizeClasses}>
                 <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Even Periods</Text>
                   </View>                   
-                  <FumiInput objKey="p2" type={Schedule.even[0].subject} icon="pencil"/>
-                    <FumiInput objKey="p4" type={Schedule.even[3].subject} icon="pencil"/>
-                    <FumiInput objKey="p6" type={Schedule.even[5].subject} icon="pencil"/>
-                    <FumiInput objKey="p8" type={Schedule.even[7].subject} icon="pencil"/>
+                    <FumiInput objKey="Period 2" type={Schedule["Period 2"]} icon="pencil"/>
+                    <FumiInput objKey="Period 4" type={Schedule["Period 4"]} icon="pencil"/>
+                    <FumiInput objKey="Period 6" type={Schedule["Period 6"]} icon="pencil"/>
+                    <FumiInput objKey="Period 8" type={Schedule["Period 8"]} icon="pencil"/>
                 </View>
             </Swiper>
             <View style={{flex: 1/3, justifyContent: 'center', alignItems: 'center'}}>

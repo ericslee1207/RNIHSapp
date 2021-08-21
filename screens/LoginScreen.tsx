@@ -20,6 +20,7 @@ import { Feather } from '@expo/vector-icons';
 
 import oddPeriods from "../OddPeriods.json";
 import evenPeriods from "../EvenPeriods.json";
+import specialDay from "../specialDay.json"
 import { AntDesign } from '@expo/vector-icons'; 
 import Constants from 'expo-constants';
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -38,12 +39,18 @@ import uuid from 'react-native-uuid'
 import firebase from 'firebase'
 import { firebaseConfig } from "../config";
 import Modal from 'react-native-modal'
+import tuesdayPeriods from "../TuesdayPeriods.json"
+import wednesdayPeriods from "../WednesdayPeriods.json"
+import thursdayPeriods from "../ThursdayPeriods.json"
+import fridayPeriods from "../FridayPeriods.json"
 // firebase.initializeApp(firebaseConfig);
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 // firebase.analytics();
 var userRef = firebase.firestore().collection("users")
+var scheduleRef = firebase.firestore().collection("schedule")
+var specialDays = firebase.firestore().collection("specialDays")
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -116,6 +123,10 @@ export const Login = ({ navigation }) => {
     }).catch((e)=>{
       console.log(e)
     })
+    // await scheduleRef.doc("even").set({even: evenPeriods}).then(()=>{console.log("schedule saved")})
+    // await scheduleRef.doc("odd").set({odd: oddPeriods}).then(()=>{console.log("schedule saved")})
+    // await scheduleRef.doc("monday").set({monday: mondayPeriods})
+    // await scheduleRef.doc("special").set({special: specialDay})
     let colorObj = {
       primary: "#04b5a7",
       highlight: "hsl(165, 100%, 80%)",
@@ -123,9 +134,7 @@ export const Login = ({ navigation }) => {
       darkbackground: "#D3E7EE"
     }
     let defaultSchedule = {
-      odd: oddPeriods,
-      even: evenPeriods,
-      monday: mondayPeriods
+      "Period 1": "Period 1", "Period 2": "Period 2", "Period 3": "Period 3", "Period 4": "Period 4", "Period 5": "Period 5", "Period 6": "Period 6", "Period 7": "Period 7", "Period 8": "Period 8"
     }
     let settings = {isCircle: false, radius: 3, colorObj: colorObj}
     let data = {
@@ -150,6 +159,7 @@ export const Login = ({ navigation }) => {
     //   });
     //   console.log(expoPushToken)
     // })
+
     
   }
   const [firstName, setfirst] = useState("")
@@ -158,6 +168,25 @@ export const Login = ({ navigation }) => {
   const [longID, setLongID] = useState("")
   const [graduationYear, setGraduationYear] = useState("")
   const [modalVisible, setModalVisible] = useState(true)
+
+  const inputData = () => {
+    // specialDays.doc("8-18-2021").set({schedule: specialDay})
+    scheduleRef.doc("monday").set({monday: mondayPeriods})
+    scheduleRef.doc("tuesday").set({tuesday: tuesdayPeriods})
+    scheduleRef.doc('wednesday').set({wednesday: wednesdayPeriods})
+    scheduleRef.doc('thursday').set({thursday: thursdayPeriods})
+    scheduleRef.doc('friday').set({friday: fridayPeriods})
+//     docRef.get().then((doc) => {
+//         if (doc.exists) {
+//             console.log("Document data:", doc.data());
+//         } else {
+//             // doc.data() will be undefined in this case
+//             console.log("No such document!");
+//         }
+//     }).catch((error) => {
+//         console.log("Error getting document:", error);
+// });
+  }
 
   const newDataLongID = (text: string) => {
     if (text.length > 0) {
@@ -250,7 +279,9 @@ export const Login = ({ navigation }) => {
           imageStyle={{ opacity: 0.4 }}
         >
           <View style={styles.top}>
-            <Text style={styles.title}>IHS Student</Text>
+            <View style={{backgroundColor: 'white', borderTopRightRadius: moderateScale(30), borderBottomRightRadius: moderateScale(30), marginVertical: moderateScale(20), paddingVertical: moderateScale(5), paddingHorizontal: moderateScale(20)}}>
+              <Text style={styles.title}>Sign Up</Text>
+            </View>
           </View>
 
           <Animatable.View style={styles.bottom} animation="fadeInUpBig">
@@ -280,7 +311,7 @@ export const Login = ({ navigation }) => {
                   <Text style={styles.welcome}>Basic Information</Text>
                   <FumiInput type="First Name" newData={newDataFirstName} icon="user"/>
                   <FumiInput type="Last Name" newData={newDataLastName} icon="user"/>
-                  
+                  {/* <Button title="Input DATA" onPress={inputData}/> */}
                 </View>
                 <View style={styles.customizeClasses}>
                   <Text style={styles.welcome}>IHS Information</Text>
@@ -406,16 +437,15 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 3.5,
     backgroundColor: "white",
-    borderTopLeftRadius: 25,
+    borderTopLeftRadius: 0,
     borderTopRightRadius: 25,
     alignItems: "center",
     borderWidth: 5,
     borderColor: "white",
   },
   title: {
-    fontSize: moderateScale(32),
-    margin: moderateScale(25),
-    color: "white",
+    fontSize: moderateScale(27),
+    color: "#04b5a7",
     fontFamily: "OpenSansSemiBold",
   },
   innercircle: {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Image, Dimensions, Alert } from "react-native";
-import { My_SearchBar } from "../screens/Tab3Screens/SearchBar";
+import { My_SearchBar } from "./Tab3Screens/SearchBar";
 import { Text, View } from "../components/Themed";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -133,7 +133,7 @@ const secondRoute = (navigation, preferences) => {
 }
 
 
-export default function TabTwoScreen({navigation}) {
+export default function ToolsScreen({navigation}) {
   const [preferences, setPreferences] = useState({
     isCircle: false,
     radius: 3,

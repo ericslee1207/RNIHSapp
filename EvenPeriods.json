@@ -2,65 +2,55 @@
   {
     "period": 2,
     "subject": "Period 2",
-    "teacher": { "id": 2, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "8:30 AM",
-    "id": 2
+    "id": 0
   },
   {
     "period": "Flex",
     "subject": "Flex Time",
-    "teacher": { "id": 3, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "10:00 AM",
-    "id": 3
+    "id": 1
   },
   {
     "period": "*",
     "subject": "Break",
-    "teacher": { "id": 4, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "10:30 AM",
-    "id": 4
+    "id": 2
   },
   {
     "period": 4,
     "subject": "Period 4",
-    "teacher": { "id": 5, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "10:45 AM",
-    "id": 5
+    "id": 3
   },
   {
     "period": "*",
     "subject": "Lunch",
-    "teacher": { "id": 6, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "12:10 PM",
-    "id": 6
+    "id": 4
   },
   {
     "period": 6,
     "subject": "Period 6",
-    "teacher": { "id": 7, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "12:50 PM",
-    "id": 7
+    "id": 5
   },
   {
     "period": "*",
     "subject": "Break",
-    "teacher": { "id": 8, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "2:15 PM",
-    "id": 8
+    "id": 6
   },
   {
     "period": 8,
     "subject": "Period 8",
-    "teacher": { "id": 9, "first_name": "NA", "last_name": "NA" },
-    "room": "NA",
     "time": "2:25 PM",
-    "id": 9
+    "id": 7
+  },
+  {
+    "period": "*",
+    "subject": "End of School",
+    "time": "3:50 PM",
+    "id": 100
   }
 ]

@@ -10,9 +10,9 @@ import { Entypo } from '@expo/vector-icons';
 import Colors from "../constants/Colors";
 import { Feather } from '@expo/vector-icons'; 
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import TabThreeScreen from "../screens/TabThreeScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ToolsScreen from "../screens/ToolsScreen";
+import ListOfClubsScreen from "../screens/ListOfClubsScreen";
 import { IdCard } from "../screens/ToolScreens/IdCard";
 import { Calendar1 } from "../screens/ToolScreens/Calendar";
 import { Staff } from "../screens/ToolScreens/Staff";
@@ -113,8 +113,8 @@ export function TabOneNavigator({navigation}) {
   return (
     <TabOneStack.Navigator mode="modal">
       <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerTitle: (props) => (
             <Image
@@ -166,7 +166,7 @@ export function TabOneNavigator({navigation}) {
         component={ConfigurePersonalInfoScreen}
         options={{
           headerLeft: (props)=>(
-            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "Personalize Classes",
           headerStyle:{
@@ -180,7 +180,7 @@ export function TabOneNavigator({navigation}) {
         component={ConfigureSettingsScreen}
         options={{
           headerLeft: (props)=>(
-            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "Settings",
           headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
@@ -191,7 +191,7 @@ export function TabOneNavigator({navigation}) {
         component={PreferencesScreen}
         options={{
           headerLeft: (props)=>(
-            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "Preferences",
           headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
@@ -202,7 +202,7 @@ export function TabOneNavigator({navigation}) {
         component={AboutScreen}
         options={{
           headerLeft: (props)=>(
-            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("TabOneScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "About",
           headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
@@ -218,8 +218,8 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
+        name="ToolsScreen"
+        component={ToolsScreen}
         options={{
           headerTitle: "Tools",
           headerStyle: styles.header,
@@ -272,8 +272,8 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="TabThreeScreen"
-        component={TabThreeScreen}
+        name="ListOfClubsScreen"
+        component={ListOfClubsScreen}
         options={{
           headerTitle: "Clubs",
           headerStyle: [styles.header],

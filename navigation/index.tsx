@@ -18,7 +18,7 @@ import { ClubContext } from '../screens/Tab3Screens/ClubContext';
 import SummerScreen from "../screens/SummerScreen"
 import moment from 'moment';
 import BannerScreen from "../screens/BannerScreen"
-import IUSDevents from "../IUSD_events.json"
+import IUSDevents from "../IUSD_holidays.json"
 import oddPeriods from "../OddPeriods.json"
 import evenPeriods from "../EvenPeriods.json"
 import mondayPeriods from "../MondayPeriods.json"
@@ -46,22 +46,12 @@ function RootNavigator() {
   const [schedule, setSchedule] = React.useState([])
   const [currentPeriod, setCurrentPeriod] = React.useState({})
   const [nextPeriod, setNextPeriod] = React.useState({})
+  const [index, setIndex] = React.useState()
   // React.useEffect(() => {
   //   setTimeout(()=>{setIsLoading(false)}, 2000)
   // }, []);
   const date = moment().format("l")
-  // const date ="8/19/2021"
-  // const isSummer = () => {
-  //   let from = Date.parse(IUSDevents[0].eventDateStart)
-  //   let to = Date.parse(IUSDevents[0].eventDateEnd)
-  //   let check = Date.parse(date)
-  //   if((check <= to && check >= from)){
-  //     return true;
-  //   } 
-  //   else{
-  //     return false;
-  //   }
-  // }
+
   let isHoliday = false;
   let holiday = undefined;
   IUSDevents.forEach(element => {

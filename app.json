@@ -5,11 +5,11 @@
     "version": "1.0.4",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/correctCropLogo.png",
+    "icon": "./assets/images/IHSLOGOSquare.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splashscreen.png",
+      "image": "./assets/images/irvinesplashscreen.png",
       "resizeMode": "cover"
     },
     "updates": {

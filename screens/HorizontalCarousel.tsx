@@ -10,112 +10,98 @@ import { moderateScale, verticalScale, moderateVerticalScale, } from "react-nati
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BlurView } from 'expo-blur';
 import { AuthContext } from "../components/AuthContext";
+import oddPeriods from "../OddPeriods.json"
+import evenPeriods from "../EvenPeriods.json"
+import mondayPeriods from "../MondayPeriods.json"
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const HorizontalCarousel = (props: any) => {
   const { Schedule } = React.useContext(AuthContext)
-  const currentDate = new Date();
   const [activeIndex, setActiveIndex] = useState(0);
-  const dayOfWeek = moment(currentDate).format('dddd')
-  let upcomingPeriods = [];
-  // const dayOfWeek = "Tuesday"
+  const dayOfWeek = props.date.format("dddd")
+  // const dayOfWeek = "Thursday"
+  const changeTo24Hour = (time) => {
+    const arr = time
+    .split(" ")
+    .join(",")
+    .split(":")
+    .join(",")
+    .split(",");
+    let hour = parseInt(arr[0]);
+    let minute = parseInt(arr[1]);
+    let ampm = arr[2];
+    if (hour != 12 && ampm === "PM") {
+      hour += 12;
+    }
+    if (hour == 12 && ampm=="AM"){
+      hour-=12;
+    }
+    return [hour, minute, ampm]
+  }
   
-  const datenow = props.date.format("LT");
-
-  const arr = props.comingPeriod.time
-    .split(" ")
-    .join(",")
-    .split(":")
-    .join(",")
-    .split(",");
-  const bef = props.currentPeriod.time
-    .split(" ")
-    .join(",")
-    .split(":")
-    .join(",")
-    .split(",");
-    //datenow.format("LT")
-  // const dateLT = datenow
-  //   .format("LT")
-  //   .split(" ")
-  //   .join(",")
-  //   .split(":")
-  //   .join(",")
-  //   .split(",");
-  const dateLT = datenow
-    .split(" ")
-    .join(",")
-    .split(":")
-    .join(",")
-    .split(",");
-  let nowhour = parseInt(dateLT[0]);
-  let nowminute = parseInt(dateLT[1]);
-  let nowampm = dateLT[2];
-  let befhour = parseInt(bef[0]);
-  let befminute = parseInt(bef[1]);
-  let befampm = bef[2];
-
-  let nexthour = parseInt(arr[0]);
-  const nextminute = parseInt(arr[1]);
-  const nextampm = arr[2];
+  let upcomingPeriods = [];
+  let upcomingPeriodNames: any;
+  
+  
+  const datenow = props.date.format("LT")
   let subtitle = "ends in";
   let subject = props.currentPeriod.subject;
-  if (nowhour != 12 && nowampm === "PM") {
-    nowhour += 12;
+  if (props.currentPeriod.period !== "*" && props.currentPeriod.period !== "Flex"){
+    subject = props.periodNames[props.currentPeriod.subject]
   }
-  if (nexthour != 12 && nextampm === "PM") {
-    nexthour += 12;
-  }
-  let hourdiff = nexthour - nowhour;
-  let minutediff = nextminute - nowminute;
-  let timeLeft = hourdiff * 60 + minutediff;
-  if (befhour != 12 && befampm === "PM") {
-    befhour += 12;
-  }
-  let hourdiff1 = nexthour - befhour;
-  let minutediff1 = nextminute - befminute;
-  let timeLeft1 = hourdiff1 * 60 + minutediff1;
-  if (dayOfWeek=="Monday" && props.comingPeriod.period!="*" && props.comingPeriod.id!=0){
-    timeLeft-=5;
-    timeLeft1-=5;
-    if (timeLeft <= 0 ){
+
+  //crusty logic
+  let comingPeriodStartTime = changeTo24Hour(props.comingPeriod.time)
+  let currentPeriodStartTime = changeTo24Hour(props.currentPeriod.time)
+  let nowTime = changeTo24Hour(datenow)
+  
+
+
+  let hourdiff = comingPeriodStartTime[0] - nowTime[0];
+  let minutediff = comingPeriodStartTime[1] - nowTime[1];
+  let timeLeftUntilPeriodEnds = hourdiff * 60 + minutediff;
+  
+  let periodHourLength = comingPeriodStartTime[0] - currentPeriodStartTime[0];
+  let periodMinuteLength = comingPeriodStartTime[1] - currentPeriodStartTime[1];
+  let periodTotalLength = periodHourLength * 60 + periodMinuteLength;
+  if (props.comingPeriod.period!="*" && props.comingPeriod.id!=0){
+    timeLeftUntilPeriodEnds-=5;
+    periodTotalLength-=5;
+
+    if (timeLeftUntilPeriodEnds <= 0 ){
       subject = props.comingPeriod.subject;
+      if (props.comingPeriod.period != "*"){
+        subject = props.periodNames[props.comingPeriod.subject]
+      }
       subtitle="starts in"
-      timeLeft+=5
-      timeLeft1=5;
+      timeLeftUntilPeriodEnds+=5
+      periodTotalLength=5;
     }
   }
-  if (dayOfWeek!="Monday" && props.comingPeriod.period!="*" && props.comingPeriod.id!=1){
-    timeLeft-=5;
-    timeLeft1-=5;
-    if (timeLeft <= 0 ){
-      subject = props.comingPeriod.subject;
-      subtitle="starts in"
-      timeLeft+=5
-      timeLeft1=5;
-    }
-  }
-  let rightPercentage=((timeLeft/timeLeft1))*100;
+
+  let rightPercentage=((timeLeftUntilPeriodEnds/periodTotalLength))*100;
  
+  let schoolEndTime = changeTo24Hour(props.periods[props.periods.length-1].time)
+  let schoolStartTime = changeTo24Hour(props.periods[0].time);
   if (
-    (nowampm === "PM" && nowhour > 15) ||
-    (nowampm === "AM" && nowhour === 12)
+    (nowTime[2] === "PM" && nowTime[0] > schoolEndTime[0])
   ) {
-    timeLeft = 0;
+    timeLeftUntilPeriodEnds = 0;
     rightPercentage = 100;
     subtitle = "ended";
     subject = "School";
-  } else if (nowhour < 8 && nowampm === "AM") {
+  } else if (nowTime[0] < schoolStartTime[0] && nowTime[2] === schoolStartTime[2]) {
     subtitle = "starts in";
     subject = "School";
     rightPercentage=100
-  } else if (nowampm === "PM" && nowhour === 15 && nowminute >= 50) {
-    timeLeft = 0;
+  } else if (nowTime[2] === schoolEndTime[2] && nowTime[0] === schoolEndTime[0] && nowTime[1] >= schoolEndTime[1]) {
+    timeLeftUntilPeriodEnds = 0;
     rightPercentage = 0
     subtitle = "ended";
     subject = "School";
   }
-  else if (nowhour==8 && nowampm=="AM"){
-    if (nowminute<30 && dayOfWeek!="Monday"){
+  else if (nowTime[0]==schoolStartTime[0] && nowTime[2]==schoolStartTime[2]){
+    if (nowTime[1]<schoolStartTime[1]){
       subtitle = "starts in";
       subject = "School";
       rightPercentage=100
@@ -124,7 +110,7 @@ export const HorizontalCarousel = (props: any) => {
   if (dayOfWeek==="Saturday"|| dayOfWeek==="Sunday"){
     subject="Weekend!";
     subtitle=""
-    timeLeft=0;
+    timeLeftUntilPeriodEnds=0;
     rightPercentage=0
   }
   let fontColor = props.colorObj.primary;
@@ -134,50 +120,56 @@ export const HorizontalCarousel = (props: any) => {
 
   if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
     if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriods = Schedule.odd
+      upcomingPeriodNames = Schedule
+      upcomingPeriods = oddPeriods
     }
     if (subject=="School" && subtitle=="ended"){
-      upcomingPeriods=Schedule.even
+      upcomingPeriodNames=Schedule
+      upcomingPeriods = evenPeriods
     }
   }
   else if(dayOfWeek=="Wednesday"){
     if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriods = Schedule.even
+      upcomingPeriodNames = Schedule
+      upcomingPeriods = evenPeriods
     }
     if (subject=="School" && subtitle=="ended"){
-      upcomingPeriods=Schedule.odd
+      upcomingPeriodNames=Schedule
+      upcomingPeriods = oddPeriods
     }
   }
   else if(dayOfWeek=="Friday"){
     if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriods = Schedule.even
+      upcomingPeriodNames = Schedule
+      upcomingPeriods = evenPeriods
     }
     if (subject=="School" && subtitle=="ended"){
-      upcomingPeriods=Schedule.monday
+      upcomingPeriodNames=Schedule
+      upcomingPeriods = mondayPeriods
     }
   }
   else if (dayOfWeek=="Monday"){
     if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriods = Schedule.monday
+      upcomingPeriodNames = Schedule
+      upcomingPeriods = mondayPeriods
     }
     if (subject=="School" && subtitle=="ended"){
-      upcomingPeriods=Schedule.odd
+      upcomingPeriodNames=Schedule
+      upcomingPeriods = oddPeriods
     }
   }
   else{
-    upcomingPeriods=Schedule.monday
+    upcomingPeriodNames=Schedule
+    upcomingPeriods = mondayPeriods
   }
+
+  
   let count = 0
   const upcomingClasses = upcomingPeriods.map((period)=>{
-    const arr = period.time
-      .split(" ")
-      .join(",")
-      .split(":")
-      .join(",")
-      .split(",");
-    const nowhour = arr[0];
-    const nowminute = arr[1];
-    const nowampm = arr[2];
+    let subject = period.subject;
+    if (period.period !== "*" && period.period !== "Flex"){
+      subject = upcomingPeriodNames[period.subject]
+    }
     count++
     if (count<=props.preferences.radius){
     return(
@@ -194,7 +186,7 @@ export const HorizontalCarousel = (props: any) => {
           {props.data.period}
         </Text> */}
         <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: moderateScale(21), color: props.preferences.colorObj.primary }}>
-          {period.subject}
+          {subject}
         </Text>
         <View
           style={{ alignItems: "flex-end", backgroundColor: "rgba(0,0,0,0)" }}
@@ -210,7 +202,7 @@ export const HorizontalCarousel = (props: any) => {
               marginVertical: 1,
             }}
           >
-            {nowhour}:{nowminute} {nowampm}
+            {period.time}
           </Text> 
       </View>
     </View>
@@ -221,14 +213,8 @@ export const HorizontalCarousel = (props: any) => {
       return(
         <View style={{backgroundColor: 'transparent', width: '91.5%', height: moderateScale(2.5), marginTop: '5%', borderColor: 'white', justifyContent: 'center', flexDirection: 'column', borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(-0.5), alignSelf: 'center'}}>
           {<View style={{backgroundColor: props.colorObj.primary, height: moderateScale(2.5), marginRight: `${rightPercentage}%`, borderColor: 'white',  borderBottomRightRadius: moderateScale(100), borderBottomLeftRadius: moderateScale(100),marginBottom: moderateScale(1), }}>
-            {/* <MaterialCommunityIcons style={{marginLeft: `${rightPercentage-1}%`}} size={40} name="chevron-right"/> */}
           </View>
-        //   :
-        //   <View style={{backgroundColor: 'lightgrey', height: 14,  borderRadius: 15, borderColor: 'white', borderWidth: 1}}>
-        //   {/* <MaterialCommunityIcons style={{marginLeft: `${rightPercentage-1}%`}} size={40} name="chevron-right"/> */}
-        // </View>
         }
-          
         </View>
       )
       
@@ -287,7 +273,7 @@ export const HorizontalCarousel = (props: any) => {
               fontSize: moderateScale(80),
               color: props.colorObj.primary,
               marginLeft: moderateScale(30)
-            }}>{timeLeft}</Text>
+            }}>{timeLeftUntilPeriodEnds}</Text>
             <Text style={{
               fontFamily: 'OpenSansRegular',
               fontSize: moderateScale(22),
@@ -300,7 +286,7 @@ export const HorizontalCarousel = (props: any) => {
           <HorizontalTimer/>
         </View> :
 
-
+            
         <View style={styles.header}>
           <View 
             style={{
@@ -341,7 +327,7 @@ export const HorizontalCarousel = (props: any) => {
 
             }}
           >
-            <Text style={{ fontSize: moderateScale(80), color: "white"}}>{timeLeft}</Text>
+            <Text style={{ fontSize: moderateScale(80), color: "white"}}>{timeLeftUntilPeriodEnds}</Text>
             <Text style={{
               fontFamily: 'OpenSansSemiBold',
               fontSize: moderateScale(16),
