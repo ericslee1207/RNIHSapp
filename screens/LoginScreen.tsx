@@ -31,7 +31,7 @@ import { AuthContext } from "../components/AuthContext";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as Notifications from 'expo-notifications';
 import moment from "moment";
-import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 import mondayPeriods from "../MondayPeriods.json"
 import Swiper from "react-native-web-swiper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -239,7 +239,7 @@ export const Login = ({ navigation }) => {
       useNativeDriver={true}
       onBackButtonPress={()=>setModalVisible(true)}
       hideModalContentWhileAnimating={true}>
-        <View style={{width: '85%', maxHeight: moderateScale(330), marginLeft: '7.5%'}}>
+        <View style={{width: '85%', marginLeft: '7.5%', height: Platform.OS=="ios" ? moderateScale(340): moderateScale(370)}}>
           <View style={[styles.invitationBody]}>
             <AntDesign name="Safety" size={moderateScale(40)} color="#04b5a7" style={{marginBottom: moderateScale(10)}}/>              
             <View style={{flexDirection: 'row',  width: '100%', justifyContent: 'center'}}>

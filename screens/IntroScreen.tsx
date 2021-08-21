@@ -82,8 +82,8 @@ const styles=StyleSheet.create({
         
     },
     logo: {
-        height: moderateScale(155),
-        width: moderateScale(155),
+        height: moderateScale(140),
+        width: moderateScale(140),
         opacity: 1,
         borderRadius: moderateScale(0)
     },
@@ -94,12 +94,12 @@ const styles=StyleSheet.create({
         fontFamily: 'OpenSansSemiBold',
     },
     innercircle: {
-        borderWidth: 5, 
-        height: moderateScale(189), 
-        width: moderateScale(189), 
+        borderWidth: 7, 
+        height: moderateScale(169), 
+        width: moderateScale(169), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 150,
+        borderRadius: 50,
         borderColor: '#009387',
         backgroundColor: 'transparent'
     },
@@ -113,11 +113,11 @@ const styles=StyleSheet.create({
         color: "#009387"
     },
     outercircle: {
-        height: moderateScale(200), 
-        width: moderateScale(200), 
+        height: moderateScale(180), 
+        width: moderateScale(180), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 150,
+        borderRadius: 50,
         backgroundColor: 'rgba(255, 255, 255, 1)'
     },
 })

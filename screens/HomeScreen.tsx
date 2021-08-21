@@ -315,11 +315,7 @@ export default function HomeScreen() {
           await scheduleRef.doc("monday").get().then(async(doc)=>{
             setPeriods(doc.data().monday)
             setEvenOrOdd('neither')
-            if (afterSchoolEnded(doc.data().monday)){
-              await scheduleRef.doc("monday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().monday)
-              })
-            }
+            setUpcomingPeriods(doc.data().monday)
           })
           
         }
