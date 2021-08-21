@@ -2,10 +2,10 @@
   "expo": {
     "name": "Irvine High Mobile",
     "slug": "ihsApp",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/IHSLOGOSquare.png",
+    "icon": "./assets/images/IHSLogoBWhite.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {

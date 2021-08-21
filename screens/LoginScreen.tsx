@@ -14,6 +14,7 @@ import {
   Platform,
   ActivityIndicator,
   Touchable,
+  TouchableOpacity
   
 } from "react-native";
 import { Feather } from '@expo/vector-icons'; 
@@ -23,7 +24,6 @@ import evenPeriods from "../EvenPeriods.json";
 import specialDay from "../specialDay.json"
 import { AntDesign } from '@expo/vector-icons'; 
 import Constants from 'expo-constants';
-import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Animatable from "react-native-animatable";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Fumi } from "react-native-textinput-effects";

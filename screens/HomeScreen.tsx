@@ -204,10 +204,12 @@ const ScheduleItem = (props: any) => {
 export default function HomeScreen() {
   const { Schedule } = React.useContext(AuthContext)
   const [periods, setPeriods] = useState()
+  const [upcomingPeriods, setUpcomingPeriods] = useState()
   const [currentPeriod, setCurrentPeriod] = useState()
   const [comingPeriod, setComingPeriod] = useState()
   const [evenOrOdd, setEvenOrOdd] = useState()
   const currentDate = new Date();
+  
   const [datenow, updateDate] = useState(moment(currentDate));
   const withSeconds = datenow.format("LTS");
   const dayOfWeek = datenow.format('dddd')
@@ -234,7 +236,7 @@ export default function HomeScreen() {
   const [index, setIndex] = useState(curSecond);
   const isFocused = useIsFocused();
   const timeNow = datenow.format("LT");
-    // const datenow = "10:40 AM"
+    // const timeNow = "9:55 AM"
     const datenow_split = timeNow
       .split(" ")
       .join(",")
@@ -248,47 +250,83 @@ export default function HomeScreen() {
   useEffect(()=>{
     const setUp = async() => {
       const dayOfWeek = datenow.format("dddd")
-      // const dayOfWeek = "Thursday"
+      // const dayOfWeek = "Monday"
         if (dayOfWeek=="Tuesday"){
-          await scheduleRef.doc("tuesday").get().then((doc)=>{
+          await scheduleRef.doc("tuesday").get().then(async(doc)=>{
             setPeriods(doc.data().tuesday)
             setEvenOrOdd('odd')
+            if (afterSchoolEnded(doc.data().tuesday)){
+              await scheduleRef.doc("wednesday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().wednesday)
+              })
+            }
           })
+          
         }
         else if (dayOfWeek == "Wednesday"){
-          await scheduleRef.doc("wednesday").get().then((doc)=>{
+          await scheduleRef.doc("wednesday").get().then(async(doc)=>{
             setPeriods(doc.data().wednesday)
             setEvenOrOdd('even')
+            if (afterSchoolEnded(doc.data().wednesday)){
+              await scheduleRef.doc("thursday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().thursday)
+              })
+            }
           })
+          
         }
         else if(dayOfWeek=="Thursday"){
-          await scheduleRef.doc("thursday").get().then((doc)=>{
+          await scheduleRef.doc("thursday").get().then(async(doc)=>{
             setPeriods(doc.data().thursday)
             setEvenOrOdd('odd')
+            if (afterSchoolEnded(doc.data().thursday)){
+              await scheduleRef.doc("friday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().friday)
+              })
+            }
           })
+          
         }
         else if(dayOfWeek=="Friday"){
-          await scheduleRef.doc("friday").get().then((doc)=>{
+          await scheduleRef.doc("friday").get().then(async(doc)=>{
             setPeriods(doc.data().friday)
             setEvenOrOdd('even')
+            if (afterSchoolEnded(doc.data().friday)){
+              await scheduleRef.doc("monday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().monday)
+              })
+            }
           })
+          
         }
         else if (dayOfWeek=="Monday"){
-          await scheduleRef.doc("monday").get().then((doc)=>{
+          await scheduleRef.doc("monday").get().then(async(doc)=>{
             setPeriods(doc.data().monday)
             setEvenOrOdd('neither')
+            if (afterSchoolEnded(doc.data().monday)){
+              await scheduleRef.doc("tuesday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().tuesday)
+              })
+            }
           })
+          
         }
         else{
-          await scheduleRef.doc("monday").get().then((doc)=>{
+          await scheduleRef.doc("monday").get().then(async(doc)=>{
             setPeriods(doc.data().monday)
             setEvenOrOdd('neither')
+            if (afterSchoolEnded(doc.data().monday)){
+              await scheduleRef.doc("monday").get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data().monday)
+              })
+            }
           })
+          
         }
     }
     setUp()
     
-  },[datenow_hour])
+  },[datenow_minute])
   
   useEffect(() => {
     updateDate(moment(new Date()))
@@ -320,8 +358,50 @@ export default function HomeScreen() {
     getPreferences()
   }, [isFocused])
   let classes = [];
-  
-  if (periods!==undefined && currentPeriod!==undefined){
+  const changeTo24Hour = (time) => {
+    const arr = time
+    .split(" ")
+    .join(",")
+    .split(":")
+    .join(",")
+    .split(",");
+    let hour = parseInt(arr[0]);
+    let minute = parseInt(arr[1]);
+    let ampm = arr[2];
+    if (hour != 12 && ampm === "PM") {
+      hour += 12;
+    }
+    if (hour == 12 && ampm=="AM"){
+      hour-=12;
+    }
+    return [hour, minute, ampm]
+  }
+  const beforeSchoolStarts = () => {
+    const firstPeriodTime = changeTo24Hour(periods[0].time)
+    const nowTime = changeTo24Hour(timeNow)
+    if (nowTime[0] < firstPeriodTime[0]){
+      return true
+    }
+    else if (nowTime[0] == firstPeriodTime[0] && nowTime[1] < firstPeriodTime[1]){
+      return true
+    }
+    return false
+  }
+  const afterSchoolEnded = (periods) => {
+    const schoolEndTime = changeTo24Hour(periods[periods.length-1].time)
+    const nowTime = changeTo24Hour(timeNow)
+    if (nowTime[0] > schoolEndTime[0]){
+      return true;
+    }
+    else if (nowTime[0]==schoolEndTime[0] && nowTime[1]> schoolEndTime[1]){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+  if (periods!==undefined && currentPeriod!==undefined && !beforeSchoolStarts() && !afterSchoolEnded(periods)){
     classes = periods.map((period) => {
       let highlightPeriod = false;
       if (period==currentPeriod){
@@ -329,30 +409,33 @@ export default function HomeScreen() {
       }
       return(
       <View key={period.id} style={{ backgroundColor: "transparent"}}>
-        <ScheduleItem periods={periods} preferences = {preferences} date={datenow} data={period} key={period.id} periodNames={Schedule} highlightPeriod={highlightPeriod} currentPeriod={currentPeriod}/>
+        <ScheduleItem periods={periods} preferences = {preferences} data={period} key={period.id} periodNames={Schedule} highlightPeriod={highlightPeriod} currentPeriod={currentPeriod}/>
       </View>)})
     }
-  
+    
     const checkCurrentandNextPeriod = () => {
-      
-  
     for (let i = 0; i < periods.length - 1; i++) {
       if (inbetween(periods[i].time, periods[i + 1].time, timeNow)) {
         setCurrentPeriod(periods[i]);
         setComingPeriod(periods[i + 1]);
       }
+
+      // if (afterSchoolEnded()){
+
+      // }
     }
-    if (datenow_ampm === "AM" && datenow_hour < 8) {
-      setComingPeriod(periods[0]);
+    if (beforeSchoolStarts(periods)){
+      setCurrentPeriod(periods[0])
+      setComingPeriod(periods[0])
     }
-    if (dayOfWeek!="Monday" && datenow_ampm === "AM" && datenow_hour == 8 && datenow_minute<30) {
-      setComingPeriod(periods[0]);
+    if (afterSchoolEnded(periods)){
+      setCurrentPeriod(periods[0])
+      setComingPeriod(periods[0])
     }
-    }
+  }
     // if (periods!=undefined){
     //   checkCurrentandNextPeriod()
     // }
-    
   return (
     <>
     <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)', }}>
@@ -415,12 +498,14 @@ export default function HomeScreen() {
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
             date={datenow}
+            timeNow = {timeNow}
             colorObj={preferences.colorObj}
             isCircle={preferences.isCircle}
             preferences={preferences}
             fontSize={fontSize}
             periods = {periods}
             periodNames= {Schedule}
+            upcomingPeriods={upcomingPeriods}
           />:<></>}
           {(dayOfWeek!="Saturday" && dayOfWeek!="Sunday") ? 
           <View
@@ -506,6 +591,7 @@ export default function HomeScreen() {
     </>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -39,11 +39,9 @@ export const HorizontalCarousel = (props: any) => {
     return [hour, minute, ampm]
   }
   
-  let upcomingPeriods = [];
-  let upcomingPeriodNames: any;
   
   
-  const datenow = props.date.format("LT")
+  const datenow = props.timeNow
   let subtitle = "ends in";
   let subject = props.currentPeriod.subject;
   if (props.currentPeriod.period !== "*" && props.currentPeriod.period !== "Flex"){
@@ -70,7 +68,7 @@ export const HorizontalCarousel = (props: any) => {
 
     if (timeLeftUntilPeriodEnds <= 0 ){
       subject = props.comingPeriod.subject;
-      if (props.comingPeriod.period != "*"){
+      if (props.comingPeriod.period != "*" && props.comingPeriod.period != "Flex"){
         subject = props.periodNames[props.comingPeriod.subject]
       }
       subtitle="starts in"
@@ -83,6 +81,7 @@ export const HorizontalCarousel = (props: any) => {
  
   let schoolEndTime = changeTo24Hour(props.periods[props.periods.length-1].time)
   let schoolStartTime = changeTo24Hour(props.periods[0].time);
+
   if (
     (nowTime[2] === "PM" && nowTime[0] > schoolEndTime[0])
   ) {
@@ -118,57 +117,13 @@ export const HorizontalCarousel = (props: any) => {
     fontColor = "#FF6E7A"
   }
 
-  if (dayOfWeek=="Tuesday" || dayOfWeek=="Thursday"){
-    if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriodNames = Schedule
-      upcomingPeriods = oddPeriods
-    }
-    if (subject=="School" && subtitle=="ended"){
-      upcomingPeriodNames=Schedule
-      upcomingPeriods = evenPeriods
-    }
-  }
-  else if(dayOfWeek=="Wednesday"){
-    if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriodNames = Schedule
-      upcomingPeriods = evenPeriods
-    }
-    if (subject=="School" && subtitle=="ended"){
-      upcomingPeriodNames=Schedule
-      upcomingPeriods = oddPeriods
-    }
-  }
-  else if(dayOfWeek=="Friday"){
-    if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriodNames = Schedule
-      upcomingPeriods = evenPeriods
-    }
-    if (subject=="School" && subtitle=="ended"){
-      upcomingPeriodNames=Schedule
-      upcomingPeriods = mondayPeriods
-    }
-  }
-  else if (dayOfWeek=="Monday"){
-    if (subject=="School" && subtitle=="starts in"){
-      upcomingPeriodNames = Schedule
-      upcomingPeriods = mondayPeriods
-    }
-    if (subject=="School" && subtitle=="ended"){
-      upcomingPeriodNames=Schedule
-      upcomingPeriods = oddPeriods
-    }
-  }
-  else{
-    upcomingPeriodNames=Schedule
-    upcomingPeriods = mondayPeriods
-  }
-
+  
   
   let count = 0
-  const upcomingClasses = upcomingPeriods.map((period)=>{
+  const upcomingClasses = props.upcomingPeriods.map((period)=>{
     let subject = period.subject;
     if (period.period !== "*" && period.period !== "Flex"){
-      subject = upcomingPeriodNames[period.subject]
+      subject = Schedule[period.subject]
     }
     count++
     if (count<=props.preferences.radius){
