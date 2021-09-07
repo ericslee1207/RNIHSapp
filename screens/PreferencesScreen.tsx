@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, Switch, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters'
 import Slider from '@react-native-community/slider';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from '../components/AuthContext';
 
 const PreferencesScreen = ({navigation}) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [sliderValue, setSliderValue] = useState(3)
     const [colorValue, setColorValue] = useState(2)
-    const [colorObj, setColorObj] = useState({})
+    const [colorObj, setColorObject] = useState({})
+    const {setColorObj} = React.useContext(AuthContext)
     useEffect(()=>{
         const getDefaultValues = async() => {
             let defaultSettings = await AsyncStorage.getItem("SettingConfigurations")
@@ -24,12 +26,15 @@ const PreferencesScreen = ({navigation}) => {
             else if (primary == "#04b5a7"){
                 setColorValue(3)
             }
-            else{
+            else if (primary=="#ff82c5"){
                 setColorValue(4)
+            }
+            else{
+                setColorValue(5)
             }
             setIsEnabled(parsed.isCircle)
             setSliderValue(parsed.radius)
-            setColorObj(parsed.colorObj)
+            setColorObject(parsed.colorObj)
 
         }
         getDefaultValues()
@@ -63,6 +68,12 @@ const PreferencesScreen = ({navigation}) => {
             colorObj.lightbackground = "rgba(233, 251, 251, 0.96)"
             colorObj.darkbackground = "#D3E7EE"
         }
+        else if (colorValue==4){
+            colorObj.primary = "#ff82c5"
+            colorObj.highlight = "#fde0e0"
+            colorObj.lightbackground = "#fff0f8"
+            colorObj.darkbackground = "#ffe8e8"
+        }
         else{
             colorObj.primary = "#7361ff"
             colorObj.highlight = "#adb0ff"
@@ -76,12 +87,13 @@ const PreferencesScreen = ({navigation}) => {
             radius: sliderValue,
             colorObj: colorObj
         }
-        setColorObj(colorObj)
+        setColorObject(obj.colorObj)
         await AsyncStorage.setItem("SettingConfigurations", JSON.stringify(obj))
+        setColorObj(obj.colorObj)
         navigation.navigate("HomeScreen")
     }
     return(
-        <ScrollView style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)'}}>
+        <ScrollView style={{flex: 1, backgroundColor: colorObj.lightbackground}}>
                 <View style={[styles.button, {marginTop: moderateScale(25)}]}>
                 <View style={{backgroundColor: colorObj.primary, justifyContent: 'center', alignItems: 'center', paddingHorizontal: moderateScale(15), paddingVertical: moderateScale(8), marginTop: moderateScale(20), borderTopLeftRadius: moderateScale(30), borderTopRightRadius: moderateScale(30), borderBottomLeftRadius: moderateScale(30), borderBottomRightRadius: moderateScale(30)}}>
                     <Text style={styles.title}>Timer Style</Text>
@@ -107,9 +119,9 @@ const PreferencesScreen = ({navigation}) => {
             <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '50%'}}>
                 {/* <Text style={styles.subTitle}>Table</Text> */}
                 <Slider
-                    style={{width: moderateScale(200), height: moderateScale(30), marginTop: moderateScale(20)}}
-                    minimumValue={2}
-                    maximumValue={4}
+                    style={{width: moderateScale(210), height: moderateScale(30), marginTop: moderateScale(20)}}
+                    minimumValue={3}
+                    maximumValue={5}
                     minimumTrackTintColor="darkgreen"
                     maximumTrackTintColor="lightblue"
                     step={1}
@@ -117,9 +129,9 @@ const PreferencesScreen = ({navigation}) => {
                     value={sliderValue}
                 />
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', width: moderateScale(190)}}>
-                    <Text style={styles.subTitle}>2</Text>
                     <Text style={styles.subTitle}>3</Text>
                     <Text style={styles.subTitle}>4</Text>
+                    <Text style={styles.subTitle}>5</Text>
                 </View>
                 {/* <Text style={styles.subTitle}>Circle</Text> */}
                 
@@ -133,7 +145,7 @@ const PreferencesScreen = ({navigation}) => {
             <Slider
                     style={{width: moderateScale(200), height: moderateScale(30), marginTop: moderateScale(20)}}
                     minimumValue={1}
-                    maximumValue={3}
+                    maximumValue={5}
                     minimumTrackTintColor="darkgreen"
                     maximumTrackTintColor="lightblue"
                     step={1}
@@ -144,6 +156,10 @@ const PreferencesScreen = ({navigation}) => {
                     <Text style={[styles.subTitle, {color: '#86e07b'}]}>LG</Text>
                     <Text style={[styles.subTitle, {color: '#45b5ff'}]}>LB</Text>
                     <Text style={[styles.subTitle, {color: '#04b5a7'}]}>G</Text>
+                    <Text style={[styles.subTitle, {color: '#fc73c4'}]}>Pi</Text>
+                    <Text style={[styles.subTitle, {color: '#7361ff'}]}>Pu</Text>
+
+
                     {/* <Text style={[styles.subTitle, {color: '#0006b8'}]}>P</Text> */}
                     
                 </View>

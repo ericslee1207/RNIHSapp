@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Text, View, StyleSheet, Dimensions, ImageBackground, Image} from 'react-native';
 import {Card, Title, Paragraph} from 'react-native-paper';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment"
 import { moderateScale } from 'react-native-size-matters';
 import Barcode from 'react-native-barcode-svg';

@@ -29,7 +29,7 @@ import moment from "moment";
 import { Madoka } from "react-native-textinput-effects";
 import { ScrollView, FlatList } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { moderateScale } from "react-native-size-matters";
 import { useIsFocused } from "@react-navigation/native";
 import * as Notifications from 'expo-notifications';

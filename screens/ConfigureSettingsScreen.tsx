@@ -2,23 +2,15 @@ import React, {useState} from 'react'
 import { View, StyleSheet, Text, Switch, TouchableOpacity, ScrollView } from 'react-native'
 import { moderateScale, moderateVerticalScale } from 'react-native-size-matters'
 import { FontAwesome5 } from '@expo/vector-icons'; 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
+import { AuthContext } from '../components/AuthContext';
 
 const ConfigureSettingsScreen = ({navigation}) => {
-    const [colorObj, setColorObj] = useState({})
-    React.useEffect(()=>{
-        const getDefaultValues = async() => {
-            let defaultSettings = await AsyncStorage.getItem("SettingConfigurations")
-            let parsed = JSON.parse(defaultSettings)
-            setColorObj(parsed.colorObj)
-
-        }
-        getDefaultValues()
-    }, [])
+    const {colorObj} = React.useContext(AuthContext)    
     return(
-        <View style={{flex: 2,  paddingHorizontal: moderateScale(20), backgroundColor: "rgba(233, 251, 251, 0.96)", justifyContent: 'center'}}>
+        <View style={{flex: 2,  paddingHorizontal: moderateScale(20), backgroundColor: colorObj.lightbackground, justifyContent: 'center'}}>
             <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Preferences")}>
                     <FontAwesome5 name="pencil-ruler" size={moderateScale(30)} color= {colorObj.primary}/>
@@ -88,7 +80,7 @@ const styles = StyleSheet.create({
     },
     button: { 
         flex: 1/2, 
-        height: moderateScale(170),
+        height: moderateScale(165),
         borderRadius: moderateScale(20), 
         // marginRight: moderateScale(6), 
         justifyContent: 'center', 

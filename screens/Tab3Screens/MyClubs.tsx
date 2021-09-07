@@ -5,7 +5,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import {Subtitle} from 'native-base'
 import {ClubContext} from './ClubContext'
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from 'react-native';
 
 

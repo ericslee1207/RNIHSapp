@@ -1,0 +1,63 @@
+[
+    {
+      "period": 1,
+      "subject": "Period 1",
+      "time": "8:30 AM",
+      "id":0
+    },
+    {
+      "period": 2,
+      "subject": "Period 2",
+      "time": "9:00 AM",
+      "id": 1
+    },
+    {
+      "period": 3,
+      "subject": "Period 3",
+      "time": "9:30 AM",
+      "id": 2
+    },
+    {
+      "period": 4,
+      "subject": "Period 4",
+      "time": "10:00 AM",
+      "id": 3
+    },
+    {
+        "period": "*",
+        "subject": "Break",
+        "time": "10:25 AM",
+        "id": 4
+    },
+    {
+        "period": 5,
+        "subject": "Period 5",
+        "time": "10:40 AM",
+        "id": 5
+      },
+    {
+      "period": 6,
+      "subject": "Period 6",
+      "time": "11:10 AM",
+      "id": 6
+    },
+    {
+      "period": 7,
+      "subject": "Period 7",
+      "time": "11:40 AM",
+      "id": 7
+    },
+    {
+      "period": 8,
+      "subject": "Period 8",
+      "time": "12:10 PM",
+      "id": 8
+    },
+    {
+      "period": "*",
+      "subject": "End of School",
+      "time": "12:35 PM",
+      "id": 100
+    }
+  ]
+  

@@ -4,7 +4,7 @@ import {Card} from 'react-native-paper'
 import { StyleSheet, Dimensions } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import {Subtitle} from 'native-base'
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ClubContext} from './ClubContext'
 import { moderateScale } from 'react-native-size-matters';
 

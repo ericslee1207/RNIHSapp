@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Image, Dimensions, Alert } from "react-native";
 import { My_SearchBar } from "./Tab3Screens/SearchBar";
 import { Text, View } from "../components/Themed";
-import AsyncStorage from "@react-native-community/async-storage";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import club_data from "../clubs_2019-2020.json";
 import { Card, Avatar, IconButton, Title } from "react-native-paper";
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view'
@@ -11,6 +10,7 @@ import {ClubContext} from './Tab3Screens/ClubContext'
 import { useContext } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { moderateScale, moderateVerticalScale } from "react-native-size-matters";
+import { AuthContext } from "../components/AuthContext";
 
 const firstRoute= (navigation) => {
   const [clubs, setClubs] = useState(club_data);
@@ -76,9 +76,28 @@ const firstRoute= (navigation) => {
   );
 }
 
-const secondRoute = (navigation, preferences) => {
+const secondRoute = (navigation) => {
   
-  
+  const [preferences, setPreferences] = useState({
+    isCircle: false,
+    radius: 3,
+    colorObj: {
+      primary :"#04b5a7",
+      highlight : "hsl(165, 100%, 80%)",
+      lightbackground : "rgba(233, 251, 251, 0.96)",
+      darkbackground : "#D3E7EE"
+    }
+  })
+  const isFocused = useIsFocused()
+  useEffect(()=>{    
+      const getPreferences = async() => {
+        let preferences = await AsyncStorage.getItem("SettingConfigurations")
+        let preferencesParsed = JSON.parse(preferences)
+        setPreferences(preferencesParsed)
+      }
+      getPreferences()
+    
+}, [isFocused])
   const[finalClubs, setFinalClubs] = useState([])
   const [clubs, setClubs] = useState([]);
   let savedClubs = useContext(ClubContext).saved_clubs
@@ -134,46 +153,27 @@ const secondRoute = (navigation, preferences) => {
 
 
 export default function ToolsScreen({navigation}) {
-  const [preferences, setPreferences] = useState({
-    isCircle: false,
-    radius: 3,
-    colorObj: {
-      primary :"#04b5a7",
-      highlight : "hsl(165, 100%, 80%)",
-      lightbackground : "rgba(233, 251, 251, 0.96)",
-      darkbackground : "#D3E7EE"
-    }
-  })
-  const isFocused = useIsFocused()
-  useEffect(()=>{    
-      const getPreferences = async() => {
-        let preferences = await AsyncStorage.getItem("SettingConfigurations")
-        let preferencesParsed = JSON.parse(preferences)
-        setPreferences(preferencesParsed)
-      }
-      getPreferences()
-    
-}, [isFocused])
+  
   const [index, setIndex]= useState(0);
   const routes=[{key: 'first', title: 'All Clubs'}, {key: 'second', title: 'Saved Clubs'}]
-
+  const {colorObj} = React.useContext(AuthContext)
   const renderScene=SceneMap({
     first: ()=>firstRoute(navigation),
-    second: () => secondRoute(navigation, preferences)
+    second: () => secondRoute(navigation)
   })
 
 
   const [saved_clubs, save_club] = useState([])
-
+  const {color} = React.useContext(AuthContext)
   return(
     <ClubContext.Provider value={{saved_clubs: saved_clubs, save_club: save_club}}>
       <TabView
         renderTabBar={props => <TabBar
           {...props}
-          indicatorStyle={{backgroundColor: preferences.colorObj.primary}}
-          style={{backgroundColor: 'rgba(233, 251, 251, 0.96)', height: moderateScale(40)}}
-          activeColor={preferences.colorObj.primary}
-          inactiveColor={preferences.colorObj.primary}
+          indicatorStyle={{backgroundColor: color}}
+          style={{backgroundColor: colorObj.lightbackground, height: moderateScale(40)}}
+          activeColor={'black'}
+          inactiveColor={'grey'}
           renderLabel={({ route, focused, color }) => (
             <Text style={{ color, fontFamily: "OpenSansSemiBold" }}>
               {route.title}

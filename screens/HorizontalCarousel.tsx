@@ -13,12 +13,13 @@ import { AuthContext } from "../components/AuthContext";
 import oddPeriods from "../OddPeriods.json"
 import evenPeriods from "../EvenPeriods.json"
 import mondayPeriods from "../MondayPeriods.json"
-import AsyncStorage from "@react-native-community/async-storage";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import IUSDevents from "../IUSD_holidays.json"
 export const HorizontalCarousel = (props: any) => {
-  const { Schedule } = React.useContext(AuthContext)
+  const { Schedule, isHoliday } = React.useContext(AuthContext)
   const [activeIndex, setActiveIndex] = useState(0);
   const dayOfWeek = props.date.format("dddd")
+  
   // const dayOfWeek = "Thursday"
   const changeTo24Hour = (time) => {
     const arr = time
@@ -38,7 +39,10 @@ export const HorizontalCarousel = (props: any) => {
     }
     return [hour, minute, ampm]
   }
-  
+  let upcomingPeriods = []
+  if (props.upcomingPeriods!=undefined){
+    upcomingPeriods=props.upcomingPeriods
+  }
   
   
   const datenow = props.timeNow
@@ -110,17 +114,22 @@ export const HorizontalCarousel = (props: any) => {
     subject="Weekend!";
     subtitle=""
     timeLeftUntilPeriodEnds=0;
-    rightPercentage=0
+    rightPercentage=100
   }
   let fontColor = props.colorObj.primary;
   if (subtitle == "starts in"){
     fontColor = "#FF6E7A"
   }
 
-  
+  if (isHoliday){
+    subject="No School!"
+    subtitle = ""
+    timeLeftUntilPeriodEnds=0
+    rightPercentage = 100
+  }
   
   let count = 0
-  const upcomingClasses = props.upcomingPeriods.map((period)=>{
+  const upcomingClasses = upcomingPeriods.map((period)=>{
     let subject = period.subject;
     if (period.period !== "*" && period.period !== "Flex"){
       subject = Schedule[period.subject]
@@ -297,7 +306,7 @@ export const HorizontalCarousel = (props: any) => {
         {/* <HorizontalTimer/> */}
         
       </View>
-      {subtitle !="ended" && (subtitle!="starts in" || subject!="School") && subject!= "Weekend!"? 
+      {!isHoliday && subtitle !="ended" && (subtitle!="starts in" || subject!="School") && subject!= "Weekend!"? 
       <View style={{backgroundColor: 'transparent', flexDirection: 'row', marginLeft: '5%'}}>
       <Text
           style={{

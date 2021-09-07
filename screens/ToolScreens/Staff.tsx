@@ -17,7 +17,7 @@ import staffData from "../../exStaff.json";
 import { Staff_List } from "./staff_list";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { useEffect } from "react";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { moderateScale } from "react-native-size-matters";
 import { useIsFocused } from "@react-navigation/native";
 

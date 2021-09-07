@@ -18,9 +18,6 @@ export const Intro = ({navigation}) => {
             "OpenSansBold": require("../assets/fonts/Open_Sans/OpenSans-Bold.ttf")
         })
     
-    
-    
-    
     if (!fontsLoaded){
         return <AppLoading/>
     }
@@ -48,7 +45,7 @@ export const Intro = ({navigation}) => {
                             {/* <Image source={require("../assets/images/newlogowhite.png")} style={{height: moderateScale(45), width: moderateScale(300), marginTop: moderateScale(30)}}/> */}
                             <View style={{width: '100%'}}>
                                 <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: moderateScale(55), backgroundColor: '#04b5a7', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.3}}>
-                                    <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Student Onboard</Text>
+                                    <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Sign Up</Text>
                                 </TouchableOpacity>
                             </View>
                         </Animatable.View>
@@ -94,13 +91,13 @@ const styles=StyleSheet.create({
         fontFamily: 'OpenSansSemiBold',
     },
     innercircle: {
-        borderWidth: 7, 
+        borderWidth: 5, 
         height: moderateScale(169), 
         width: moderateScale(169), 
         justifyContent: 'center', 
         alignItems: 'center', 
         borderRadius: 50,
-        borderColor: '#009387',
+        borderColor: '#45b5ff',
         backgroundColor: 'transparent'
     },
     welcome: {

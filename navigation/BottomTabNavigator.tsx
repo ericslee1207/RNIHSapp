@@ -30,10 +30,12 @@ import { MyClubs } from "../screens/Tab3Screens/MyClubs"
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import PreferencesScreen from "../screens/PreferencesScreen";
 import AboutScreen from "../screens/AboutScreen";
+import { AuthContext } from "../components/AuthContext";
 
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator({navigation}) {
+  const {colorObj} = React.useContext(AuthContext)
   return (
     <>
     {/* <View style={styles.homebuttonbackground}>
@@ -44,7 +46,7 @@ export default function BottomTabNavigator({navigation}) {
     
     <BottomTab.Navigator
       initialRouteName="Profile"
-      activeColor='#009387'
+      activeColor={colorObj.primary}
       inactiveColor='grey'
       shifting={true}
       barStyle={{
@@ -57,7 +59,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-bookmark" color={color} />
           ),
-          tabBarColor: '#D3E7EE',
+          tabBarColor: colorObj.darkbackground,
           tabBarLabel: ''
         }}
       />
@@ -68,7 +70,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="home" color={color} />
           ),
-          tabBarColor: '#D3E7EE',
+          tabBarColor: colorObj.darkbackground,
           tabBarLabel: '',
           
         }}
@@ -80,7 +82,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-search" color={color} />
           ),
-          tabBarColor: '#D3E7EE',
+          tabBarColor: colorObj.darkbackground,
           tabBarLabel: ''
         }}
       />
@@ -104,6 +106,7 @@ function TabBarIcon(props: { name: string; color: string }) {
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
 export function TabOneNavigator({navigation}) {
+  const {colorObj} = React.useContext(AuthContext)
   const onPfpClick = () => {
     navigation.navigate("ConfigurePersonalInfo")
   }
@@ -116,18 +119,51 @@ export function TabOneNavigator({navigation}) {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          headerTitle: (props) => (
-            <Image
-            style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
-            source={require("../assets/images/darkgreenIHSheader.png")}
-          />
-          
-          // <></>
-          ),
+          headerTitle: (props) => {
+            if (colorObj.primary=="#04b5a7"){
+              return(
+                <Image
+                  style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
+                  source={require("../assets/images/darkgreenIHSheader.png")}
+                />
+              )
+            }
+            else if (colorObj.primary=="#45b5ff"){
+                return(
+                  <Image
+                    style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
+                    source={require("../assets/images/lightblueIHSHeader.png")}
+                  />
+                )
+            }
+            else if (colorObj.primary=="#ff82c5"){
+              return(
+                <Image
+                  style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
+                  source={require("../assets/images/pinkIHSHeader.png")}
+                />
+              )
+            }
+            else if (colorObj.primary=="#86e07b"){
+              return(
+                <Image
+                  style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
+                  source={require("../assets/images/lightgreenIHSHeader.png")}
+                />
+              )
+            }
+            else{
+              return(
+                <Image
+                  style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
+                  source={require("../assets/images/purpleIHSHeader.png")}
+                />
+              )
+            }
+          },
           headerLeft: (props)=>(
             null
           ),
-          // headerTitle: (props)=>(<></>),
           headerRight: (props)=>(
             <>
             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
@@ -135,13 +171,13 @@ export function TabOneNavigator({navigation}) {
               <MaterialCommunityIcons name="account-circle-outline" size={moderateScale(43)} color="darkgreen"/>
             </TouchableOpacity> */}
             <TouchableOpacity onPress={onSettingsClick} style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: moderateScale(20)}}>
-              <Entypo name="dots-three-horizontal" size={moderateScale(35)} color="darkgreen" />              
+              <Entypo name="dots-three-horizontal" size={moderateScale(35)} color="black" />              
               </TouchableOpacity>
             </View>
             </>
           ),
           headerStyle: {
-            backgroundColor: 'rgba(233, 251, 251, 0.96)',
+            backgroundColor: colorObj.lightbackground,
             height: verticalScale(78),
             shadowColor: "transparent",
             shadowOffset: {
@@ -170,7 +206,7 @@ export function TabOneNavigator({navigation}) {
           ),
           headerTitle: "Personalize Classes",
           headerStyle:{
-            backgroundColor: 'rgba(233, 251, 251, 0.96)',
+            backgroundColor: colorObj.lightbackground,
 
           }
         }}
@@ -183,7 +219,7 @@ export function TabOneNavigator({navigation}) {
             <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "Settings",
-          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
+          headerStyle: {backgroundColor: colorObj.lightbackground}
         }}
       />
       <TabOneStack.Screen
@@ -194,7 +230,7 @@ export function TabOneNavigator({navigation}) {
             <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "Preferences",
-          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
+          headerStyle: {backgroundColor: colorObj.lightbackground}
         }}
       />
       <TabOneStack.Screen
@@ -205,7 +241,7 @@ export function TabOneNavigator({navigation}) {
             <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
           ),
           headerTitle: "About",
-          headerStyle: {backgroundColor: "rgba(233, 251, 251, 0.96)"}
+          headerStyle: {backgroundColor: colorObj.lightbackground}
         }}
       />
 </TabOneStack.Navigator>
@@ -215,6 +251,7 @@ export function TabOneNavigator({navigation}) {
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
+  const {colorObj} = React.useContext(AuthContext)
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
@@ -222,7 +259,7 @@ function TabTwoNavigator() {
         component={ToolsScreen}
         options={{
           headerTitle: "Tools",
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
           headerLeft: null
 
@@ -233,7 +270,7 @@ function TabTwoNavigator() {
         component={IdCard}
         options={{
           headerTitle: "ID Card",
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
         }}
       />
@@ -251,7 +288,7 @@ function TabTwoNavigator() {
         component={Staff}
         options={{
           headerTitle: "Staff",
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
         }}
       />
@@ -260,7 +297,7 @@ function TabTwoNavigator() {
         component={Calendar1}
         options={{
           headerTitle: "Calendar",
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
         }}
       />
@@ -269,6 +306,8 @@ function TabTwoNavigator() {
 }
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 function TabThreeNavigator() {
+  const {colorObj} = React.useContext(AuthContext)
+
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
@@ -276,7 +315,7 @@ function TabThreeNavigator() {
         component={ListOfClubsScreen}
         options={{
           headerTitle: "Clubs",
-          headerStyle: [styles.header],
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
           headerLeft: null
         }}
@@ -287,7 +326,7 @@ function TabThreeNavigator() {
         component={Club_Page}
         options={{
           headerTitle: 'Clubs',
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle
         }}
         
@@ -297,7 +336,7 @@ function TabThreeNavigator() {
         component={MyClubs}
         options={{
           headerTitle: 'My Clubs',
-          headerStyle: styles.header,
+          headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle
         }}
         

@@ -28,7 +28,7 @@ import * as Animatable from "react-native-animatable";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Fumi } from "react-native-textinput-effects";
 import { AuthContext } from "../components/AuthContext";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from 'expo-notifications';
 import moment from "moment";
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
@@ -43,6 +43,8 @@ import tuesdayPeriods from "../TuesdayPeriods.json"
 import wednesdayPeriods from "../WednesdayPeriods.json"
 import thursdayPeriods from "../ThursdayPeriods.json"
 import fridayPeriods from "../FridayPeriods.json"
+import minimumDayPeriods from "../MinimumDay.json"
+
 // firebase.initializeApp(firebaseConfig);
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -99,11 +101,8 @@ async function registerForPushNotificationsAsync() {
 }
 
 export const Login = ({ navigation }) => {
-  const { SignIn, setSchedule } = React.useContext(AuthContext);
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  const { SignIn, setSchedule, setColorObj } = React.useContext(AuthContext);
+
   const swiperRef = useRef(null);
   const [index, updateIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -113,20 +112,21 @@ export const Login = ({ navigation }) => {
   const goToHome = () => {
     SignIn()
   }
+
+  
   const proceedToHome = async() =>{
     setLoading(true);
     let idd = uuid.v4().toString();
     await userRef.doc(idd).set({
       uuid: idd,
+      firstName: firstName,
+      lastName: lastName
     }).then(()=>{
       console.log("Saved!")
     }).catch((e)=>{
       console.log(e)
     })
-    // await scheduleRef.doc("even").set({even: evenPeriods}).then(()=>{console.log("schedule saved")})
-    // await scheduleRef.doc("odd").set({odd: oddPeriods}).then(()=>{console.log("schedule saved")})
-    // await scheduleRef.doc("monday").set({monday: mondayPeriods})
-    // await scheduleRef.doc("special").set({special: specialDay})
+
     let colorObj = {
       primary: "#04b5a7",
       highlight: "hsl(165, 100%, 80%)",
@@ -144,24 +144,18 @@ export const Login = ({ navigation }) => {
       longID: longID,
       graduationYear: graduationYear
     }
-
+    setColorObj(colorObj)
     await AsyncStorage.setItem("accountInfo", JSON.stringify(data));
     await AsyncStorage.setItem("scheduleDetails", JSON.stringify(defaultSchedule))
     .then(()=>setSchedule(defaultSchedule))
     await AsyncStorage.setItem("SettingConfigurations", JSON.stringify(settings))
     .then(goToHome)
-    .then(()=>setLoading(false))
-    // .then(()=>{
-    //   registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-    //   notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-    //     // setNotification(notification);
-    //     console.log(notification)
-    //   });
-    //   console.log(expoPushToken)
-    // })
-
-    
+    .then(()=>setLoading(false))    
   }
+
+
+
+
   const [firstName, setfirst] = useState("")
   const [lastName, setlast] = useState("")
   const [shortID, setShortID] =  useState("")
@@ -171,21 +165,11 @@ export const Login = ({ navigation }) => {
 
   const inputData = () => {
     // specialDays.doc("8-18-2021").set({schedule: specialDay})
-    scheduleRef.doc("monday").set({monday: mondayPeriods})
-    scheduleRef.doc("tuesday").set({tuesday: tuesdayPeriods})
-    scheduleRef.doc('wednesday').set({wednesday: wednesdayPeriods})
-    scheduleRef.doc('thursday').set({thursday: thursdayPeriods})
-    scheduleRef.doc('friday').set({friday: fridayPeriods})
-//     docRef.get().then((doc) => {
-//         if (doc.exists) {
-//             console.log("Document data:", doc.data());
-//         } else {
-//             // doc.data() will be undefined in this case
-//             console.log("No such document!");
-//         }
-//     }).catch((error) => {
-//         console.log("Error getting document:", error);
-// });
+    // scheduleRef.doc("monday").set({monday: mondayPeriods})
+    scheduleRef.doc("tuesday").set({tuesday: mondayPeriods})
+    scheduleRef.doc('wednesday').set({wednesday: minimumDayPeriods})
+    // scheduleRef.doc('thursday').set({thursday: thursdayPeriods})
+    // scheduleRef.doc('friday').set({friday: fridayPeriods})
   }
 
   const newDataLongID = (text: string) => {
@@ -215,7 +199,7 @@ export const Login = ({ navigation }) => {
     }
   };
 
-  if (longID.length==9 && shortID.length==5 && firstName.length>0 && lastName.length>0 && parseInt(graduationYear)<=year.start+4 && parseInt(graduationYear)>=year.end){
+  if ((longID.length==9 || longID.length==8)  && shortID.length==5 && firstName.length>0 && lastName.length>0 && parseInt(graduationYear)<=year.start+4 && parseInt(graduationYear)>=year.end){
     disabled=false
     opacity=1
     bc = "#009387"
@@ -235,9 +219,9 @@ export const Login = ({ navigation }) => {
       
     <Modal
       isVisible={modalVisible}
-      onBackdropPress={()=>setModalVisible(true)}
+      onBackdropPress={()=>setModalVisible(false)}
       useNativeDriver={true}
-      onBackButtonPress={()=>setModalVisible(true)}
+      onBackButtonPress={()=>setModalVisible(false)}
       hideModalContentWhileAnimating={true}>
         <View style={{width: '85%', marginLeft: '7.5%', height: Platform.OS=="ios" ? moderateScale(340): moderateScale(370)}}>
           <View style={[styles.invitationBody]}>

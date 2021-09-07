@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import {View, StyleSheet, Image, Text, ScrollView, TouchableOpacity, Linking, Button} from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { AuthContext } from '../components/AuthContext';
 const AboutScreen = () => {
-    
+    const {colorObj} = React.useContext(AuthContext)
     return(
-        <ScrollView style={styles.container}>
+        <ScrollView style={[styles.container, {backgroundColor: colorObj.lightbackground}]}>
            <View style={styles.outercircle}>
                                 <View style={styles.innercircle}>
                                     <Image source={require('../assets/images/IHSLOGOSquare.png')} style={styles.logo}/>

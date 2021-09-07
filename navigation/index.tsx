@@ -13,7 +13,7 @@ import {AuthContext} from '../components/AuthContext';
 import {TabOneNavigator} from './BottomTabNavigator'
 import OnboardingPageTwo from "../screens/OnboardingTwo"
 import OnboardingPageOne from "../screens/OnboardingOne"
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ClubContext } from '../screens/Tab3Screens/ClubContext';
 import SummerScreen from "../screens/SummerScreen"
 import moment from 'moment';
@@ -22,6 +22,7 @@ import IUSDevents from "../IUSD_holidays.json"
 import oddPeriods from "../OddPeriods.json"
 import evenPeriods from "../EvenPeriods.json"
 import mondayPeriods from "../MondayPeriods.json"
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -46,6 +47,7 @@ function RootNavigator() {
   const [schedule, setSchedule] = React.useState([])
   const [currentPeriod, setCurrentPeriod] = React.useState({})
   const [nextPeriod, setNextPeriod] = React.useState({})
+  const [colorObj, setColorObj] = React.useState({})
   const [index, setIndex] = React.useState()
   // React.useEffect(() => {
   //   setTimeout(()=>{setIsLoading(false)}, 2000)
@@ -98,7 +100,10 @@ function RootNavigator() {
           }
           let settings = {isCircle: false, radius: 3, colorObj: colorObj}
           await AsyncStorage.setItem("SettingConfigurations", JSON.stringify(settings))
+
         }
+        preferences = JSON.parse(preferences)
+        setColorObj(preferences.colorObj)
         setUserToken("true")
 
       }
@@ -109,6 +114,7 @@ function RootNavigator() {
     }
     func()
   }, [])
+
   const verifyUser = React.useMemo(() => ({
     SignIn: ()=> {
       setUserToken('true');
@@ -121,7 +127,7 @@ function RootNavigator() {
     }
   }), [])
   return (
-    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut, Schedule: schedule, setSchedule: setSchedule, currentPeriod: currentPeriod, setCurrentPeriod: setCurrentPeriod, nextPeriod: nextPeriod, setNextPeriod: setNextPeriod
+    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut, Schedule: schedule, setSchedule: setSchedule, currentPeriod: currentPeriod, setCurrentPeriod: setCurrentPeriod, nextPeriod: nextPeriod, setNextPeriod: setNextPeriod, isHoliday: isHoliday, setColorObj: setColorObj, colorObj: colorObj
     }}>
       <ClubContext.Provider value={{saved_clubs: savedClubs, changeStatusClub: changeStatusClub1}}>
         {

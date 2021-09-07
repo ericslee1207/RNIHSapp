@@ -13,7 +13,7 @@ import {
   View
 } from "native-base";
 import { AuthContext } from "../components/AuthContext";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { moderateScale } from "react-native-size-matters";
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -23,8 +23,16 @@ import { useIsFocused } from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
 
 export const ToolList = (props) => {
+  const {setColorObj} = React.useContext(AuthContext)
   const onDelete = async () => {
     SignOut()
+    let colorObj = {
+      primary: "#04b5a7",
+      highlight: "hsl(165, 100%, 80%)",
+      lightbackground: "rgba(233, 251, 251, 0.96)",
+      darkbackground: "#D3E7EE"
+    }
+    setColorObj(colorObj)
     await AsyncStorage.clear();
   }
   const [preferences, setPreferences] = React.useState({

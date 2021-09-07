@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from 'react'
 import { useEffect } from 'react';
 import { useState, useRef } from 'react';
@@ -8,6 +8,7 @@ import { Fumi } from "react-native-textinput-effects";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Swiper from 'react-native-web-swiper';
 import { AuthContext } from '../components/AuthContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const ConfigurePersonalInfoScreen = ({navigation, route}) => {
     const colorObj = route.params.colorObj
@@ -117,11 +118,13 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
               width: '100%'
             }}
             value={text}
-            iconClass={FontAwesomeIcon}
+
+            iconClass={MaterialCommunityIcons}
             iconName={icon}
             iconColor={colorObj.primary}
-            iconSize={moderateScale(25)}
+            iconSize={25}
             inputPadding={moderateScale(15)}
+            
             inputStyle={{marginTop: moderateScale(-13)}}
             autoCapitalize="none"
             onChangeText={(text) => onChange(text)}
@@ -129,7 +132,7 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
         );
       };
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: colorObj.lightbackground}]}>
             {/* <DropDownMenu /> */}
             <Swiper
                 onIndexChanged={(index)=>updateIndex(index)}
@@ -154,19 +157,19 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
                   <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Odd Periods</Text>
                   </View>
-                    <FumiInput objKey="Period 1" type={Schedule["Period 1"]}icon="pencil"/>
-                    <FumiInput objKey="Period 3" type={Schedule["Period 3"]} icon="pencil"/>
-                    <FumiInput objKey="Period 5" type={Schedule["Period 5"]} icon="pencil"/>
-                    <FumiInput objKey="Period 7" type={Schedule["Period 7"]} icon="pencil"/>
+                    <FumiInput objKey="Period 1" type={Schedule["Period 1"]}icon="numeric-1"/>
+                    <FumiInput objKey="Period 3" type={Schedule["Period 3"]} icon="numeric-3"/>
+                    <FumiInput objKey="Period 5" type={Schedule["Period 5"]} icon="numeric-5"/>
+                    <FumiInput objKey="Period 7" type={Schedule["Period 7"]} icon="numeric-7"/>
                 </View>
                 <View style={styles.customizeClasses}>
                 <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Even Periods</Text>
                   </View>                   
-                    <FumiInput objKey="Period 2" type={Schedule["Period 2"]} icon="pencil"/>
-                    <FumiInput objKey="Period 4" type={Schedule["Period 4"]} icon="pencil"/>
-                    <FumiInput objKey="Period 6" type={Schedule["Period 6"]} icon="pencil"/>
-                    <FumiInput objKey="Period 8" type={Schedule["Period 8"]} icon="pencil"/>
+                    <FumiInput objKey="Period 2" type={Schedule["Period 2"]} icon="numeric-2"/>
+                    <FumiInput objKey="Period 4" type={Schedule["Period 4"]} icon="numeric-4"/>
+                    <FumiInput objKey="Period 6" type={Schedule["Period 6"]} icon="numeric-6"/>
+                    <FumiInput objKey="Period 8" type={Schedule["Period 8"]} icon="numeric-8"/>
                 </View>
             </Swiper>
             <View style={{flex: 1/3, justifyContent: 'center', alignItems: 'center'}}>

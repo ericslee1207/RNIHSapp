@@ -29,7 +29,7 @@ import fridayPeriods from "../FridayPeriods.json"
 import evenPeriods from "../EvenPeriods.json";
 import { moderateScale } from "react-native-size-matters";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import CircleTimer from "./CircleTimer"
 import { AuthContext } from "../components/AuthContext";
@@ -202,7 +202,7 @@ const ScheduleItem = (props: any) => {
 
 
 export default function HomeScreen() {
-  const { Schedule } = React.useContext(AuthContext)
+  const { Schedule, isHoliday } = React.useContext(AuthContext)
   const [periods, setPeriods] = useState()
   const [upcomingPeriods, setUpcomingPeriods] = useState()
   const [currentPeriod, setCurrentPeriod] = useState()
@@ -212,7 +212,7 @@ export default function HomeScreen() {
   
   const [datenow, updateDate] = useState(moment(currentDate));
   const withSeconds = datenow.format("LTS");
-  const dayOfWeek = datenow.format('dddd')
+  const dayOfWeek = datenow.format("dddd").toLowerCase()
   const [fontSize, setFontSize] = useState(moderateScale(27))
   const [preferences, setPreferences] = useState({
     isCircle: false,
@@ -249,76 +249,49 @@ export default function HomeScreen() {
   
   useEffect(()=>{
     const setUp = async() => {
-      const dayOfWeek = datenow.format("dddd")
-      // const dayOfWeek = "Monday"
-        if (dayOfWeek=="Tuesday"){
-          await scheduleRef.doc("tuesday").get().then(async(doc)=>{
-            setPeriods(doc.data().tuesday)
-            setEvenOrOdd('odd')
-            if (afterSchoolEnded(doc.data().tuesday)){
-              await scheduleRef.doc("wednesday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().wednesday)
-              })
-            }
-          })
-          
-        }
-        else if (dayOfWeek == "Wednesday"){
-          await scheduleRef.doc("wednesday").get().then(async(doc)=>{
-            setPeriods(doc.data().wednesday)
-            setEvenOrOdd('even')
-            if (afterSchoolEnded(doc.data().wednesday)){
-              await scheduleRef.doc("thursday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().thursday)
-              })
-            }
-          })
-          
-        }
-        else if(dayOfWeek=="Thursday"){
-          await scheduleRef.doc("thursday").get().then(async(doc)=>{
-            setPeriods(doc.data().thursday)
-            setEvenOrOdd('odd')
-            if (afterSchoolEnded(doc.data().thursday)){
-              await scheduleRef.doc("friday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().friday)
-              })
-            }
-          })
-          
-        }
-        else if(dayOfWeek=="Friday"){
-          await scheduleRef.doc("friday").get().then(async(doc)=>{
-            setPeriods(doc.data().friday)
-            setEvenOrOdd('even')
-            if (afterSchoolEnded(doc.data().friday)){
-              await scheduleRef.doc("monday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().monday)
-              })
-            }
-          })
-          
-        }
-        else if (dayOfWeek=="Monday"){
-          await scheduleRef.doc("monday").get().then(async(doc)=>{
-            setPeriods(doc.data().monday)
+      let days = ["monday", "tuesday","wednesday", "thursday", "friday", "saturday", "sunday"]
+      let schoolDays: any;
+      await scheduleRef.doc("days").get().then((doc)=>{
+        schoolDays = doc.data()
+      })
+      let currentIndex = days.findIndex(day=>day==dayOfWeek)
+      let count = 0;
+      let nextIndex = currentIndex;
+      let nextSchoolDay: any;
+      let isNextSchoolDay = false;
+      while (isNextSchoolDay==false && count < 7){
+        nextIndex = (nextIndex+1)%7
+        nextSchoolDay = days[nextIndex]
+        isNextSchoolDay = schoolDays[nextSchoolDay]
+        count++
+      }
+      if (count<7){
+        if (dayOfWeek!=="saturday" && dayOfWeek!=="sunday"){
+          await scheduleRef.doc(dayOfWeek).get().then(async(doc)=>{
+            setPeriods(doc.data()[dayOfWeek])
             setEvenOrOdd('neither')
-            if (afterSchoolEnded(doc.data().monday)){
-              await scheduleRef.doc("tuesday").get().then((doc1)=>{
-                setUpcomingPeriods(doc1.data().tuesday)
+            if (afterSchoolEnded(doc.data()[dayOfWeek])){
+              await scheduleRef.doc(nextSchoolDay).get().then((doc1)=>{
+                setUpcomingPeriods(doc1.data()[nextSchoolDay])
               })
             }
+            else{
+              setUpcomingPeriods(doc.data()[dayOfWeek])
+            }
           })
-          
         }
         else{
-          await scheduleRef.doc("monday").get().then(async(doc)=>{
-            setPeriods(doc.data().monday)
+          await scheduleRef.doc(nextSchoolDay).get().then(async(doc)=>{
+            setPeriods(doc.data()[nextSchoolDay])
             setEvenOrOdd('neither')
-            setUpcomingPeriods(doc.data().monday)
+            setUpcomingPeriods(doc.data()[nextSchoolDay])
           })
-          
-        }
+        } 
+      }
+      else{
+        setPeriods(undefined)
+        setUpcomingPeriods(undefined)
+      }
     }
     setUp()
     
@@ -434,9 +407,9 @@ export default function HomeScreen() {
     // }
   return (
     <>
-    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: 'rgba(233, 251, 251, 0.96)', }}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: preferences.colorObj.lightbackground, }}>
       <View style={styles.container}>
-      <LinearGradient colors={["rgba(233, 251, 251, 0.96)", "#D3E7EE"]} style={{position: 'absolute', top: -moderateScale(100), right:0, left: 0, height: moderateScale(1000)}}/>
+      <LinearGradient colors={[preferences.colorObj.lightbackground, preferences.colorObj.darkbackground]} style={{position: 'absolute', top: -moderateScale(100), right:0, left: 0, height: moderateScale(1000)}}/>
 
         {/* <ImageBackground
           source={require("../assets/images/lightbluegradient.png")}
@@ -503,7 +476,7 @@ export default function HomeScreen() {
             periodNames= {Schedule}
             upcomingPeriods={upcomingPeriods}
           />:<></>}
-          {(dayOfWeek!="Saturday" && dayOfWeek!="Sunday") ? 
+          {(dayOfWeek!="saturday" && dayOfWeek!="sunday" && !isHoliday) ? 
           <View
             style={{
               backgroundColor: "rgba(0,0,0,0)",

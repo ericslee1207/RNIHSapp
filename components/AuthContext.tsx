@@ -8,5 +8,9 @@ export const AuthContext = React.createContext({
     currentPeriod: {},
     setCurrentPeriod: (val: any)=>{},
     nextPeriod: {},
-    setNextPeriod: (val: any)=>{}
+    setNextPeriod: (val: any)=>{},
+    isHoliday: false,
+    colorObj: "",
+    setColorObj: (val: any)=>{}
+
 })
