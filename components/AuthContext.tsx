@@ -11,6 +11,12 @@ export const AuthContext = React.createContext({
     setNextPeriod: (val: any)=>{},
     isHoliday: false,
     colorObj: "",
-    setColorObj: (val: any)=>{}
+    setColorObj: (val: any)=>{},
+    clubs: [],
+    setClubs: (val: any)=>{},
+    clubModal: true,
+    setClubModal: (val: any)=>{},
+    user: {},
+    setUser: (val: any) => {}
 
 })

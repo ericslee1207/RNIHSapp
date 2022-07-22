@@ -8,7 +8,10 @@ import {
   Linking,
   Dimensions,
   Alert,
+  Platform
 } from "react-native";
+import Modal from 'react-native-modal'
+
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import {LinearGradient} from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons';
@@ -34,6 +37,7 @@ import { useIsFocused } from "@react-navigation/native";
 import CircleTimer from "./CircleTimer"
 import { AuthContext } from "../components/AuthContext";
 import { firebaseConfig } from "../config";
+import GlassyView from "../components/GlassyView";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -87,6 +91,7 @@ function inbetween(first: string, second: string, now: string) {
 }
 
 const ScheduleItem = (props: any) => {
+  const {Schedule} = React.useContext(AuthContext)
   let trueperiod = true;
   if (props.data.period === "*") {
     trueperiod = false;
@@ -120,8 +125,8 @@ const ScheduleItem = (props: any) => {
   let height = moderateScale(100) - xDomain*moderateScale(15)
   let width = `${(72 - 11 * xDomain)}%`
   let subject = props.data.subject;
-  if (props.data.period !== "*" && props.data.period !== "Flex"){
-    subject = props.periodNames[props.data.subject]
+  if (Schedule[props.data.subject]!==undefined){
+    subject = Schedule[props.data.subject]
   }
   if (props.highlightPeriod) {
     return (
@@ -209,10 +214,13 @@ export default function HomeScreen() {
   const [comingPeriod, setComingPeriod] = useState()
   const [evenOrOdd, setEvenOrOdd] = useState()
   const currentDate = new Date();
-  
+  const [modalVisible, setModalVisible] =useState(false)
+  const [isFirstRally, setIsFirstRally] = useState(false);
   const [datenow, updateDate] = useState(moment(currentDate));
   const withSeconds = datenow.format("LTS");
-  const dayOfWeek = datenow.format("dddd").toLowerCase()
+  const dayOfWeek = datenow.format('dddd').toLowerCase()
+  // const dayOfWeek = "monday"
+
   const [fontSize, setFontSize] = useState(moderateScale(27))
   const [preferences, setPreferences] = useState({
     isCircle: false,
@@ -236,7 +244,7 @@ export default function HomeScreen() {
   const [index, setIndex] = useState(curSecond);
   const isFocused = useIsFocused();
   const timeNow = datenow.format("LT");
-    // const timeNow = "9:55 AM"
+    // const timeNow = "10:11 AM"
     const datenow_split = timeNow
       .split(" ")
       .join(",")
@@ -246,13 +254,16 @@ export default function HomeScreen() {
     const datenow_hour = parseInt(datenow_split[0]);
     const datenow_minute = parseInt(datenow_split[1])
     const datenow_ampm = datenow_split[2];
-  
-  useEffect(()=>{
     const setUp = async() => {
       let days = ["monday", "tuesday","wednesday", "thursday", "friday", "saturday", "sunday"]
       let schoolDays: any;
+      let pepRallyDays: any;
+      let currentDay = dayOfWeek
       await scheduleRef.doc("days").get().then((doc)=>{
         schoolDays = doc.data()
+      })
+      await scheduleRef.doc("pepRallyDays").get().then((doc)=>{
+        pepRallyDays = doc.data()
       })
       let currentIndex = days.findIndex(day=>day==dayOfWeek)
       let count = 0;
@@ -265,18 +276,35 @@ export default function HomeScreen() {
         isNextSchoolDay = schoolDays[nextSchoolDay]
         count++
       }
+
+      if (pepRallyDays[dayOfWeek]){
+        if (user.isFirstPepRally){
+          currentDay="firstPepRally"
+        }
+        else{
+          currentDay="secondPepRally"
+        }
+      }
+      if (pepRallyDays[nextSchoolDay]){
+        if (user.isFirstPepRally){
+          nextSchoolDay="firstPepRally"
+        }
+        else{
+          nextSchoolDay="secondPepRally"
+        }
+      }
       if (count<7){
         if (dayOfWeek!=="saturday" && dayOfWeek!=="sunday"){
-          await scheduleRef.doc(dayOfWeek).get().then(async(doc)=>{
-            setPeriods(doc.data()[dayOfWeek])
+          await scheduleRef.doc(currentDay).get().then(async(doc)=>{
+            setPeriods(doc.data()[currentDay])
             setEvenOrOdd('neither')
-            if (afterSchoolEnded(doc.data()[dayOfWeek])){
+            if (afterSchoolEnded(doc.data()[currentDay])|| schoolDays[currentDay]==false){
               await scheduleRef.doc(nextSchoolDay).get().then((doc1)=>{
                 setUpcomingPeriods(doc1.data()[nextSchoolDay])
               })
             }
             else{
-              setUpcomingPeriods(doc.data()[dayOfWeek])
+              setUpcomingPeriods(doc.data()[currentDay])
             }
           })
         }
@@ -293,8 +321,10 @@ export default function HomeScreen() {
         setUpcomingPeriods(undefined)
       }
     }
-    setUp()
+  useEffect(()=>{
     
+    setUp()
+
   },[datenow_minute])
   
   useEffect(() => {
@@ -312,9 +342,6 @@ export default function HomeScreen() {
   }, [index]);
   useEffect(()=>{
     const getPreferences = async() => {
-      let preferences = await AsyncStorage.getItem("SettingConfigurations")
-      let preferencesParsed = JSON.parse(preferences)
-      setPreferences(preferencesParsed)
       let user = await AsyncStorage.getItem("accountInfo")
       let userParsed = JSON.parse(user)
       if (userParsed.firstName.length >=9){
@@ -322,10 +349,23 @@ export default function HomeScreen() {
         setFontSize(size)
       }
       setUser(userParsed)
-
+      console.log(userParsed.isFirstPepRally)
+      if (userParsed.isFirstPepRally == undefined){
+        console.log(user)
+        setModalVisible(true)
+        console.log(modalVisible)
+      }
+      let preferences = await AsyncStorage.getItem("SettingConfigurations")
+      let preferencesParsed = JSON.parse(preferences)
+      setPreferences(preferencesParsed)
+      
     }
     getPreferences()
+    
   }, [isFocused])
+  useEffect(()=>{
+    setUp()
+  }, [user.isFirstPepRally])
   let classes = [];
   const changeTo24Hour = (time) => {
     const arr = time
@@ -407,6 +447,89 @@ export default function HomeScreen() {
     // }
   return (
     <>
+    
+    <Modal
+      isVisible={modalVisible}
+      onBackdropPress={()=>setModalVisible(true)}
+      useNativeDriver={true}
+      onBackButtonPress={()=>setModalVisible(true)}
+      hideModalContentWhileAnimating={true}>
+        <View style={{width: '85%', marginLeft: '7.5%', height: Platform.OS=="ios" ? moderateScale(270): moderateScale(290), borderRadius: moderateScale(20), alignItems: 'center', justifyContent: 'center'}}>
+          <View style={[styles.invitationBody]}>
+            {/* <AntDesign name="Safety" size={moderateScale(40)} color="#04b5a7" style={{marginBottom: moderateScale(10)}}/>               */}
+            <View style={{flexDirection: 'row',  width: '100%', justifyContent: 'center'}}>
+            <Text style={{fontFamily: 'OpenSansBold', fontSize: moderateScale(20)}}>Pep Rally Schedule</Text>
+            </View>
+            
+            <Text style={{marginVertical: moderateScale(7), textAlign: 'center', fontSize: moderateScale(17), marginHorizontal: moderateScale(5)}}>Is your fourth period in the social science, math, humanities, or the world language building?</Text>
+            <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+                onPress={async()=>{
+                  if (user!==null){
+                    let data = {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        shortID: user.shortID,
+                        longID: user.longID,
+                        graduationYear: user.graduationYear,
+                        isFirstPepRally: false
+                      }
+                      setUser(data)
+                      await AsyncStorage.setItem("accountInfo", JSON.stringify(data)).then(()=>setModalVisible(false));        
+                }
+                }}
+                style={[styles.buttonstyle, {height: moderateScale(35), width: moderateScale(100), marginTop: moderateScale(12), flexDirection: 'row', marginRight: moderateScale(5)}]}
+
+              >
+              <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "OpenSansSemiBold",
+                    fontSize: moderateScale(17),
+                    marginRight: moderateScale(5)
+                  }}
+                >
+                  Yes
+                </Text>
+                {/* <AntDesign name="checkcircleo" size={moderateScale(18)} color="white"/> */}
+
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async()=>{
+                  if (user!==null){
+                    let data = {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        shortID: user.shortID,
+                        longID: user.longID,
+                        graduationYear: user.graduationYear,
+                        isFirstPepRally: true
+                      }
+                      setUser(data)
+                      await AsyncStorage.setItem("accountInfo", JSON.stringify(data)).then(()=>{setModalVisible(false)});
+                }
+                }}
+                style={[styles.buttonstyle, {height: moderateScale(35), width: moderateScale(100), marginTop: moderateScale(12), flexDirection: 'row', marginLeft: moderateScale(5), backgroundColor: '#ff675c'}]}
+  
+              >
+              <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "OpenSansSemiBold",
+                    fontSize: moderateScale(17),
+                    marginRight: moderateScale(5)
+                  }}
+                >
+                  No
+                </Text>
+                {/* <AntDesign name="checkcircleo" size={moderateScale(18)} color="white"/> */}
+
+              </TouchableOpacity>
+              </View>
+          </View>
+        </View>
+      
+    </Modal>
     <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, backgroundColor: preferences.colorObj.lightbackground, }}>
       <View style={styles.container}>
       <LinearGradient colors={[preferences.colorObj.lightbackground, preferences.colorObj.darkbackground]} style={{position: 'absolute', top: -moderateScale(100), right:0, left: 0, height: moderateScale(1000)}}/>
@@ -463,6 +586,7 @@ export default function HomeScreen() {
             darkColor="#009387"
           /> */}
           {periods!=undefined && currentPeriod!=undefined && comingPeriod!=undefined? 
+          
           <HorizontalCarousel
             currentPeriod={currentPeriod}
             comingPeriod={comingPeriod}
@@ -598,6 +722,22 @@ const styles = StyleSheet.create({
     height: 30,
     width: 50,
   },
+  buttonstyle: {
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    height: moderateScale(55),
+    width: "90%",
+    borderRadius: 15,
+    marginBottom: "5%",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowColor: 'grey',
+    shadowRadius: 5,
+    elevation: 5,
+    backgroundColor: "#04b5a7",
+    opacity: 1
+  },
   scheduleFormat1: {
     justifyContent: "center",
     flexDirection: "row",
@@ -636,5 +776,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: 15,
     marginHorizontal: 2,
+  },
+  invitationBody: {
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+    borderRadius: moderateScale(20),
+    padding: moderateScale(20),
+    
+  
   },
 });

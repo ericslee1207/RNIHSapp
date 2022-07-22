@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Image, Dimensions, Alert } from "react-native";
+import { StyleSheet, FlatList, Image, Dimensions, Alert, Platform, TouchableOpacity } from "react-native";
 import { My_SearchBar } from "./Tab3Screens/SearchBar";
 import { Text, View } from "../components/Themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import club_data from "../clubs_2019-2020.json";
 import { Card, Avatar, IconButton, Title } from "react-native-paper";
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view'
 import {ClubContext} from './Tab3Screens/ClubContext'
@@ -11,9 +10,14 @@ import { useContext } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { moderateScale, moderateVerticalScale } from "react-native-size-matters";
 import { AuthContext } from "../components/AuthContext";
+import Modal from 'react-native-modal'
+import clubs2021 from "../clubs_2020-2021.json"
+
 
 const firstRoute= (navigation) => {
-  const [clubs, setClubs] = useState(club_data);
+  const {clubs, clubModal, setClubModal} = React.useContext(AuthContext)
+
+  const [clubs1, setClubs1] = React.useState(clubs)
   const [preferences, setPreferences] = useState({
     isCircle: false,
     radius: 3,
@@ -26,21 +30,24 @@ const firstRoute= (navigation) => {
   })
   const isFocused = useIsFocused()
   useEffect(()=>{
-    const getPreferences = async() => {
+    const getData = async() => {
+      
       let preferences = await AsyncStorage.getItem("SettingConfigurations")
       let preferencesParsed = JSON.parse(preferences)
       setPreferences(preferencesParsed)
+
     }
-    getPreferences()
+
+    getData()
   }, [isFocused])
 
   const onChange = (query: string) => {
-    const queries = club_data.filter((club) => {
+    const queries = clubs.filter((club) => {
       const clubdata = club.clubname.toLowerCase();
       const query_data = query.toLowerCase();
       return clubdata.indexOf(query_data) > -1;
     });
-    setClubs(queries);
+    setClubs1(queries);
   };
 
   const renderListItem = ({ item }) => {
@@ -63,16 +70,52 @@ const firstRoute= (navigation) => {
       </Card>
     );
   };
+  
   return (
+    <>
+    
     <View style={styles.container}>
+    <Modal
+      isVisible={false}
+      onBackdropPress={()=>setClubModal(false)}
+      useNativeDriver={true}
+      onBackButtonPress={()=>setClubModal(false)}
+      hideModalContentWhileAnimating={true}>
+        <View style={{width: '85%', marginLeft: '7.5%', height: Platform.OS=="ios" ? moderateScale(250): moderateScale(270), borderRadius: moderateScale(20)}}>
+          <View style={[styles.invitationBody]}>
+            <View style={{flexDirection: 'row',  width: '100%', justifyContent: 'center'}}>
+            <Text style={{fontFamily: 'OpenSansBold', fontSize: moderateScale(20)}}>Club Information</Text>
+            </View>
+            
+            <Text style={{marginVertical: moderateScale(7), textAlign: 'center', fontSize: moderateScale(17), marginHorizontal: moderateScale(5)}}>The clubs listed here are from years 2019 to 2020. The updated club list for this year will be posted soon.</Text>
+            <TouchableOpacity
+                onPress={()=>setClubModal(false)}
+                style={[styles.buttonstyle, {height: moderateScale(35), width: moderateScale(170), marginTop: moderateScale(12), flexDirection: 'row'}]}
+              >
+              <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "OpenSansSemiBold",
+                    fontSize: moderateScale(17),
+                    marginRight: moderateScale(5)
+                  }}
+                >
+                  I understand
+                </Text>
+              </TouchableOpacity>
+          </View>
+        </View>
+      
+    </Modal>
       <My_SearchBar change_function={onChange} />
       <FlatList
         style={styles.scrollview}
-        data={clubs}
+        data={clubs1}
         renderItem={renderListItem}
         keyExtractor={(item) => item.clubname}
       />
     </View>
+    </>
   );
 }
 
@@ -100,7 +143,6 @@ const secondRoute = (navigation) => {
 }, [isFocused])
   const[finalClubs, setFinalClubs] = useState([])
   const [clubs, setClubs] = useState([]);
-  let savedClubs = useContext(ClubContext).saved_clubs
   useEffect(()=>{
       revealSavedClubs();
   }, [])
@@ -140,7 +182,7 @@ const secondRoute = (navigation) => {
   }
   return (
     <View style={styles.container}>
-      <My_SearchBar change_function={onChange} />
+      {/* <My_SearchBar change_function={onChange} /> */}
       <FlatList
         style={styles.scrollview}
         data={clubs}
@@ -226,5 +268,32 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     marginRight: 25,
+  },
+  invitationBody: {
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+    borderRadius: moderateScale(20),
+    padding: moderateScale(20)
+  
+  },
+  buttonstyle: {
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    height: moderateScale(55),
+    width: "90%",
+    borderRadius: 15,
+    marginBottom: "5%",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowColor: 'grey',
+    shadowRadius: 5,
+    elevation: 5,
+    backgroundColor: "#04b5a7",
+    opacity: 1
   },
 });

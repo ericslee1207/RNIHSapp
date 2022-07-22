@@ -14,13 +14,13 @@ import oddPeriods from "../OddPeriods.json"
 import evenPeriods from "../EvenPeriods.json"
 import mondayPeriods from "../MondayPeriods.json"
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import IUSDevents from "../IUSD_holidays.json"
+import GlassyView from "../components/GlassyView";
 export const HorizontalCarousel = (props: any) => {
   const { Schedule, isHoliday } = React.useContext(AuthContext)
   const [activeIndex, setActiveIndex] = useState(0);
   const dayOfWeek = props.date.format("dddd")
   
-  // const dayOfWeek = "Thursday"
+  // const dayOfWeek = "Monday"
   const changeTo24Hour = (time) => {
     const arr = time
     .split(" ")
@@ -131,7 +131,7 @@ export const HorizontalCarousel = (props: any) => {
   let count = 0
   const upcomingClasses = upcomingPeriods.map((period)=>{
     let subject = period.subject;
-    if (period.period !== "*" && period.period !== "Flex"){
+    if (Schedule[period.subject]!==undefined){
       subject = Schedule[period.subject]
     }
     count++
@@ -140,15 +140,7 @@ export const HorizontalCarousel = (props: any) => {
     <View key={period.id} style={{ backgroundColor: "transparent"}}>
       <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
       <View style={[styles.scheduleFormat1, {height: moderateScale(85), width: "61%"}]}>
-        {/* <Text
-          style={{
-            fontFamily: "OpenSansSemiBold",
-            fontSize: 27,
-            fontStyle: "italic",
-          }}
-        >
-          {props.data.period}
-        </Text> */}
+        {/* <GlassyView style={{width: '100%', height: '100%'}}> */}
         <Text style={{ fontFamily: "OpenSansSemiBold", fontSize: moderateScale(21), color: props.preferences.colorObj.primary }}>
           {subject}
         </Text>
@@ -157,6 +149,7 @@ export const HorizontalCarousel = (props: any) => {
         >
           
         </View>
+        {/* </GlassyView> */}
       </View>
       <Text
             style={{

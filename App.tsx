@@ -15,6 +15,8 @@ import firebase from "firebase"
 import { registerRootComponent } from 'expo';
 
 registerRootComponent(App);
+
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

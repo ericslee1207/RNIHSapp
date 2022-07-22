@@ -8,6 +8,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 
 export const Intro = ({navigation}) => {
     const[loading, setLoading] = useState(false);
@@ -25,29 +26,60 @@ export const Intro = ({navigation}) => {
         return (
             
                 <View style={styles.container}>
-                    <LinearGradient start={{ x: 0, y: 0 }} colors={["#009387", "#45b5ff"]} style={{ height: '100%', position: 'absolute', width: '100%' }} />
-                    <ImageBackground style={{height: '100%', width: '100%'}} source={require('../assets/images/IHSAerielView_Cut.jpg')} imageStyle={{opacity: 0.4}}>
+                    <LinearGradient start={{ x: 0, y: 0 }} colors={["#4afff0", "#45b5ff"]} style={{ height: '100%', position: 'absolute', width: '100%', overflow: 'hidden' }} />
+                    <ImageBackground style={{height: '100%', width: '100%', overflow: 'hidden'}} source={require('../assets/images/IHSAerielView_Cut.jpg')} imageStyle={{opacity: 0.55}}>
                         <View style={styles.top}>
-                            <View style={styles.outercircle}>
+                            {/* <ImageBackground style={{overflow: 'hidden', backgroundColor: 'white', borderRadius: moderateScale(100)}} source={require("../assets/images/colorback4.png")}>
+                            <BlurView 
+                                intensity={100}
+                                tint='light'
+                                style={[styles.outercircle]}
+                            >
+                                <LinearGradient 
+                                    colors={['rgba(0,0,0,0.0)', 'rgba(232,255,239,0.3)']}
+                                    start={{x: 0, y: 1}}
+                                    end= {{x: 1, y: 1}}
+                                    style={{height: '100%', width: '100%', justifyContent: 'center', alignItems :'center', }}
+                                >  */}
+                                <View style={styles.outercircle}>
                                 <View style={styles.innercircle}>
                                     <Image source={require('../assets/images/IHSLOGOSquare.png')} style={styles.logo}/>
                                 </View>
-                            </View>
+                                </View>
+                                {/* </LinearGradient>
+                            </BlurView>
+                            </ImageBackground> */}
                             {/* <Text style={styles.title}>IHS Mobile</Text> */}
                         </View>
                         <Animatable.View 
+                        
                         style={styles.bottom}
                         animation='fadeInUpBig'
                         >
-                            <Text style={styles.welcome}><Text style={{fontFamily: 'OpenSansRegular', color: 'grey'}}>Welcome</Text> IHS Student!</Text>
-                            <View style={{height: 2, backgroundColor: "#45b5ff", width: '30%'}}/>
+                            {/* <ImageBackground source={require("../assets/images/colorback4.png")} style={{height: '100%', width: '100%'}}>
+                            <BlurView 
+                                intensity={100}
+                                tint="light"
+                                style={{flex: 1, height: '100%', width: '100%', borderTopLeftRadius: moderateScale(25), borderTopRightRadius: moderateScale(25), }}
+                            >
+                                <LinearGradient 
+                                    colors={['rgba(0,0,0,0.0)', 'rgba(232,255,239,0.3)']}
+                                    start={{x: 0, y: 1}}
+                                    end= {{x: 1, y: 1}}
+                                    style={{height: '100%', width: '100%'}}
+                                > */}
+                                        <Text style={styles.welcome}><Text style={{fontFamily: 'OpenSansSemiBold', color: 'black'}}>Welcome To </Text>IHS Mobile!</Text>
+                                    <View style={{height: 2, backgroundColor: "#45b5ff", width: '30%', alignSelf: 'center'}}/>
 
-                            {/* <Image source={require("../assets/images/newlogowhite.png")} style={{height: moderateScale(45), width: moderateScale(300), marginTop: moderateScale(30)}}/> */}
-                            <View style={{width: '100%'}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: moderateScale(55), backgroundColor: '#04b5a7', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.3}}>
-                                    <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Sign Up</Text>
-                                </TouchableOpacity>
-                            </View>
+                                    <View style={{width: '100%'}}>
+                                        <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: moderateScale(55), backgroundColor: '#04b5a7', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.3}}>
+                                            <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Sign Up</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                {/* </LinearGradient>
+                            
+                            </BlurView>
+                            </ImageBackground> */}
                         </Animatable.View>
                     </ImageBackground>
                 </View>
@@ -60,20 +92,25 @@ export const Intro = ({navigation}) => {
 const styles=StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#009387'
+        backgroundColor: '#009387',
+        overflow: 'hidden'
     },
     top: {
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
+        backgroundColor: 'transparent',
     },
     bottom: {
         flex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 1)',
+        // backgroundColor: 'rgba(255, 255, 255, 1)',
 
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         alignItems: 'center',
+        overflow: 'hidden',
+        backgroundColor: 'white'
         // borderWidth: 5,
         // borderColor: 'white',
         
@@ -91,14 +128,15 @@ const styles=StyleSheet.create({
         fontFamily: 'OpenSansSemiBold',
     },
     innercircle: {
-        borderWidth: 5, 
-        height: moderateScale(169), 
-        width: moderateScale(169), 
+        height: moderateScale(179), 
+        width: moderateScale(179), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 50,
+        borderRadius: moderateScale(179/2),
         borderColor: '#45b5ff',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+                borderWidth: 5,
+
     },
     welcome: {
         marginHorizontal: '8%',
@@ -110,11 +148,12 @@ const styles=StyleSheet.create({
         color: "#009387"
     },
     outercircle: {
-        height: moderateScale(180), 
-        width: moderateScale(180), 
+        height: moderateScale(189), 
+        width: moderateScale(189), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 50,
-        backgroundColor: 'rgba(255, 255, 255, 1)'
+        borderRadius: moderateScale(189/2),
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        overflow: 'hidden'
     },
 })

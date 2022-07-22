@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
 import { AuthContext } from '../components/AuthContext';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 const ConfigureSettingsScreen = ({navigation}) => {
     const {colorObj} = React.useContext(AuthContext)    
@@ -21,8 +23,12 @@ const ConfigureSettingsScreen = ({navigation}) => {
                     <Text style={styles.title}>Set Classes</Text>
                 </TouchableOpacity>
             </View>
+            
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: moderateScale(12)}}>
-                
+                <TouchableOpacity style={[styles.button]} onPress={()=>navigation.navigate("RallySchedule")}>
+                <MaterialCommunityIcons name="camera-timer" size={moderateScale(32)} color={colorObj.primary} />                    
+                <Text style={styles.title}>Rally Schedule</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={[styles.button]} onPress={()=>navigation.navigate("About")}>
                     <Feather name="info" size={moderateScale(30)} color={colorObj.primary} />
                     <Text style={styles.title}>General Info</Text>

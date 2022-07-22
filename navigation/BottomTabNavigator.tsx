@@ -19,6 +19,7 @@ import { Staff } from "../screens/ToolScreens/Staff";
 import {moderateScale, verticalScale, scale} from 'react-native-size-matters'
 import ConfigurePersonalInfoScreen from "../screens/ConfigurePersonalInfoScreen";
 import ConfigureSettingsScreen from "../screens/ConfigureSettingsScreen";
+import RallyScheduleScreen from "../screens/RallyScheduleScreen";
 import {
   BottomTabParamList,
   TabOneParamList,
@@ -59,7 +60,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-bookmark" color={color} />
           ),
-          tabBarColor: colorObj.darkbackground,
+          tabBarColor: colorObj.darkbackground || "#D3E7EE",
           tabBarLabel: ''
         }}
       />
@@ -70,7 +71,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="home" color={color} />
           ),
-          tabBarColor: colorObj.darkbackground,
+          tabBarColor: colorObj.darkbackground || "#D3E7EE",
           tabBarLabel: '',
           
         }}
@@ -82,7 +83,7 @@ export default function BottomTabNavigator({navigation}) {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-search" color={color} />
           ),
-          tabBarColor: colorObj.darkbackground,
+          tabBarColor: colorObj.darkbackground || "#D3E7EE",
           tabBarLabel: ''
         }}
       />
@@ -120,11 +121,11 @@ export function TabOneNavigator({navigation}) {
         component={HomeScreen}
         options={{
           headerTitle: (props) => {
-            if (colorObj.primary=="#04b5a7"){
+            if (colorObj.primary=="#7361ff"){
               return(
                 <Image
                   style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
-                  source={require("../assets/images/darkgreenIHSheader.png")}
+                  source={require("../assets/images/purpleIHSHeader.png")}
                 />
               )
             }
@@ -156,7 +157,7 @@ export function TabOneNavigator({navigation}) {
               return(
                 <Image
                   style={{ width: moderateScale(150), height: moderateScale(45), alignSelf: "flex-start",}}
-                  source={require("../assets/images/purpleIHSHeader.png")}
+                  source={require("../assets/images/darkgreenIHSheader.png")}
                 />
               )
             }
@@ -211,6 +212,21 @@ export function TabOneNavigator({navigation}) {
           }
         }}
       />
+      
+      <TabOneStack.Screen
+        name="RallySchedule"
+        component={RallyScheduleScreen}
+        options={{
+          headerLeft: (props)=>(
+            <Feather name="x" size={moderateScale(22)} onPress={()=>navigation.navigate("HomeScreen")} color="black" style={{marginLeft: moderateScale(30)}}/>
+          ),
+          headerTitle: "Configure Rally Schedule",
+          headerStyle:{
+            backgroundColor: colorObj.lightbackground,
+
+          }
+        }}
+      />
       <TabOneStack.Screen
         name="ConfigureSettings"
         component={ConfigureSettingsScreen}
@@ -253,7 +269,7 @@ const TabTwoStack = createStackNavigator<TabTwoParamList>();
 function TabTwoNavigator() {
   const {colorObj} = React.useContext(AuthContext)
   return (
-    <TabTwoStack.Navigator>
+    <TabTwoStack.Navigator mode="card">
       <TabTwoStack.Screen
         name="ToolsScreen"
         component={ToolsScreen}
@@ -261,7 +277,8 @@ function TabTwoNavigator() {
           headerTitle: "Tools",
           headerStyle: [styles.header, {backgroundColor: colorObj.lightbackground}],
           headerTitleStyle: styles.headerTitle,
-          headerLeft: null
+          headerLeft: null,
+          gestureDirection: 'horizontal'
 
         }}
       />
@@ -309,7 +326,7 @@ function TabThreeNavigator() {
   const {colorObj} = React.useContext(AuthContext)
 
   return (
-    <TabThreeStack.Navigator>
+    <TabThreeStack.Navigator mode="card" screenOptions={{gestureDirection: 'horizontal'}}>
       <TabThreeStack.Screen
         name="ListOfClubsScreen"
         component={ListOfClubsScreen}

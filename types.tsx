@@ -22,7 +22,8 @@ export type TabOneParamList = {
   ConfigureSettings: undefined;
   Preferences: undefined;
   SetClasses: undefined,
-  About: undefined
+  About: undefined,
+  RallySchedule: undefined
 };
 
 export type TabTwoParamList = {

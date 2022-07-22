@@ -23,7 +23,7 @@ export const Club_Page= ({navigation, route})=>{
         }
         func()
     }, [])
-    let {clubname, clubadvisor, clubroom, clubmeeting, clubleader, clubinfo} = route.params
+    let {clubname, clubadvisor, clubroom, clubmeeting, clubleader, clubinfo, contactinfo, constitution} = route.params
     let font_size=moderateScale(50)
     if (clubinfo===undefined){
         clubinfo='NA'
@@ -40,6 +40,7 @@ export const Club_Page= ({navigation, route})=>{
         font_size=moderateScale(30)
     }
     
+
     const changeStatusClub = async() => {
         if (type=="all"){
             let prev = await AsyncStorage.getItem("savedClubs");
@@ -82,6 +83,14 @@ export const Club_Page= ({navigation, route})=>{
                     <Text style={styles.additional_info_text}>{clubinfo}</Text>
                 </Card>
                 <Card style={[styles.cardstyle, {shadowColor: route.params.colorObj.primary}]}>
+                    <Text style={styles.infoHeader}>Time {"&"} Place:</Text>
+                    <Text style={styles.additional_info_text}>{clubmeeting}</Text>
+                </Card>
+                <Card style={[styles.cardstyle, {shadowColor: route.params.colorObj.primary}]}>
+                    <Text style={styles.infoHeader}>Contact Info:</Text>
+                    <Text style={styles.additional_info_text}>{contactinfo}</Text>
+                </Card>
+                <Card style={[styles.cardstyle, {shadowColor: route.params.colorObj.primary}]}>
                     <Text style={{fontSize: 23, fontWeight: 'bold', marginBottom: 5, fontFamily: 'OpenSansSemiBold'}}>Additional Info:</Text>
                     <View style={{backgroundColor: 'transparent', paddingRight: 160}}>
                         <View style={{flexDirection: 'row'}}>
@@ -92,13 +101,10 @@ export const Club_Page= ({navigation, route})=>{
                             <Text style={styles.additional_info_header}>Advisor: </Text>
                             <Text style={styles.additional_info_text}>{clubadvisor}</Text>
                         </View>
+                        
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={styles.additional_info_header}>Room: </Text>
-                            <Text style={styles.additional_info_text}>{clubroom}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={styles.additional_info_header}>Meeting: </Text>
-                            <Text style={styles.additional_info_text}>{clubmeeting}</Text>
+                            <Text style={styles.additional_info_header}>Constitution: </Text>
+                            <Text style={styles.additional_info_text}>{constitution}</Text>
                         </View>
                     </View>
                     {/* <Text style={{fontSize: 17, color: 'grey', fontStyle: 'italic', marginVertical: 6}}>{clubinfo}</Text> */}
@@ -138,7 +144,8 @@ const styles=StyleSheet.create({
         color: 'grey', 
         fontStyle: 'italic', 
         marginVertical: 6, 
-        fontFamily: 'OpenSansSemiBold'
+        fontFamily: 'OpenSansSemiBold',
+        
     },
     cardstyle: {
         alignItems: 'flex-start', 

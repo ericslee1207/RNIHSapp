@@ -1,14 +1,13 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName, StyleSheet, Button } from 'react-native';
+import { ColorSchemeName, StyleSheet, Button, ActivityIndicator, Dimensions } from 'react-native';
 import {Intro} from '../screens/IntroScreen'
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {Login} from '../screens/LoginScreen';
 import { View } from 'react-native-animatable';
-import { ActivityIndicator } from 'react-native-paper';
 import {AuthContext} from '../components/AuthContext';
 import {TabOneNavigator} from './BottomTabNavigator'
 import OnboardingPageTwo from "../screens/OnboardingTwo"
@@ -23,6 +22,14 @@ import oddPeriods from "../OddPeriods.json"
 import evenPeriods from "../EvenPeriods.json"
 import mondayPeriods from "../MondayPeriods.json"
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import firebase from "firebase"
+import { firebaseConfig } from "../config";
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+let clubRef = firebase.firestore().collection("clubs")
+var scheduleRef = firebase.firestore().collection("schedule")
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -49,27 +56,46 @@ function RootNavigator() {
   const [nextPeriod, setNextPeriod] = React.useState({})
   const [colorObj, setColorObj] = React.useState({})
   const [index, setIndex] = React.useState()
+  const [clubs, setClubs] = React.useState([])
+  const [clubModal, setClubModal] = React.useState(true)
+  const [user, setUser] = React.useState({})
+  const [holidays, setHolidays] = React.useState()
   // React.useEffect(() => {
   //   setTimeout(()=>{setIsLoading(false)}, 2000)
   // }, []);
   const date = moment().format("l")
+  // const date = "11/11/2021"
 
   let isHoliday = false;
   let holiday = undefined;
-  IUSDevents.forEach(element => {
-    let startDate = element.eventDateStart
-    let endDate = element.eventDateEnd
-    let from = Date.parse(startDate)
-    let to = Date.parse(endDate)
-    let check = Date.parse(date)
-    if((check <= to && check >= from)){
-      holiday = element
-      isHoliday= true;
-    } 
-  });
+  if (holidays!==undefined){
+    holidays.forEach(element => {
+      let startDate = element.eventDateStart
+      let endDate = element.eventDateEnd
+      let from = Date.parse(startDate)
+      let to = Date.parse(endDate)
+      let check = Date.parse(date)
+      if((check <= to && check >= from)){
+        holiday = element
+        isHoliday= true;
+      } 
+    });
+  }
+  
   React.useEffect(()=>{
     const func = async() => {
+      setIsLoading(true)
+      await scheduleRef.doc("holidays").get().then(async(doc)=>{
+        setHolidays(doc.data().holidays)
+      })
+      await clubRef.doc("clubs").get().then(async(doc)=>{
+        setClubs(doc.data().clubs)
+      })
+      firebase.firestore().collection("users").get().then(function(querySnapshot) {      
+        console.log(querySnapshot.size); 
+      });
       let user = await AsyncStorage.getItem("accountInfo");
+      setUser(JSON.parse(user))
       let savedClubs = await AsyncStorage.getItem("savedClubs")
       let schedule = await AsyncStorage.getItem("scheduleDetails")
       let preferences = await AsyncStorage.getItem("SettingConfigurations")
@@ -78,6 +104,13 @@ function RootNavigator() {
         setSchedule(schedule)
       }
       if (user==null){
+        let colorObj = {
+          primary: "#04b5a7",
+          highlight: "hsl(165, 100%, 80%)",
+          lightbackground: "rgba(233, 251, 251, 0.96)",
+          darkbackground: "#D3E7EE"
+        }
+        setColorObj(colorObj)
         setUserToken(null);
       }
       
@@ -111,23 +144,45 @@ function RootNavigator() {
         savedClubs = JSON.parse(savedClubs);
         changeStatusClub1(savedClubs);
       }
+      setIsLoading(false)
     }
     func()
   }, [])
 
   const verifyUser = React.useMemo(() => ({
     SignIn: ()=> {
+      let colorObj = {
+        primary: "#04b5a7",
+        highlight: "hsl(165, 100%, 80%)",
+        lightbackground: "rgba(233, 251, 251, 0.96)",
+        darkbackground: "#D3E7EE"
+      }
+      setColorObj(colorObj)
       setUserToken('true');
-      setIsLoading(false);
+      setIsLoading(false)
     },
     SignOut: ()=>{
+      let colorObj = {
+        primary: "#04b5a7",
+        highlight: "hsl(165, 100%, 80%)",
+        lightbackground: "rgba(233, 251, 251, 0.96)",
+        darkbackground: "#D3E7EE"
+      }
+      setColorObj(colorObj)
       setUserToken(null);
-      //delete from asyncstorage
       setIsLoading(false)
+      //delete from asyncstorage
     }
   }), [])
+  
+  const window = Dimensions.get('window')
+
   return (
-    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut, Schedule: schedule, setSchedule: setSchedule, currentPeriod: currentPeriod, setCurrentPeriod: setCurrentPeriod, nextPeriod: nextPeriod, setNextPeriod: setNextPeriod, isHoliday: isHoliday, setColorObj: setColorObj, colorObj: colorObj
+    <>
+    {isLoading ? <ActivityIndicator style={{zIndex: 999,position: 'absolute',width: window.width, height: window.height, backgroundColor: 'lightgrey', opacity: 0.4}} animating={isLoading} color={"darkgreen"} size="large"/>:
+      <></>
+      }
+    <AuthContext.Provider value={{SignIn: verifyUser.SignIn, SignOut: verifyUser.SignOut, Schedule: schedule, setSchedule: setSchedule, currentPeriod: currentPeriod, setCurrentPeriod: setCurrentPeriod, nextPeriod: nextPeriod, setNextPeriod: setNextPeriod, isHoliday: isHoliday, setColorObj: setColorObj, colorObj: colorObj, clubs: clubs, setClubs: setClubs, clubModal: clubModal, setClubModal: setClubModal, user: user, setUser: setUser
     }}>
       <ClubContext.Provider value={{saved_clubs: savedClubs, changeStatusClub: changeStatusClub1}}>
         {
@@ -156,6 +211,7 @@ function RootNavigator() {
           } 
       </ClubContext.Provider>
     </AuthContext.Provider>
+    </>
   );
 }
 

@@ -99,7 +99,7 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
         }
     }
     const FumiInput = ({ objKey, type, icon }) => {
-        const [text, changeText] = useState(type)
+        const [text, changeText] = useState(Schedule[objKey])
         const onChange = (text) => {
             changeText(text)
             setObject((prev)=>{
@@ -110,22 +110,22 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
         }
         return (
           <Fumi
-            // label={type}
+            label={type}
             style={{
               marginBottom: moderateScale(10),
               borderRadius: 20,
               height: moderateScale(12),
-              width: '100%'
+              width: '100%',
             }}
             value={text}
 
             iconClass={MaterialCommunityIcons}
             iconName={icon}
             iconColor={colorObj.primary}
-            iconSize={25}
+            iconSize={moderateScale(25)}
             inputPadding={moderateScale(15)}
             
-            inputStyle={{marginTop: moderateScale(-13)}}
+            inputStyle={{marginTop: moderateScale(-11)}}
             autoCapitalize="none"
             onChangeText={(text) => onChange(text)}
           />
@@ -157,19 +157,19 @@ const ConfigurePersonalInfoScreen = ({navigation, route}) => {
                   <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Odd Periods</Text>
                   </View>
-                    <FumiInput objKey="Period 1" type={Schedule["Period 1"]}icon="numeric-1"/>
-                    <FumiInput objKey="Period 3" type={Schedule["Period 3"]} icon="numeric-3"/>
-                    <FumiInput objKey="Period 5" type={Schedule["Period 5"]} icon="numeric-5"/>
-                    <FumiInput objKey="Period 7" type={Schedule["Period 7"]} icon="numeric-7"/>
+                    <FumiInput objKey="Period 1" type={"Period 1"}icon="pencil"/>
+                    <FumiInput objKey="Period 3" type={"Period 3"} icon="pencil"/>
+                    <FumiInput objKey="Period 5" type={"Period 5"} icon="pencil"/>
+                    <FumiInput objKey="Period 7" type={"Period 7"} icon="pencil"/>
                 </View>
                 <View style={styles.customizeClasses}>
                 <View style={{marginBottom: moderateScale(20), alignItems: 'center', justifyContent:'center', backgroundColor: colorObj.primary, paddingHorizontal: moderateScale(14), borderRadius: moderateScale(20), paddingVertical: moderateScale(5)}}>
                     <Text style={{color: 'white',fontSize: moderateScale(22), fontFamily: 'OpenSansSemiBold'}}>Even Periods</Text>
                   </View>                   
-                    <FumiInput objKey="Period 2" type={Schedule["Period 2"]} icon="numeric-2"/>
-                    <FumiInput objKey="Period 4" type={Schedule["Period 4"]} icon="numeric-4"/>
-                    <FumiInput objKey="Period 6" type={Schedule["Period 6"]} icon="numeric-6"/>
-                    <FumiInput objKey="Period 8" type={Schedule["Period 8"]} icon="numeric-8"/>
+                    <FumiInput objKey="Period 2" type={"Period 2"} icon="pencil"/>
+                    <FumiInput objKey="Period 4" type={"Period 4"} icon="pencil"/>
+                    <FumiInput objKey="Period 6" type={"Period 6"} icon="pencil"/>
+                    <FumiInput objKey="Period 8" type={"Period 8"} icon="pencil"/>
                 </View>
             </Swiper>
             <View style={{flex: 1/3, justifyContent: 'center', alignItems: 'center'}}>
