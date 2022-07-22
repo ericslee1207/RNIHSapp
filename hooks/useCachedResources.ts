@@ -15,7 +15,10 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'Trebuchet MS': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          "OpenSansLight": require('../assets/fonts/Open_Sans/OpenSans-Light.ttf'),
+          "OpenSansRegular": require('../assets/fonts/Open_Sans/OpenSans-Regular.ttf'),
+          "OpenSansSemiBold": require('../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf'),
+          "OpenSansBold": require("../assets/fonts/Open_Sans/OpenSans-Bold.ttf")
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

@@ -1,0 +1,26 @@
+[
+  {
+    "period": 5,
+    "subject": "Period 5",
+    "time": "8:30 AM",
+    "id": 0
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "time": "9:50 AM",
+    "id": 1
+  },
+  {
+    "period": 6,
+    "subject": "Period 6",
+    "time": "10:05 AM",
+    "id": 2
+  },
+  {
+    "period": "*",
+    "subject": "End of School",
+    "time": "12:55 PM",
+    "id": 100
+  }
+]

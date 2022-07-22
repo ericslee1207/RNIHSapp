@@ -1,0 +1,741 @@
+
+    [
+        {
+            "clubname": "ACS ChemClub",
+            "clubadvisor": "Jay Cassity",
+            "clubleader": "Kavleen Kaur",
+            "clubmeeting": "TBD",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "JayCassity@iusd.org & acsirvine@gmail.com"
+        },
+        {
+            "clubname": "Acts of Random Kindness (ARK)",
+            "clubadvisor": "Natalie Hanks",
+            "clubleader": "Rhea Mogulla",
+            "clubmeeting": "Twice a month at lunch in Hank's room.",
+            "constitution": "YES",
+            "clubinfo": "The ARK club's mission is to help people in our community and spread positivity, hoping to inspire kindness into people’s everyday lives. As students are stressed, we strive to make the campus a more pleasant experience by conducting uplifting actives and projects.",
+            "contactinfo": "NatalieHanks@iusd.org & rheamogulla@gmail.com"
+        },
+        {
+            "clubname": "Astronomy Club",
+            "clubadvisor": "Archana Jain",
+            "clubleader": "Ria Singh Thakur",
+            "clubmeeting": "UA9 and Meeting Days/Times TBD",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "archanajain@iusd.org & triasingh@gmail.com"
+        },
+        {
+            "clubname": "Chess Club",
+            "clubadvisor": "Richard Crowe",
+            "clubleader": "Shelby Crowe",
+            "clubmeeting": "Mondays at lunch room M2",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": " richardcrowe@iusd.org & sscrowe2424@gmail.com"
+        },
+        {
+            "clubname": "CHOC club",
+            "clubadvisor": "Jonathan Mesisca",
+            "clubleader": "Pihu Garg/Riddhi Kumar",
+            "clubmeeting": "Tuesday @lunch, Drama room",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "jonathanmesisca@iusd.org & pihugarg23@gmail.com & riddhi.kumar.rk@gmail.com\n"
+        },
+        {
+            "clubname": "Danglers",
+            "clubadvisor": "Luna Bai",
+            "clubleader": "Hunter Ballon",
+            "clubmeeting": "Fridays, After School (TBD), room unknown",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "luna.bai@iusd.org & huntballon@gmail.com"
+        },
+        {
+            "clubname": "DAY",
+            "clubadvisor": "Mrs. Bai",
+            "clubleader": "Niki Saleh",
+            "clubmeeting": "Every Fridays, 12:30-12:40 ,S2",
+            "constitution": "YES",
+            "clubinfo": "Dear Asian Youth is a youth-led, global organization that promotes intersectional activism, solidarity with other marginalized communities, and equality and equity",
+            "contactinfo": "lunabai@iusd.org & nsaleh.24ca@gmail.com"
+        },
+        {
+            "clubname": "Den of Drones",
+            "clubadvisor": "Gary Russell",
+            "clubleader": "Rishabh Dedhia",
+            "clubmeeting": "lunch, at room ua12, wednesday",
+            "constitution": "YES",
+            "clubinfo": "The Den of Drones is an open environment for those who have an interest in building, flying, and racing drones",
+            "contactinfo": "GaryRussell@iusd.org & Rishabh.dedhia05@gmail.com"
+        },
+        {
+            "clubname": "Drama Club",
+            "clubadvisor": "Mr. Mesisca",
+            "clubleader": "Marie Riddle",
+            "clubmeeting": "Every 1st and 3rd Wednesday at Lunch / Drama Room",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "JonathanMesisca@iusd.org  MISSING STUDENT EMAIL"
+        },
+        {
+            "clubname": "EARTH Club",
+            "clubadvisor": "Ms. Eagleson",
+            "clubleader": "Nikitha Mateti",
+            "clubmeeting": "Biweekly meetings Wednesdays at lunch, Room S6",
+            "constitution": "YES",
+            "clubinfo": "At EARTH, Educating All about Respecting The Habitats, we are focused on educating and advocating climate activism and allow every individual to make an impact ontheir community.From beach clean-ups to writing to senators, we hope to provide activities and volunteer services to put an end to climate change.",
+            "contactinfo": "breeagleson@iusd.org & nikithamateti@gmail.com"
+        },
+        {
+            "clubname": "Families together OC (FTOC)",
+            "clubadvisor": "Ms.Khurgel",
+            "clubleader": "Amelie Wang/Sunwoo Eom",
+            "clubmeeting": "monthly meeting, tbd",
+            "constitution": "YES",
+            "clubinfo": "We offer volunteer events with, community service hours with the organization. The organization prioritizes/offers covid vaccinations and support low income families",
+            "contactinfo": "miriamkhurgel@iusd.org & MISSING STUDENT EMAIL"
+        },
+        {
+            "clubname": "Fashion Club",
+            "clubadvisor": "Ms.Briseno",
+            "clubleader": "Kelly Campos/Laila Ahmed",
+            "clubmeeting": "wednesday at Lunch, room WL5",
+            "constitution": "MISSING",
+            "clubinfo": "In fashion club you will be able to get a more in depth look at how all things fashion work. As a member of the Fashion Club you are just required to be your own authentic-self.\r\n",
+            "contactinfo": "KarenBriseno@iusd.org & Kellycmps22@gmail.com & lv1la4372@gmail.com\r\n\r\n"
+        },
+        {
+            "clubname": "Fellowship of Christian Athletes",
+            "clubadvisor": "Gabe Cota",
+            "clubleader": "Evan Tom",
+            "clubmeeting": "Every other Thursday @lunch in the practice gym",
+            "constitution": "YES",
+            "clubinfo": "Christian club made for fellowship and involvement on campus. You do not need to be Christian or an athlete to join the club!",
+            "contactinfo": "gabrielcota@iusd.org & Evantom008@gmail.com"
+        },
+        {
+            "clubname": "First Aid Club",
+            "clubadvisor": "Lisa Baker",
+            "clubleader": "Daniel Kim",
+            "clubmeeting": "First wednesday of every month, Lunch, Gym/Foyer",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "ihsfirstaid@gmail.com"
+        },
+        {
+            "clubname": "First Robotics Club",
+            "clubadvisor": "Archana Jain",
+            "clubleader": "Rio MacFarland/Allen Weng",
+            "clubmeeting": "Thursdays Lunch UA9",
+            "constitution": "YES",
+            "clubinfo": "FRC is a club that focuses on building a large robot designed to perform complex tasks for the FIRST Robotics Competition. Students learn practical skills in hardware, software, and graphic design as well as teamwork and leadership abilities.",
+            "contactinfo": "archanajain@iusd.org & riocupcake@gmail.com & ttaw2014@yahoo.com"
+        },
+        {
+            "clubname": "French Honor Society",
+            "clubadvisor": "Tracy Gallo",
+            "clubleader": "Elena Lee",
+            "clubmeeting": "Meetings once a week, day, time, and place TBD.",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "tracygallo@iusd.org & leeelena@gmail.com"
+        },
+        {
+            "clubname": "Future Business Leaders of America(FBLA)",
+            "clubadvisor": "Stephanie Fair",
+            "clubleader": "Sonia Fereidooni",
+            "clubmeeting": "Every other Thursday (TBD), Lunch, M8",
+            "constitution": "YES",
+            "clubinfo": "A passion for finance and a willingness to learn more about money management and investing.Participation in certain activities and projects related to finance.",
+            "contactinfo": "StephanieFair@iusd.org & sonia.fereidooni@gmail.com"
+        },
+        {
+            "clubname": "Generation She",
+            "clubadvisor": "Miriam Khurgel",
+            "clubleader": "Anoushka Khajanchi",
+            "clubmeeting": "Monday, at lunch, UA3",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "Miriamkhurgl@iusd.org & MISSING STUDENT EMAIL"
+        },
+        {
+            "clubname": "Girls Who Code",
+            "clubadvisor": "Faten Sakallah",
+            "clubleader": "Alana Zhao",
+            "clubmeeting": "Roughly Tuesdays from 3:50 to 5:00, M6",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "fatensakallah@iusd.org & alanazhao2023@gmail.com"
+        },
+        {
+            "clubname": "Guitar Club",
+            "clubadvisor": "Mr. Munsell",
+            "clubleader": "Paul Chau",
+            "clubmeeting": "Tuesday, Lunch, H19",
+            "constitution": "YES",
+            "clubinfo": "The Guitar Club is a casual, relaxed place for all guitar players, from complete beginners to experts, to play, study, and have fun with their instrument. Anyone who expresses interest is welcome.",
+            "contactinfo": "stevenmunsell@iusd.org & paul.son.chau@gmail.com"
+        },
+        {
+            "clubname": "HOSA",
+            "clubadvisor": "Ms. Bai",
+            "clubleader": "Pranav Sankar/Vishnu Manathattai",
+            "clubmeeting": "Mondays, Lunch, S2",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "lunabai@iusd.org & pranavsankar2@gmail.com & vishnu363728@gmail.com & sonia.fereidooni@gmail.com"
+        },
+        {
+            "clubname": "IHS Bhangra Club",
+            "clubadvisor": "Archana Jain",
+            "clubleader": "Kavleen Kaur",
+            "clubmeeting": "TBD",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "ArchanaJain@iusd.org & bhangraihs@gmail.com"
+        },
+        {
+            "clubname": "IHS Habitat for Humanity",
+            "clubadvisor": "Hughes",
+            "clubleader": "Maddie Kim",
+            "clubmeeting": "Every Other Monday at Lunch in S10 (Hughes)",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MISSING clubadvisor EMAIL & maddieandminnie@gmail.com"
+        },
+        {
+            "clubname": "IHS Holt International",
+            "clubadvisor": "Mandy. Tucker",
+            "clubleader": "Cera Pascua",
+            "clubmeeting": "Tuesdays at Lunch (Room # TBD)",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MandyTucker@iusd.org & cerapascua@gmail.com"
+        },
+        {
+            "clubname": "IHS Improv Club",
+            "clubadvisor": "John Valerie",
+            "clubleader": "Carolina Garcia",
+            "clubmeeting": "Meeting days are on Friday at lunch in WL1.",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "JohnValerie@iusd.org & caroleve05@gmail.com"
+        },
+        {
+            "clubname": "IHS Mock Trial",
+            "clubadvisor": "Mr. Cassity",
+            "clubleader": "Sachi Lakhina",
+            "clubmeeting": "Thursday and Tuesday from 4 to 6, S7",
+            "constitution": "YES",
+            "clubinfo": "Mock Trial is an academic team that competes in actual courts with a case composed by CRF-OC (constitutional Rights Foundation). We learn about the law and how the judicial process works. Mock Trial is an amazing club for anyone interested in law, speech/debate, acting, or for anyone just looking for something new!",
+            "contactinfo": "JayCassity@iusd.org &  sachilakhina@gmail.com"
+        },
+        {
+            "clubname": "IHS STEAM For All School Chapter",
+            "clubadvisor": "Michelle Cortez",
+            "clubleader": "Aiza Zafar",
+            "clubmeeting": "Wednesdays, During lunch, SLG/Outside",
+            "constitution": "YES",
+            "clubinfo": "The purpose of the IHS STEAM For All School Chapter Club is to allow High School students to host STEAM-related events for Elementary and Middle School students. This club is looking for enthusiastic students who are interested in STEAM and are also hoping to gain some volunteering and leadership experience along their way as a member of this club.",
+            "contactinfo": "MichelleCortez@iusd.org & aizazafar719@gmail.com"
+        },
+        {
+            "clubname": "IHS UNICEF Club",
+            "clubadvisor": "MISSING",
+            "clubleader": "Kalyn Nishida",
+            "clubmeeting": "Once a month on a tuesday during lunch",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "kktoshi68@icloud.com & kktoshi68@icloud.com"
+        },
+        {
+            "clubname": "Irvine Beats",
+            "clubadvisor": "Derek Venlet",
+            "clubleader": "Caleb Choi",
+            "clubmeeting": "Tuesday, Lunch, BLab",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "DerekVenlet@iusd.org & choigo316@gmail.com"
+        },
+        {
+            "clubname": "Irvine Business",
+            "clubadvisor": "MISSING",
+            "clubleader": "Siya Madan/Prasanthi Mantena",
+            "clubmeeting": "Time & Day TBD, W10",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MISSING clubadvisor EMAIL & siyamadan10@gmail.com & prasanthi.mantena117@gmail.com"
+        },
+        {
+            "clubname": "Irvine California Scholarship Federation",
+            "clubadvisor": "Harrington",
+            "clubleader": "Hannah Lee",
+            "clubmeeting": "Every other Wensday/Lunch time/HLG or SS202",
+            "constitution": "YES",
+            "clubinfo": "We are a volunteer and academic club that offers volunteer events. Members are only allowed to join if they have a certain grade.",
+            "contactinfo": "MISSING clubadvisor EMAIL & hjviolin144@gmail.com"
+        },
+        {
+            "clubname": "Irvine Green Project",
+            "clubadvisor": "Mr. Jacobs",
+            "clubleader": "David Ho/Angela Park",
+            "clubmeeting": "Fridays during lunch in room S3",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "TimJacobs@iusd.org & davidhoo2004@gmail.com & angelachpark@gmail.com"
+        },
+        {
+            "clubname": "Irvine High Ocean Surf Club",
+            "clubadvisor": "Mr. Clark",
+            "clubleader": "Joshua Greenberg",
+            "clubmeeting": "TBD",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "JasonClark@iusd.org & MISSING STUDENT EMAIL"
+        },
+        {
+            "clubname": "Irvine Investing Club",
+            "clubadvisor": "Gary Russell",
+            "clubleader": "Elizabeth Jiang/Keira Vu",
+            "clubmeeting": "Thursday, Lunch, UA12",
+            "constitution": "YES",
+            "clubinfo": "Anyone interested in investing and stocks are welcome to join, no experience necessary! Our mission is to increase financial literacy by teaching our members responsible investing and introducing them miscellaneous competitions and organizations (participation is voluntary).",
+            "contactinfo": "GaryRussell@iusd.org & keiramvu@gmail.com & elizabethijiang@gmail.com"
+        },
+        {
+            "clubname": "Irvine Linens N Love",
+            "clubadvisor": "Sarah Chung",
+            "clubleader": "Situ Chintakunta/Shelby Lee",
+            "clubmeeting": "Meetings done online, every other Monday @lunch",
+            "constitution": "YES",
+            "clubinfo": "Irvine Linens N Love is a service based nonprofit chapter that focuses on promoting environmental sustainability while making an impact in our community. The primary service project we focus on is collecting unwanted linens from hotels and repurposing them through donations to local shelters as well as hosting hands-on service events and fundraisers to provide necessities for places in need.",
+            "contactinfo": "SarahChung@iusd.org & 24chintakusitu@gmail.com & Lshelby020@gmail.com"
+        },
+        {
+            "clubname": "Irvine Machine Learning Club",
+            "clubadvisor": "Faten Sakallah",
+            "clubleader": "Elizabeth Jiang",
+            "clubmeeting": "Mondays, Lunch, M6",
+            "constitution": "YES",
+            "clubinfo": "Our goal is to introduce high school students in Irvine (no coding experience required!) to ML and apply their learning to virtually any field they have a passion for (ex. medicine, sports, business, and more). We hope to help you enrich your skills by providing educational resources, local competitions, and tutoring opportunities.",
+            "contactinfo": "FatenSakallah@iusd.org & elizabethijiang@gmail.com "
+        },
+        {
+            "clubname": "Irvine Repair Consortium",
+            "clubadvisor": "Joseph Elmasri",
+            "clubleader": "Rishi Padmanabhan",
+            "clubmeeting": "TBD",
+            "constitution": "MISSING",
+            "clubinfo": "MISSING",
+            "contactinfo": "josephelmasri@iusd.org & rishi.padman@gmail.com"
+        },
+        {
+            "clubname": "Irvine Sea",
+            "clubadvisor": "Michelle Cortez",
+            "clubleader": "Ananya Karthi/Khushi Rajesh",
+            "clubmeeting": "TBD, room SLG",
+            "constitution": "YES",
+            "clubinfo": "SEA is an organization that focuses on engaging less fortunate children with entertaining and academic activities. SEA stands for Science, Engineering, and Art. Our main goal for SEA is to get kids involved with fun activities that they might not be able to participate in on a daily basis.",
+            "contactinfo": "michellecortez@iusd.org & ananyawp@gmail.com & Khushirajesh08@gmail.com"
+        },
+        {
+            "clubname": "ITV",
+            "clubadvisor": "Ms.Phillips",
+            "clubleader": "Sofia Garcia",
+            "clubmeeting": "Once a week at UA6 after school",
+            "constitution": "MISSING",
+            "clubinfo": "MISSING",
+            "contactinfo": "Rebeccahphillips@iusd.org & sofiagarcia1217@yahoo.co"
+        },
+        {
+            "clubname": "K-Crew",
+            "clubadvisor": "Mrs. Sloate",
+            "clubleader": "Kayla Kwak",
+            "clubmeeting": "Tuesdays @lunch in dance room",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "sherylsloate@iusd.org & kkayla1052@gmail.com"
+        },
+        {
+            "clubname": "Key Club",
+            "clubadvisor": "Joseph Elmasri",
+            "clubleader": "Vy Nguyen",
+            "clubmeeting": "Tuesdays, lunch, S6",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "JosephElmasri@iusd.org & 1234.vy.ng@gmail.com"
+        },
+        {
+            "clubname": "Koncerts for Kause",
+            "clubadvisor": "Derek Venlet",
+            "clubleader": "Hannah Lee",
+            "clubmeeting": "Every other Friday/Lunch time/B-Lab",
+            "constitution": "YES",
+            "clubinfo": "Koncerts for Kause was founded with the goal of uniting students with a common passion for music and using this talent to help our local community. We provide music exhibitions at senior residences multiple times a month as well as host biannual service projects, exemplifying music as a great cultural component of our community.",
+            "contactinfo": "MISSING clubadvisor EMAIL & hjviolin144@gmail.com"
+        },
+        {
+            "clubname": "Korean Club",
+            "clubadvisor": "Ms. Yu",
+            "clubleader": "Timothy Sauh",
+            "clubmeeting": "Every other Thursday",
+            "constitution": "MISSING",
+            "clubinfo": "MISSING",
+            "contactinfo": "suyoungyu@iusd.org & jenos22722@gmail.com"
+        },
+        {
+            "clubname": "Korean National Honor Society",
+            "clubadvisor": "Ms. Jennifer Yu",
+            "clubleader": "Katelyn Wang",
+            "clubmeeting": "1st and 3rd Thursday of the Month, during lunch, W L7",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "suyoungyu@iusd.org & katelynawang@gmail.com"
+        },
+        {
+            "clubname": "LinkBot Robotics",
+            "clubadvisor": "MISSING",
+            "clubleader": "Taeyoung Kim",
+            "clubmeeting": "Mondays 4:00 M6",
+            "constitution": "MISSING ",
+            "clubinfo": "MISSING",
+            "contactinfo": "MISSING clubadvisor EMAIL & tykim0818@gmail.com"
+        },
+        {
+            "clubname": "Make-A-Wish",
+            "clubadvisor": "Mr. Elmasri",
+            "clubleader": "Izzy Feng/Evan Tom",
+            "clubmeeting": "First Thursday of the month @ Lunch, S3",
+            "constitution": "YES",
+            "clubinfo": "Make-A-Wish is a nonprofit organization dedicated to fulfilling the dreams of children with critical illnesses. As a club at Irvine High School, MAW supports the nonprofit by hosting a variety of fundraisers and events, as well as directly helping children in local hospitals.",
+            "contactinfo": "josephelmasri@iusd.org & fengizzy@gmail.com & evantom008@gmail.com"
+        },
+        {
+            "clubname": "Mandarin Students Association",
+            "clubadvisor": "Mrs. Chow",
+            "clubleader": "Hou Tao Lin",
+            "clubmeeting": "Lunch or after school, Zoom meeting or WL12/13 ",
+            "constitution": "YES",
+            "clubinfo": "Mandarin Student Association is a club that gathers all students who speak Chinese and/or are interested in learning Chinese at IHS. MSA will also provide you with the opportunity to participate in voluntary activities in Chinese",
+            "contactinfo": "EuniceChow@iusd.org & linhoutao@gmail.com"
+        },
+        {
+            "clubname": "Math Olympiad",
+            "clubadvisor": "Luna Bai",
+            "clubleader": "Vishnu Manathattai/Pranav Sankar",
+            "clubmeeting": "Wednesday, Lunch, S2",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "lunabai@iusd.org & vishnu363728@gmail.com & pranavsankar2@gmail.com"
+        },
+        {
+            "clubname": "Model United Nations",
+            "clubadvisor": "Dr. Hurst",
+            "clubleader": "Mannat Bawa",
+            "clubmeeting": "Fridays during Lunch WL9",
+            "constitution": "YES",
+            "clubinfo": "Model United Nations is a competitive club that gives students the chance to win awards and discuss issues the United Nation faces in a mock conference environment. Once students conduct research, they will represent a country or character at conferences, work with peers in a committee, and try to pass resolutions to solve current world problems.",
+            "contactinfo": "darinhurst@iusd.org & mannatkbawa@gmail.com "
+        },
+        {
+            "clubname": "Muslim Student Assiociation",
+            "clubadvisor": "Faten Sakallah",
+            "clubleader": "Haajar Yamani",
+            "clubmeeting": "Fridays at lunch, room M6",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "FatenSakallah@iusd.org & haajaryamani@gmail.com"
+        },
+        {
+            "clubname": "NABT BioClub",
+            "clubadvisor": "Ms.Cortez",
+            "clubleader": "Kavleen Kaur",
+            "clubmeeting": "TBD",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "michellecortez@iusd.org &  irvine.nabt@gmail.com"
+        },
+        {
+            "clubname": "National History Day",
+            "clubadvisor": "Jennifer Harrington",
+            "clubleader": "Jiwon Jeong",
+            "clubmeeting": "time TBD, SS 202",
+            "constitution": "YES",
+            "clubinfo": "National History Day is an annual competition where you pick a historical topic pertaining to the theme (Debate & Diplomacy in History: Successes, Failures, Consequences) and spend a few months researching and creating a project around it! You can submit either a paper, exhibit, website, documentary, or performance (you can join in a group or individually) based on a topic of your choice.",
+            "contactinfo": "JenniferHarrington@iusd.org & jiwonjeong414@gmail.com"
+        },
+        {
+            "clubname": "National Honor Society",
+            "clubadvisor": "Mr.Cali",
+            "clubleader": "Jack Han",
+            "clubmeeting": "Every two weeks on Fridays during lunch in HLG",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MatthewCali@iusd.org & hanjack615@gmail.com"
+        },
+        {
+            "clubname": "ObjectiveCode",
+            "clubadvisor": "Ms. Cortez",
+            "clubleader": "Bardia Safari",
+            "clubmeeting": "Every other Thursday at Lunch in room SLG",
+            "constitution": "YES",
+            "clubinfo": "ObjectiveCode aims to create a community of youth interested in technology and coding, by teaching and inspiring high schoolers to teach younger kids coding. Events include technology camps for middle schoolers (thought by high school club members who volunteer), get-togethers such as Hacknites, and guest speaker events called TechTalks (such as past ones with speakers from Google and Broadcom!) No coding experience is necessary to join!",
+            "contactinfo": "MichelleCortez@iusd.org & contact.bardia.safari@gmail.com"
+        },
+        {
+            "clubname": "Ocean Club",
+            "clubadvisor": "Kevin Kane",
+            "clubleader": "Ethan Stout",
+            "clubmeeting": "Second Monday of every month, 12:05 pm, room S7",
+            "constitution": "YES",
+            "clubinfo": "If you are interested in beach clean ups, learning about the ocean, or surfing you should come and check us out!",
+            "contactinfo": "JayCassity@iusd.org & ethanstout10@gmail.com"
+        },
+        {
+            "clubname": "Orphan Assistance Fund(OAFC)",
+            "clubadvisor": "Kerry Hughes",
+            "clubleader": "Julian Lodin",
+            "clubmeeting": "Every other Friday during lunch in S10",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "KerryHughes@iusd.org & julianlodin@gmail.com"
+        },
+        {
+            "clubname": "Physics Club",
+            "clubadvisor": "Joseph Elmasri",
+            "clubleader": "Brian Song",
+            "clubmeeting": "Mondays during lunch, Room S5",
+            "constitution": "YES",
+            "clubinfo": "The Physics Club holds various, unique activities. From peer tutoring to fun demonstrations to engaging discussions, join and explore the intriguing world of physics.",
+            "contactinfo": "JosephElmasri@iusd.org & brians3476@gmail.com"
+        },
+        {
+            "clubname": "Principled Approach",
+            "clubadvisor": "Mr. Cali",
+            "clubleader": "Zhongwen Zhang",
+            "clubmeeting": "Tentatively every other Tuesday at lunch",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MatthewCali@iusd.org & MISSING STUDENT EMAIL"
+        },
+        {
+            "clubname": "Psych Club",
+            "clubadvisor": "Mr. Chaney",
+            "clubleader": "Oscar Salinas/Dylan Kim",
+            "clubmeeting": "Tuesdays, lunch, H16",
+            "constitution": "YES",
+            "clubinfo": "In this club we would like to do studies/ experiments to show the fun around psychology and help people get interested into the subject.",
+            "contactinfo": "MichaelChaney@iusd.org & oscareric.15@gmail.com & Dylan0517kim@gmail.com"
+        },
+        {
+            "clubname": "Red Cross",
+            "clubadvisor": "Kristen Kamai",
+            "clubleader": "Monique Osuna/Danielle Nguyen",
+            "clubmeeting": "First Thursday every month during Lunch in Room HLG.",
+            "constitution": "YES",
+            "clubinfo": "Humanitarian organizations led by volunteers that helps those in need",
+            "contactinfo": "kristenkamai@iusd.org & moniqueruess16@gmail.com & danielletnguyen@gmail.com"
+        },
+        {
+            "clubname": "Roboticus",
+            "clubadvisor": "Jay Cassity",
+            "clubleader": "Justin Tann",
+            "clubmeeting": "Friday Lunch, Saturday Afternoon, or Sunday Afternoon, S7 or virtual",
+            "constitution": "YES",
+            "clubinfo": "Roboticus will offer a learning opportunity to all who interested in robotics and remote control.",
+            "contactinfo": "jaycassity@iusd.org & justintann201@gmail.com"
+        },
+        {
+            "clubname": "Science Olympiad",
+            "clubadvisor": "Joseph Elmasri",
+            "clubleader": "Roy Shyu",
+            "clubmeeting": "lunch time and weekends, S5",
+            "constitution": "YES",
+            "clubinfo": "Science Olympiad is a club and team in which we compete in a variety of subject fields: biology, chemistry, physics, and engineering. We have a tryouts process",
+            "contactinfo": "josephelmasri@iusd.org & irvinehsscioly@gmail.com"
+        },
+        {
+            "clubname": "Sexuality & Gender Alliance(SAGA)",
+            "clubadvisor": "Gomez",
+            "clubleader": "Rana Khozmanyar",
+            "clubmeeting": "Tuesdays, Lunch, H17",
+            "constitution": "YES",
+            "clubinfo": "A club designed to allow LGBTQIA+ students and allies here at Irvine high have access to a safer environment to share experiences and to create a more open, confidential space. We hope to participate in activism for the lgbt community and serve our community through fundraisers.",
+            "contactinfo": "MISSING clubadvisor EMAIL & 25khozmanysana@iusd.org"
+        },
+        {
+            "clubname": "Sing For Joy",
+            "clubadvisor": "Mr. Elmasri",
+            "clubleader": "Ashlynn Weidenbenner/Lilly Huffmire",
+            "clubmeeting": "Tuesdays at Lunch in S5",
+            "constitution": "YES",
+            "clubinfo": "At the SING FOR JOY CLUB, our mission is to create a fun environment for IHS students to express their love for singing for the greater good of bringing joy to the community! We provide opportunities to earn service hours through singing events at nursing homes, hospitals, and other places throughout Orange County",
+            "contactinfo": "JosephElmasri@iusd.org & singforjoyclub@gmail.com"
+        },
+        {
+            "clubname": "Smile Train",
+            "clubadvisor": "Ms. Harris",
+            "clubleader": "Nicholas DeLuca",
+            "clubmeeting": "Wednesdays, Lunch, Ms. Harris' room",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "beriharris@iusd.org & nicholasdeluca2003@gmail.com"
+        },
+        {
+            "clubname": "Society of Women Engineers",
+            "clubadvisor": "Mrs. Jain",
+            "clubleader": "Sarah Ahsan",
+            "clubmeeting": "every third Wednesday, Lunch, UA 9 ",
+            "constitution": "YES",
+            "clubinfo": "a club open to all created to provide an educational and inquisitive environment especially for the females at our school who are interested in engineering.",
+            "contactinfo": " archanajain@iusd.org & beanlivealfe@gmail.com"
+        },
+        {
+            "clubname": "South Asian Student Association (SASA)",
+            "clubadvisor": "Neetu Toura",
+            "clubleader": "Rehaan Mullik",
+            "clubmeeting": "Every 2 weeks on Friday during lunch at S4.",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "NeetuToura@iusd.org & rehaanm46@gmail.com"
+        },
+        {
+            "clubname": "Spanish Honor Society",
+            "clubadvisor": "LeticiaThompson",
+            "clubleader": "Timothy Chen",
+            "clubmeeting": "Monthly during Lunch in WL6",
+            "constitution": "YES",
+            "clubinfo": "is a nationally recognized honor society for high school students enrolled in Spanish. The purpose of the Society is to recognize high achievement in Spanish and to promote continuity of interest in Hispanic studies and culture. The official Los Vaqueros chapter at Irvine High will focus on making a lasting impact on the IHS community and beyond.",
+            "contactinfo": "LeticiaThompson@iusd.org & bidchen1@gmail.com"
+        },
+        {
+            "clubname": "Speech and Debate",
+            "clubadvisor": "Michelle Cortez",
+            "clubleader": "Pranav Sankar/Vishnu Manathattai",
+            "clubmeeting": "Tuesday, Lunch, SLG",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "michellecortez@iusd.org & pranavsankar2@gmail.com & vishnu363728@gmail.com"
+        },
+        {
+            "clubname": "STEAM For All",
+            "clubadvisor": "Mrs. Fair",
+            "clubleader": "Shriya Mokkapati/Alexis Tran",
+            "clubmeeting": "Every other Friday, lunch, M8",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "StephanieFair@iusd.org & saishriyamv@gmail.com & AlexisHTran@hotmail.com"
+        },
+        {
+            "clubname": "Sticky Stickers Club",
+            "clubadvisor": "Ms. Khurgel",
+            "clubleader": "Joshua Tio",
+            "clubmeeting": "Tuesday and Friday during school lunch, UA3",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "miriamkhurgel@iusd.org & joshuatio98@gmail.com"
+        },
+        {
+            "clubname": "Students For Racial Equality",
+            "clubadvisor": "Ms. Brophy",
+            "clubleader": "Maryam Jalali",
+            "clubmeeting": "Every other Wednesday at lunch, history building (not sure of room number yet)",
+            "constitution": "YES",
+            "clubinfo": "Students for Racial Equality is all about educating students on racial injustices and other social justices issues that students may want to learn more about. If you’re ready to take action and educate yourself please join us and sign up for our club!",
+            "contactinfo": "meganbrophy@iusd.org & maryam21904@gmail.com"
+        },
+        {
+            "clubname": "Students Meets World",
+            "clubadvisor": "Ms. Peck",
+            "clubleader": "Alexis Tran",
+            "clubmeeting": "Every other Friday, lunch, SS106",
+            "constitution": "YES",
+            "clubinfo": "Students Meets World. Girl Meets World was created to inform students about issues all over the world, and how they affect women. Our mission is to educate people on how to take action and help issues of inequality women face.",
+            "contactinfo": "CoraPeck@iusd.org & AlexisHTran@Hotmail.com"
+        },
+        {
+            "clubname": "Supplies for Smiles club",
+            "clubadvisor": "Mr. Munsell",
+            "clubleader": "Pihu Garg/Riddhi Kumar",
+            "clubmeeting": "Wednesday at Lunch in Mr. Munsell's room (will update with room number)",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "stevenmunsell@iusd.org & pihugarg23@gmail.com & riddhi.kumar.rk@gmail.com"
+        },
+        {
+            "clubname": "Tennis For Kids",
+            "clubadvisor": "Gary Russell",
+            "clubleader": "Vivesh Konkala",
+            "clubmeeting": "Monday, Every 2 weeks during lunch, UA12",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "GaryRussell@iusd.org & viveshreddy@gmail.com "
+        },
+        {
+            "clubname": "The Fourth Second",
+            "clubadvisor": "Mr Cassity",
+            "clubleader": "Necla Erdogan/Emma Dinan",
+            "clubmeeting": "Thursday, Lunch, S8/zoom",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "jaycassity@iusd.org & nicolebooks11@gmail.com"
+        },
+        {
+            "clubname": "The Frontier Spirit Club",
+            "clubadvisor": "Mr. Chris Nguyen",
+            "clubleader": "Sawyer Spivey/Caden Shaffer",
+            "clubmeeting": "Meetings prior to important games, lunch, HLG/Gym",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "chrisnguyen@iusd.org & sawyerspives@gmail.com & rox87hi@gmail.com"
+        },
+        {
+            "clubname": "The Ted-Ed Club",
+            "clubadvisor": "MISSING",
+            "clubleader": "Una Santos",
+            "clubmeeting": "Every first and last Thursday of the month",
+            "constitution": "YES",
+            "clubinfo": "MISSING",
+            "contactinfo": "MISSING clubadvisor EMAIL & unalesantos@gmail.com"
+        },
+        {
+            "clubname": "Urban Dance Club",
+            "clubadvisor": "Mrs. Sloate",
+            "clubleader": "Lanah Mamangon",
+            "clubmeeting": "Every Wednesdays at lunch, Dance Room",
+            "constitution": "YES",
+            "clubinfo": "We promote primarily hip hop dancing, inviting people to have fun, making new friends, and appreciation for the hip hop/urban culture of music and dance.",
+            "contactinfo": "Sherylsloate@iusd.org & lanahelise@gmail.com"
+        },
+        {
+            "clubname": "Vaquero Social",
+            "clubadvisor": "Tyler Tran",
+            "clubleader": "Tyler Tran",
+            "clubmeeting": "Thursdays 12:10-12:45, Room SC10",
+            "constitution": "YES",
+            "clubinfo": "Vaquero Social is a social/fundraising club bringing awareness, community, and support to students who are a part of the special education program through socializing and hang out with them during Thursday lunch and after-school events.",
+            "contactinfo": "tylertran@iusd.org"
+        },
+        {
+            "clubname": "Vietnamese student association (VSA)",
+            "clubadvisor": "Noel Nguyen",
+            "clubleader": "Audrey Ho",
+            "clubmeeting": "Last Wednesday of the month, Lunch, Room m1",
+            "constitution": "YES",
+            "clubinfo": "My club is a social club that hopes to unite and connect the Vietnamese community at IHS and students that are interested in the Vietnamese culture.",
+            "contactinfo": "NoelNguyen@iusd.org & hoaudrey123@gmail.com"
+        },
+        {
+            "clubname": "Youth Action Team(YAT)",
+            "clubadvisor": "Mrs. Harrington",
+            "clubleader": "Bardia Safari",
+            "clubmeeting": "Every other Tuesday during Lunch in HLG (subject to change)",
+            "constitution": "YES",
+            "clubinfo": "YAT has community service projects and social events that range from a variety of interests: volunteering outdoors, helping the special needs community, speaker series, and trivia night. Easy and fun way to get 25+ hours of community service and connect with other people.",
+            "contactinfo": "JenniferHarrington@iusd.org & contact.bardia.safari@gmail.com & h.wellikson@gmail.com"
+        }
+    ]

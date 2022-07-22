@@ -1,8 +1,13 @@
 export type RootStackParamList = {
   Root: undefined;
+  Home: undefined;
   NotFound: undefined;
   Introduction: undefined;
   Login: undefined;
+  OnboardingOne: undefined;
+  OnboardingTwo: undefined;
+  Summer: undefined;
+  Banner: undefined;
 };
 
 export type BottomTabParamList = {
@@ -12,11 +17,17 @@ export type BottomTabParamList = {
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  HomeScreen: undefined;
+  ConfigurePersonalInfo: undefined;
+  ConfigureSettings: undefined;
+  Preferences: undefined;
+  SetClasses: undefined,
+  About: undefined,
+  RallySchedule: undefined
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  ToolsScreen: undefined;
   IdCard: undefined;
   CheckedOutBooks: undefined;
   Staff: undefined;
@@ -24,6 +35,7 @@ export type TabTwoParamList = {
   Add_Event: undefined;
 };
 export type TabThreeParamList = {
-  TabThreeScreen: undefined;
+  ListOfClubsScreen: undefined;
   ClubScreen: undefined;
+  MyClubs: undefined;
 }

@@ -1,0 +1,57 @@
+[
+    {
+      "period": 2,
+      "subject": "Period 2",
+      "time": "8:30 AM",
+      "id": 0
+    },
+    {
+      "period": "*",
+      "subject": "Break",
+      "time": "9:55 AM",
+      "id": 1
+    },
+    {
+      "period": 4,
+      "subject": "Period 4",
+      "time": "10:10 AM",
+      "id": 2
+    },
+    {
+      "period": "*",
+      "subject": "Pep Rally",
+      "time": "10:15 AM",
+      "id": 3
+    },
+    {
+      "period": "*",
+      "subject": "Period 4",
+      "time": "10:50 AM",
+      "id": 4
+    },
+    {
+      "period": "*",
+      "subject": "Lunch",
+      "time": "12:10 PM",
+      "id": 5
+    },
+    {
+      "period": 6,
+      "subject": "Period 6",
+      "time": "12:50 PM",
+      "id": 6
+    },
+    {
+        "period": 8,
+        "subject": "Period 8",
+        "time": "2:25 PM",
+        "id": 7
+      },
+    {
+      "period": "*",
+      "subject": "End of School",
+      "time": "3:50 PM",
+      "id": 100
+    }
+  ]
+  

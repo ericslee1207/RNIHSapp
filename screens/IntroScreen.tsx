@@ -1,16 +1,24 @@
 import React from 'react'
 import {View, Text, StyleSheet, Dimensions, Button, Image, ImageBackground} from 'react-native'
-import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable'
-
+import AppLoading from "expo-app-loading"
+import { moderateScale } from 'react-native-size-matters';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 
 export const Intro = ({navigation}) => {
+    const[loading, setLoading] = useState(false);
     let [fontsLoaded] = useFonts({
-        'Acquire' : require('../assets/fonts/Acquire.otf')
-    })
-
+            "OpenSansLight": require('../assets/fonts/Open_Sans/OpenSans-Light.ttf'),
+            "OpenSansRegular": require('../assets/fonts/Open_Sans/OpenSans-Regular.ttf'),
+            "OpenSansSemiBold": require('../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf'),
+            "OpenSansBold": require("../assets/fonts/Open_Sans/OpenSans-Bold.ttf")
+        })
+    
     if (!fontsLoaded){
         return <AppLoading/>
     }
@@ -18,25 +26,60 @@ export const Intro = ({navigation}) => {
         return (
             
                 <View style={styles.container}>
-                    <ImageBackground style={{height: height, width: width}} source={require('../assets/images/IHSAerielView_Cut.jpg')} imageStyle={{opacity: 0.4}}>
+                    <LinearGradient start={{ x: 0, y: 0 }} colors={["#4afff0", "#45b5ff"]} style={{ height: '100%', position: 'absolute', width: '100%', overflow: 'hidden' }} />
+                    <ImageBackground style={{height: '100%', width: '100%', overflow: 'hidden'}} source={require('../assets/images/IHSAerielView_Cut.jpg')} imageStyle={{opacity: 0.55}}>
                         <View style={styles.top}>
-                            <View style={styles.outercircle}>
+                            {/* <ImageBackground style={{overflow: 'hidden', backgroundColor: 'white', borderRadius: moderateScale(100)}} source={require("../assets/images/colorback4.png")}>
+                            <BlurView 
+                                intensity={100}
+                                tint='light'
+                                style={[styles.outercircle]}
+                            >
+                                <LinearGradient 
+                                    colors={['rgba(0,0,0,0.0)', 'rgba(232,255,239,0.3)']}
+                                    start={{x: 0, y: 1}}
+                                    end= {{x: 1, y: 1}}
+                                    style={{height: '100%', width: '100%', justifyContent: 'center', alignItems :'center', }}
+                                >  */}
+                                <View style={styles.outercircle}>
                                 <View style={styles.innercircle}>
-                                    <Image source={require('../assets/images/IHSLOGO.png')} style={styles.logo}/>
+                                    <Image source={require('../assets/images/IHSLOGOSquare.png')} style={styles.logo}/>
                                 </View>
-                            </View>
-                            <Text style={styles.title}>Irvine High</Text>
+                                </View>
+                                {/* </LinearGradient>
+                            </BlurView>
+                            </ImageBackground> */}
+                            {/* <Text style={styles.title}>IHS Mobile</Text> */}
                         </View>
                         <Animatable.View 
+                        
                         style={styles.bottom}
                         animation='fadeInUpBig'
                         >
-                            <Text style={styles.welcome}>Welcome IHS Student</Text>
-                            <View style={{width: '100%'}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: 55, backgroundColor: '#009387', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.6}}>
-                                    <Text style={{color: 'white', fontFamily: 'Acquire'}}>Student Log In</Text>
-                                </TouchableOpacity>
-                            </View>
+                            {/* <ImageBackground source={require("../assets/images/colorback4.png")} style={{height: '100%', width: '100%'}}>
+                            <BlurView 
+                                intensity={100}
+                                tint="light"
+                                style={{flex: 1, height: '100%', width: '100%', borderTopLeftRadius: moderateScale(25), borderTopRightRadius: moderateScale(25), }}
+                            >
+                                <LinearGradient 
+                                    colors={['rgba(0,0,0,0.0)', 'rgba(232,255,239,0.3)']}
+                                    start={{x: 0, y: 1}}
+                                    end= {{x: 1, y: 1}}
+                                    style={{height: '100%', width: '100%'}}
+                                > */}
+                                        <Text style={styles.welcome}><Text style={{fontFamily: 'OpenSansSemiBold', color: 'black'}}>Welcome To </Text>IHS Mobile!</Text>
+                                    <View style={{height: 2, backgroundColor: "#45b5ff", width: '30%', alignSelf: 'center'}}/>
+
+                                    <View style={{width: '100%'}}>
+                                        <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={{alignSelf: 'center',alignItems: 'center' ,justifyContent: 'center', height: moderateScale(55), backgroundColor: '#04b5a7', width: '80%', borderRadius: 15, marginVertical: '10%', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.3}}>
+                                            <Text style={{color: 'white', fontFamily: 'OpenSansSemiBold', fontSize: moderateScale(17)}}>Sign Up</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                {/* </LinearGradient>
+                            
+                            </BlurView>
+                            </ImageBackground> */}
                         </Animatable.View>
                     </ImageBackground>
                 </View>
@@ -46,62 +89,71 @@ export const Intro = ({navigation}) => {
     
 }
 
-const {height, width} = Dimensions.get('window')
 const styles=StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#009387'
+        backgroundColor: '#009387',
+        overflow: 'hidden'
     },
     top: {
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
+        backgroundColor: 'transparent',
     },
     bottom: {
         flex: 1,
-        backgroundColor: 'white',
+        // backgroundColor: 'rgba(255, 255, 255, 1)',
+
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         alignItems: 'center',
-        borderWidth: 5,
-        borderColor: 'white'
+        overflow: 'hidden',
+        backgroundColor: 'white'
+        // borderWidth: 5,
+        // borderColor: 'white',
+        
     },
     logo: {
-        height: height*0.18,
-        width: width*0.29,
-        opacity: 0.8
+        height: moderateScale(140),
+        width: moderateScale(140),
+        opacity: 1,
+        borderRadius: moderateScale(0)
     },
     title: {
-        fontSize: 33,
+        fontSize: moderateScale(33),
         margin: 20,
         color: 'white',
-        fontFamily: 'Acquire',
+        fontFamily: 'OpenSansSemiBold',
     },
     innercircle: {
-        borderWidth: 8, 
-        height: height*0.22, 
-        width: width*0.49, 
+        height: moderateScale(179), 
+        width: moderateScale(179), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 150,
-        borderColor: 'darkslategrey',
-        backgroundColor: 'transparent'
-    },
-    welcome: {
-        margin: '8%',
-        fontFamily: 'Trebuchet MS',
-        fontSize: 20,
-        fontStyle: 'italic',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start',
+        borderRadius: moderateScale(179/2),
+        borderColor: '#45b5ff',
+        backgroundColor: 'transparent',
+                borderWidth: 5,
 
     },
+    welcome: {
+        marginHorizontal: '8%',
+        marginVertical: '8%',
+        fontFamily: 'OpenSansSemiBold',
+        fontSize: moderateScale(24),
+        fontStyle: 'italic',
+        alignSelf: 'center',
+        color: "#009387"
+    },
     outercircle: {
-        height: height*0.24, 
-        width: width*0.53, 
+        height: moderateScale(189), 
+        width: moderateScale(189), 
         justifyContent: 'center', 
         alignItems: 'center', 
-        borderRadius: 150,
-        backgroundColor: 'lightcyan'
+        borderRadius: moderateScale(189/2),
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        overflow: 'hidden'
     },
 })
