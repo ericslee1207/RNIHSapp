@@ -6,6 +6,12 @@
       "id":0
     },
     {
+      "period": 2,
+      "subject": "Period 2",
+      "time": "9:45 AM",
+      "id": 1
+    },
+    {
       "period": "*",
       "subject": "Break",
       "time": "10:25 AM",
