@@ -29,6 +29,7 @@ import { Fumi } from "react-native-textinput-effects";
 import { AuthContext } from "../components/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
+import MinimumDay from "../MinimumDay.json"
 import moment from "moment";
 import {
   moderateScale,
@@ -37,6 +38,7 @@ import {
   verticalScale,
 } from "react-native-size-matters";
 import mondayPeriods from "../MondayPeriods.json";
+import mondayPeriods2 from "../MondayPeriods2.json";
 import Swiper from "react-native-web-swiper";
 import { LinearGradient } from "expo-linear-gradient";
 import uuid from "react-native-uuid";
@@ -44,9 +46,13 @@ import firebase from "firebase";
 import { firebaseConfig } from "../config";
 import Modal from "react-native-modal";
 import tuesdayPeriods from "../TuesdayPeriods.json";
+import tuesdayPeriods2 from "../TuesdayPeriods2.json";
 import wednesdayPeriods from "../WednesdayPeriods.json";
+import wednesdayPeriods2 from "../WednesdayPeriods2.json";
 import thursdayPeriods from "../ThursdayPeriods.json";
+import thursdayPeriods2 from "../ThursdayPeriods2.json";
 import fridayPeriods from "../FridayPeriods.json";
+import fridayPeriods2 from "../FridayPeriods2.json";
 import minimumDayPeriods from "../MinimumDay.json";
 import clubList from "../clubs_2022-2023.json";
 import firstPepRally from "../firstPepRally.json";
@@ -249,12 +255,12 @@ export const Login = ({ navigation }) => {
 
   const inputData = () => {
     // specialDays.doc("8-18-2021").set({schedule: specialDay})
-    scheduleRef.doc("monday").set({ monday: mondayPeriods });
-    scheduleRef.doc("tuesday").set({ tuesday: tuesdayPeriods });
-    scheduleRef.doc("wednesday").set({ wednesday: wednesdayPeriods });
-    scheduleRef.doc("thursday").set({ thursday: thursdayPeriods });
-    scheduleRef.doc("friday").set({ friday: fridayPeriods });
-    clubRef.doc("clubs").set({ clubs: clubList });
+    scheduleRef.doc("monday").set({ monday: mondayPeriods2 });
+    scheduleRef.doc("tuesday").set({ tuesday: tuesdayPeriods2 });
+    scheduleRef.doc("wednesday").set({ wednesday: wednesdayPeriods2 });
+    scheduleRef.doc("thursday").set({ thursday: thursdayPeriods2 });
+    scheduleRef.doc("friday").set({ friday: firstPepRally });
+    // clubRef.doc("clubs").set({clubs: clubList})
     // scheduleRef.doc("secondPepRally").set({secondPepRally: secondPepRally})
     // scheduleRef.doc("firstPepRally").set({firstPepRally: firstPepRally})
     // scheduleRef.doc('holidays').set({holidays: IUSDholidays})
