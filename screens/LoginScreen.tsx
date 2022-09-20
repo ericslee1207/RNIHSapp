@@ -48,7 +48,7 @@ import wednesdayPeriods from "../WednesdayPeriods.json";
 import thursdayPeriods from "../ThursdayPeriods.json";
 import fridayPeriods from "../FridayPeriods.json";
 import minimumDayPeriods from "../MinimumDay.json";
-import clubList from "../clubs_2020-2021.json";
+import clubList from "../clubs_2022-2023.json";
 import firstPepRally from "../firstPepRally.json";
 import secondPepRally from "../secondPepRally.json";
 import { BlurView } from "expo-blur";
@@ -254,7 +254,7 @@ export const Login = ({ navigation }) => {
     scheduleRef.doc("wednesday").set({ wednesday: wednesdayPeriods });
     scheduleRef.doc("thursday").set({ thursday: thursdayPeriods });
     scheduleRef.doc("friday").set({ friday: fridayPeriods });
-    // clubRef.doc("clubs").set({clubs: clubList})
+    clubRef.doc("clubs").set({ clubs: clubList });
     // scheduleRef.doc("secondPepRally").set({secondPepRally: secondPepRally})
     // scheduleRef.doc("firstPepRally").set({firstPepRally: firstPepRally})
     // scheduleRef.doc('holidays').set({holidays: IUSDholidays})

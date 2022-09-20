@@ -1,75 +1,74 @@
 [
-    {
-      "period": 1,
-      "subject": "Period 1",
-      "time": "9:00 AM",
-      "id":0
-    },
-    {
-      "period": 2,
-      "subject": "Period 2",
-      "time": "9:45 AM",
-      "id": 1
-    },
-    {
-      "period": "*",
-      "subject": "Break",
-      "time": "10:25 AM",
-      "id": 2
-    },
-    {
-      "period": 3,
-      "subject": "Period 3",
-      "time": "10:40 AM",
-      "id": 3
-    },
-    {
-      "period": 4,
-      "subject": "Period 4",
-      "time": "11:25 AM",
-      "id": 4
-    },
-    {
-      "period": "*",
-      "subject": "Lunch",
-      "time": "12:05 PM",
-      "id": 5
-    },
-    {
-        "period": 5,
-        "subject": "Period 5",
-        "time": "12:45 PM",
-        "id": 6
-      },
-    {
-      "period": 6,
-      "subject": "Period 6",
-      "time": "1:30 PM",
-      "id": 7
-    },
-    {
-      "period": "*",
-      "subject": "Break",
-      "time": "2:10 PM",
-      "id": 8
-    },
-    {
-      "period": 7,
-      "subject": "Period 7",
-      "time": "2:25 PM",
-      "id": 9
-    },
-    {
-      "period": 8,
-      "subject": "Period 8",
-      "time": "3:10 PM",
-      "id": 10
-    },
-    {
-      "period": "*",
-      "subject": "End of School",
-      "time": "3:50 PM",
-      "id": 100
-    }
-  ]
-  
+  {
+    "period": 1,
+    "subject": "Period 1",
+    "time": "9:00 AM",
+    "id": 0
+  },
+  {
+    "period": 2,
+    "subject": "Period 2",
+    "time": "9:45 AM",
+    "id": 1
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "time": "10:25 AM",
+    "id": 2
+  },
+  {
+    "period": 3,
+    "subject": "Period 3",
+    "time": "10:40 AM",
+    "id": 3
+  },
+  {
+    "period": 4,
+    "subject": "Period 4",
+    "time": "11:25 AM",
+    "id": 4
+  },
+  {
+    "period": "*",
+    "subject": "Lunch",
+    "time": "12:05 PM",
+    "id": 5
+  },
+  {
+    "period": 5,
+    "subject": "Period 5",
+    "time": "12:45 PM",
+    "id": 6
+  },
+  {
+    "period": 6,
+    "subject": "Period 6",
+    "time": "1:30 PM",
+    "id": 7
+  },
+  {
+    "period": "*",
+    "subject": "Break",
+    "time": "2:10 PM",
+    "id": 8
+  },
+  {
+    "period": 7,
+    "subject": "Period 7",
+    "time": "2:25 PM",
+    "id": 9
+  },
+  {
+    "period": 8,
+    "subject": "Period 8",
+    "time": "3:10 PM",
+    "id": 10
+  },
+  {
+    "period": "*",
+    "subject": "End of School",
+    "time": "3:50 PM",
+    "id": 100
+  }
+]
